@@ -1,0 +1,4 @@
+extends Node
+
+#enemies?
+#projectiles?

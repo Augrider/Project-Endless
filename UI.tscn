@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://i5jwoan1v5dw"]
+
+[node name="UI" type="CanvasLayer" unique_id=1518882651]
+layer = 128
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="." unique_id=1531003555]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+ratio = 1.6
+stretch_mode = 1
+
+[node name="Movement Data" type="Label" parent="AspectRatioContainer" unique_id=1634316370]
+layout_mode = 2
+text = "asdffasdf"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ReferenceRect" type="SubViewportContainer" parent="AspectRatioContainer" unique_id=1584590944]
+visible = false
+layout_mode = 2

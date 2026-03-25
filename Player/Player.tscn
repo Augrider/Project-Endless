@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://bb7dqkjvtgyxx"]
+
+[ext_resource type="Texture2D" uid="uid://cnq8ooshbrq1a" path="res://Player/Sprites/Ship.png" id="1"]
+[ext_resource type="Script" uid="uid://pnh8ogrekeen" path="res://Player/Player.gd" id="2"]
+[ext_resource type="Script" uid="uid://kgm4y55dvs1r" path="res://Player/Scripts/PlayerHealth.gd" id="3"]
+[ext_resource type="Script" uid="uid://dq6f0d42krwo5" path="res://Player/Scripts/PlayerInput.gd" id="4"]
+[ext_resource type="Script" uid="uid://dxsaihera4jpa" path="res://Player/Scripts/PlayerMovement.gd" id="5"]
+[ext_resource type="Script" uid="uid://cgywojitp42dr" path="res://Player/Scripts/PlayerDirection.gd" id="6"]
+[ext_resource type="Script" uid="uid://di8hipxsacs2y" path="res://Player/Scripts/Visuals/Trail2D.gd" id="7"]
+[ext_resource type="Script" uid="uid://cfe6h0ncf0lgv" path="res://Common/Stopwatch.gd" id="8_5wa8t"]
+[ext_resource type="Gradient" path="res://trail_gradient.tres" id="9"]
+[ext_resource type="Curve" path="res://trail_curve.tres" id="10"]
+[ext_resource type="Script" uid="uid://c5gu5ir8la2lj" path="res://Player/Scripts/PlayerStats.gd" id="12"]
+[ext_resource type="Texture2D" uid="uid://bikml8b2ina3g" path="res://Player/Sprites/Hands.png" id="15"]
+
+[sub_resource type="CircleShape2D" id="1"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="2"]
+radius = 1.0
+
+[sub_resource type="Curve" id="Curve_5wa8t"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_p7tob"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Player" type="CharacterBody2D" unique_id=1896151399]
+light_mask = 4
+script = ExtResource("2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1015723415]
+shape = SubResource("1")
+
+[node name="Body" type="Sprite2D" parent="." unique_id=1014827918]
+texture = ExtResource("1")
+
+[node name="Trail2D" type="Line2D" parent="Body" unique_id=45516561]
+position = Vector2(-8, 0)
+width = 1.0
+width_curve = ExtResource("10")
+gradient = ExtResource("9")
+script = ExtResource("7")
+maxPointsCount = 100
+
+[node name="Health" type="Area2D" parent="." unique_id=1687765006]
+position = Vector2(1, 0)
+script = ExtResource("3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Health" unique_id=1963525701]
+shape = SubResource("2")
+
+[node name="Player Movement" type="Node2D" parent="." unique_id=26603771 node_paths=PackedStringArray("body", "stopwatch")]
+script = ExtResource("5")
+body = NodePath("..")
+stopwatch = NodePath("Stopwatch")
+maxSpeed = 100.0
+accelerationDuration = 0.3
+startCurve = SubResource("Curve_5wa8t")
+stopCurve = SubResource("Curve_p7tob")
+
+[node name="Stopwatch" type="Node" parent="Player Movement" unique_id=1360585420]
+script = ExtResource("8_5wa8t")
+autostart = true
+metadata/_custom_type_script = "uid://cfe6h0ncf0lgv"
+
+[node name="Equipment" type="Node2D" parent="." unique_id=2124445995]
+position = Vector2(5, 0)
+
+[node name="PivotLeft" type="Node2D" parent="Equipment" unique_id=1859785852]
+position = Vector2(0, -8)
+script = ExtResource("6")
+nodePath = NodePath(".")
+rotationSpeed = 50.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Equipment/PivotLeft" unique_id=701064059]
+texture = ExtResource("15")
+
+[node name="PivotRight" type="Node2D" parent="Equipment" unique_id=1973748679]
+position = Vector2(0, 8)
+script = ExtResource("6")
+nodePath = NodePath(".")
+rotationSpeed = 50.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Equipment/PivotRight" unique_id=1509277480]
+texture = ExtResource("15")
+flip_v = true
+
+[node name="Input" type="Node" parent="." unique_id=464753604]
+script = ExtResource("4")
+movementPath = NodePath("../Player Movement")
+
+[node name="Direction" type="Node" parent="." unique_id=1550294680]
+script = ExtResource("6")
+nodePath = NodePath("..")
+rotationSpeed = 25.0
+
+[node name="Stats" type="Node" parent="." unique_id=1439619079]
+script = ExtResource("12")

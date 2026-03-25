@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://Weapons/Scripts/WeaponData.gd" type="Script" id=1]
+[ext_resource path="res://Weapons/Projectile.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Weapons/DEBUG_Gun.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Weapons/DEBUG_Impulse.tres" type="Resource" id=5]
+
+[resource]
+script = ExtResource( 1 )
+weaponPrefab = ExtResource( 3 )
+projectilePrefab = ExtResource( 2 )
+fireRate = 20.0
+bulletAmount = 1
+spreadMax = 5.0
+bulletPower = 0.0
+bulletSpeed = 200.0
+bulletLifetime = 1.5
+weaponModifiers = [ ExtResource( 5 ) ]
