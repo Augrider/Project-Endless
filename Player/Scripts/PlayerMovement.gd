@@ -22,11 +22,13 @@ var moving:bool=false
 var speedRel:float
 
 
+func _on_input_movement_input_updated(new_value: Vector2) -> void:
+	set_movement_input(new_value)
+
+
 func set_movement_input(input:Vector2)->void:
 	if (input.length_squared() > 0) != moving && stopwatch.time/accelerationDuration > 1:
 		stopwatch.reset()
-	#elif moving && (input.length_squared() > 0):
-		#stopwatch.set_time(0.8*accelerationDuration)
 	
 	moving=input.length_squared() > 0
 	

@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dubjv2co4dln5"]
+
+[ext_resource type="Texture2D" uid="uid://cnq8ooshbrq1a" path="res://Player/Sprites/Ship.png" id="1_n344k"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_n344k")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

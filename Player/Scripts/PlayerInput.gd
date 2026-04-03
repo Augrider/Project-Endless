@@ -1,29 +1,27 @@
 class_name PlayerInput extends Node
 
-signal movement_input_updated
+enum InputDevice {MOUSE, JOYPAD}
 
-@export var movementInput:Vector2
-@export var boostInput:bool=false
-@export var stopInput:bool=false
+signal movement_input_updated(new_value:Vector2)
+signal device_changed(input_device:InputDevice)
 
-@export var movementPath: NodePath
+@export var movementInput:Vector2 = Vector2.ZERO
 
-var movement:PlayerMovement
+var inputDevice: InputDevice = InputDevice.MOUSE;
 
 #TODO: Add ability to turn on and off
 #TODO: Find how to pause
 
-func _ready() -> void:
-	movement = get_node(movementPath)
 
-func _process(delta:float)->void:
-	movementInput = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	boostInput = Input.get_action_strength("boost")
-	stopInput = Input.get_action_strength("stop")
+func _unhandled_input(event: InputEvent)->void:
+	if event is InputEventMouse:
+		return
 	
+	var movementInput = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	
+	print_debug("Movement "+str(movementInput))
+
 	if movementInput != self.movementInput:
-			self.movementInput = movementInput
-			emit_signal("movement_input_updated")
-			#print_debug("Movement changed "+String(movementInput))
-			
-	movement.set_movement_input(movementInput.normalized())
+		self.movementInput = movementInput
+		emit_signal("movement_input_updated", movementInput)
+		print_debug("Movement changed "+str(movementInput))
