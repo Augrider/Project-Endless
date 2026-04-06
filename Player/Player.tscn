@@ -4,9 +4,9 @@
 [ext_resource type="Script" uid="uid://bmbefbuxs6sac" path="res://Player/Scripts/Visuals/PlayerSprite.gd" id="2_5wa8t"]
 [ext_resource type="SpriteFrames" uid="uid://dubjv2co4dln5" path="res://Player/Animations/Player_frames.tres" id="2_p7tob"]
 [ext_resource type="Script" uid="uid://kgm4y55dvs1r" path="res://Player/Scripts/PlayerHealth.gd" id="3"]
-[ext_resource type="Script" uid="uid://dq6f0d42krwo5" path="res://Player/Scripts/PlayerInput.gd" id="4"]
+[ext_resource type="Script" uid="uid://dq6f0d42krwo5" path="res://Player/Scripts/Input/PlayerInput.gd" id="4"]
 [ext_resource type="Script" uid="uid://dxsaihera4jpa" path="res://Player/Scripts/PlayerMovement.gd" id="5"]
-[ext_resource type="Script" uid="uid://cgywojitp42dr" path="res://Player/Scripts/PlayerInputDirection.gd" id="6"]
+[ext_resource type="Script" uid="uid://cgywojitp42dr" path="res://Player/Scripts/Input/PlayerInputDirection.gd" id="6"]
 [ext_resource type="Script" uid="uid://di8hipxsacs2y" path="res://Player/Scripts/Visuals/Trail2D.gd" id="7"]
 [ext_resource type="Script" uid="uid://cfe6h0ncf0lgv" path="res://Common/Stopwatch.gd" id="8_5wa8t"]
 [ext_resource type="Gradient" path="res://trail_gradient.tres" id="9"]
@@ -73,14 +73,12 @@ position = Vector2(5, 0)
 
 [node name="PivotLeft" type="Node2D" parent="Equipment" unique_id=1859785852]
 position = Vector2(0, -8)
-script = ExtResource("6")
 
 [node name="Sprite2D" type="Sprite2D" parent="Equipment/PivotLeft" unique_id=701064059]
 texture = ExtResource("15")
 
 [node name="PivotRight" type="Node2D" parent="Equipment" unique_id=1973748679]
 position = Vector2(0, 8)
-script = ExtResource("6")
 
 [node name="Sprite2D" type="Sprite2D" parent="Equipment/PivotRight" unique_id=1509277480]
 texture = ExtResource("15")
