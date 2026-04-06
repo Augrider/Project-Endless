@@ -12,7 +12,6 @@
 [ext_resource type="Gradient" path="res://trail_gradient.tres" id="9"]
 [ext_resource type="Curve" path="res://trail_curve.tres" id="10"]
 [ext_resource type="Script" uid="uid://ddy71goj8dukq" path="res://Player/Scripts/PlayerFollowLookPoint.gd" id="10_dm7nj"]
-[ext_resource type="Script" uid="uid://c5gu5ir8la2lj" path="res://Player/Scripts/PlayerStats.gd" id="12"]
 [ext_resource type="Texture2D" uid="uid://bikml8b2ina3g" path="res://Player/Sprites/Hands.png" id="15"]
 
 [sub_resource type="CircleShape2D" id="1"]
@@ -41,7 +40,6 @@ sprite_frames = ExtResource("2_p7tob")
 script = ExtResource("2_5wa8t")
 
 [node name="Trail2D" type="Line2D" parent="AnimatedSprite2D" unique_id=45516561]
-position = Vector2(-8, 0)
 width = 1.0
 width_curve = ExtResource("10")
 gradient = ExtResource("9")
@@ -55,37 +53,38 @@ script = ExtResource("3")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Health" unique_id=1963525701]
 shape = SubResource("2")
 
-[node name="Player Movement" type="Node2D" parent="." unique_id=26603771 node_paths=PackedStringArray("body", "stopwatch")]
+[node name="Movement" type="Node2D" parent="." unique_id=26603771 node_paths=PackedStringArray("body", "stopwatch")]
 script = ExtResource("5")
 body = NodePath("..")
 stopwatch = NodePath("Stopwatch")
-maxSpeed = 100.0
+maxSpeed = 200.0
 accelerationDuration = 0.3
+decelerationDuration = 0.2
 startCurve = SubResource("Curve_5wa8t")
 stopCurve = SubResource("Curve_p7tob")
 
-[node name="Stopwatch" type="Node" parent="Player Movement" unique_id=1360585420]
+[node name="Stopwatch" type="Node" parent="Movement" unique_id=1360585420]
 script = ExtResource("8_5wa8t")
 autostart = true
 metadata/_custom_type_script = "uid://cfe6h0ncf0lgv"
 
-[node name="Equipment" type="Node2D" parent="." unique_id=2124445995]
+[node name="Hands" type="Node2D" parent="." unique_id=2124445995]
 position = Vector2(0, -5)
 
-[node name="PivotLeft" type="Node2D" parent="Equipment" unique_id=1859785852]
+[node name="PivotLeft" type="Node2D" parent="Hands" unique_id=1859785852]
 position = Vector2(-8, 0)
 script = ExtResource("10_dm7nj")
 durationMultiplier = 0.05
 
-[node name="Sprite2D" type="Sprite2D" parent="Equipment/PivotLeft" unique_id=701064059]
+[node name="Sprite2D" type="Sprite2D" parent="Hands/PivotLeft" unique_id=701064059]
 texture = ExtResource("15")
 
-[node name="PivotRight" type="Node2D" parent="Equipment" unique_id=1973748679]
+[node name="PivotRight" type="Node2D" parent="Hands" unique_id=1973748679]
 position = Vector2(8, 0)
 script = ExtResource("10_dm7nj")
 durationMultiplier = 0.05
 
-[node name="Sprite2D" type="Sprite2D" parent="Equipment/PivotRight" unique_id=1509277480]
+[node name="Sprite2D" type="Sprite2D" parent="Hands/PivotRight" unique_id=1509277480]
 texture = ExtResource("15")
 flip_v = true
 
@@ -95,10 +94,7 @@ script = ExtResource("6")
 [node name="Input" type="Node" parent="." unique_id=464753604]
 script = ExtResource("4")
 
-[node name="Stats" type="Node" parent="." unique_id=1439619079]
-script = ExtResource("12")
-
 [connection signal="look_point_changed" from="Input Direction" to="AnimatedSprite2D" method="_on_input_direction_look_point_changed"]
-[connection signal="look_point_changed" from="Input Direction" to="Equipment/PivotLeft" method="_on_input_direction_look_point_changed"]
-[connection signal="look_point_changed" from="Input Direction" to="Equipment/PivotRight" method="_on_input_direction_look_point_changed"]
-[connection signal="movement_input_updated" from="Input" to="Player Movement" method="_on_input_movement_input_updated"]
+[connection signal="look_point_changed" from="Input Direction" to="Hands/PivotLeft" method="_on_input_direction_look_point_changed"]
+[connection signal="look_point_changed" from="Input Direction" to="Hands/PivotRight" method="_on_input_direction_look_point_changed"]
+[connection signal="movement_input_updated" from="Input" to="Movement" method="_on_input_movement_input_updated"]
