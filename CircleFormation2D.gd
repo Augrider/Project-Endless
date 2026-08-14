@@ -15,20 +15,23 @@ func get_spots_available()->Dictionary[Vector2, int]:
 	var dict:Dictionary[Vector2, int]
 	for i in size:
 		if !_enemies.has(i):
-			dict.set(get_circle_position(i), i)
+			dict.set(get_spot(i), i)
 	return dict
+
+func get_spot(index:int)->Vector2:
+	return Vector2.UP.rotated(2*PI*(index+offset)/size)*radius
 
 
 func append(enemy:Enemy)->Vector2:
 	for i in size:
 		if !_enemies.has(i):
 			_enemies.set(i, enemy)
-			return get_circle_position(i)
+			return get_spot(i)
 	return Vector2.ZERO
 
 func append_to_spot(enemy:Enemy, spot:int)->Vector2:
 	_enemies.set(spot, enemy)
-	return get_circle_position(spot)
+	return get_spot(spot)
 
 func remove(enemy:Enemy)->void:
 	var key = -1
@@ -46,7 +49,3 @@ func get_enemies()->Array[Enemy]:
 
 func count()->int:
 	return _enemies.size()
-
-
-func get_circle_position(index:int)->Vector2:
-	return Vector2.UP.rotated(2*PI*(index+offset)/size)*radius

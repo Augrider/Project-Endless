@@ -6,6 +6,8 @@
 func any_spot_available()->bool
 @abstract
 func get_spots_available()->Dictionary[Vector2, int]
+@abstract
+func get_spot(index:int)->Vector2
 
 @abstract
 func append(enemy:Enemy)->Vector2

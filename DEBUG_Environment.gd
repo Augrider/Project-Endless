@@ -3,10 +3,9 @@ extends Node2D
 @export var player:Player
 
 @export var enemy_prefab:PackedScene
-@export var radius:float = 30.0
-@export var rings:int = 2
-@export var ring_enemy_count:int
 
+@export var inner_circle: Formation2D
+@export var outer_circle: Formation2D
 
 #@export var cooldown:Timer
 
@@ -15,18 +14,26 @@ var _active_enemies:Array[Enemy]
 
 
 func spawn_wave() -> void:
-	for ring in rings:
-		for i in ring_enemy_count+ring:
-			var enemy:Enemy = enemy_prefab.instantiate()
-			
-			get_tree().root.add_child(enemy)
-			
-			enemy.global_position = get_circle_position(i, ring)
-			enemy.look_at_target(player)
-			
-			_enemies.append(enemy)
-			if ring == 0:
-				_active_enemies.append(enemy)
+	for i in inner_circle.size:
+		var enemy:Enemy = enemy_prefab.instantiate()
+		
+		get_tree().root.add_child(enemy)
+		
+		enemy.global_position = inner_circle.append_to_spot(enemy, i)
+		enemy.look_at_target(player)
+		
+		_enemies.append(enemy)
+		_active_enemies.append(enemy)
+	
+	for i in outer_circle.size:
+		var enemy:Enemy = enemy_prefab.instantiate()
+		
+		get_tree().root.add_child(enemy)
+		
+		enemy.global_position = outer_circle.append_to_spot(enemy, i)
+		enemy.look_at_target(player)
+		
+		_enemies.append(enemy)
 
 
 func _on_spawn_timer() -> void:
@@ -50,7 +57,3 @@ func _on_wave_attack_timer() -> void:
 	for i in randi() % 6 + 1:
 		enemy.perform_ability(player)
 		await get_tree().create_timer(0.4).timeout
-
-
-func get_circle_position(index:int, ring:int)->Vector2:
-	return Vector2.UP.rotated(2*PI*(index+0.5*ring)/(ring_enemy_count+ring))*(radius+5*ring)
