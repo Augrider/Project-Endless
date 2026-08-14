@@ -15,9 +15,9 @@ var player:Player
 
 func get_player()->Player:
 	return player
-	
+
 func add_player(value:Player)->void:
 	player=value
-	
+
 func remove_player(value:Player)->void:
 	player=null

@@ -2,30 +2,33 @@ extends Weapon
 
 #nothing unusual, just shoot projectiles
 #TODO: support for different fire modes
+@export var launcher:WeaponLauncher
+
+@export var projectile_prefab:PackedScene
+
+@export var fire_rate:float = 3
+
 
 func _process(delta: float) -> void:
-	if triggerPressed && cooldown <= 0:
-		try_fire(weaponData)
+	if triggerPressed:
+		try_fire()
+	
+	if cooldown > 0:
+		cooldown=clamp(cooldown-delta, 0, cooldown)
 
 
-func try_fire(stats:WeaponData)->bool:
+func try_fire()->bool:
 	if(cooldown > 0):
 		return false
 	
-	weaponData=stats
-	fire(stats)
+	fire()
 	
-	cooldown=1/stats.fireRate
+	cooldown=1/fire_rate
 	return true
 
 
-func fire(stats:WeaponData)->void:
-	var projectiles:Array=launcher.spawn(stats.projectilePrefab, stats.spreadMax, stats.bulletAmount)
+func fire()->void:
+	var projectiles:Array[Projectile]=launcher.spawn(projectile_prefab, 1)
 
-	for i in projectiles:
-		var projectile:Projectile = i
-		projectile.init(allegiance, stats.bulletPower, stats.bulletSpeed, stats.bulletLifetime)
-	
-	for mod in stats.weaponModifiers:
-		var modifier:WeaponModifier = mod
-		modifier.apply(spaceObject, self, projectiles)
+	for projectile in projectiles:
+		projectile.init()

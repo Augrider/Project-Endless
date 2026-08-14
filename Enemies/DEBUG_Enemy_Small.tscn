@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://jpahwcw6fs8p"]
+
+[ext_resource type="Script" uid="uid://e35awnyfg0m1" path="res://Enemies/Scripts/Enemy.gd" id="1_s4o6d"]
+[ext_resource type="Script" uid="uid://b1mpu1rm8sn7h" path="res://Enemies/Scripts/EnemyVisuals.gd" id="2_b2fr2"]
+[ext_resource type="PackedScene" uid="uid://du4576dwtntag" path="res://Projectiles/DEBUG_EnemyProjectile.tscn" id="2_kafru"]
+[ext_resource type="Texture2D" uid="uid://djg08bicjgpam" path="res://Enemies/Sprites/Enemy.png" id="2_vkbag"]
+[ext_resource type="Script" uid="uid://4com5kf7gw2p" path="res://Enemies/Scripts/EnemyMovement.gd" id="3_b2fr2"]
+[ext_resource type="Script" uid="uid://cjgc8oyk0fjsx" path="res://Weapons/Scripts/Launchers/Launcher_Offset.gd" id="5_b7dvi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b2fr2"]
+radius = 5.0
+
+[node name="DEBUG_Enemy_Small" type="CharacterBody2D" unique_id=1124543649]
+script = ExtResource("1_s4o6d")
+projectile_prefab = ExtResource("2_kafru")
+
+[node name="Visuals" type="Sprite2D" parent="." unique_id=1924707109]
+unique_name_in_owner = true
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_vkbag")
+script = ExtResource("2_b2fr2")
+
+[node name="Movement" type="NavigationAgent2D" parent="." unique_id=2087549942 node_paths=PackedStringArray("body")]
+unique_name_in_owner = true
+path_desired_distance = 5.0
+avoidance_enabled = true
+radius = 5.0
+neighbor_distance = 50.0
+debug_enabled = true
+script = ExtResource("3_b2fr2")
+body = NodePath("..")
+
+[node name="RepathTimer" type="Timer" parent="Movement" unique_id=616442296]
+wait_time = 0.6
+autostart = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1126737213]
+shape = SubResource("CircleShape2D_b2fr2")
+
+[node name="AbilityUser" type="Node2D" parent="." unique_id=242422743]
+
+[node name="Launcher" type="Node2D" parent="AbilityUser" unique_id=849237996]
+unique_name_in_owner = true
+script = ExtResource("5_b7dvi")
+
+[connection signal="timeout" from="Movement/RepathTimer" to="Movement" method="_on_repath_timer"]

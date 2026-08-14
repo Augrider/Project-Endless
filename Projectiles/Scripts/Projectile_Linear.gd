@@ -1,28 +1,25 @@
 extends Projectile
 
-@export var drag:float
-
-var speedVector:Vector2
+@export var speed_curve:Curve
+var speed_current:float
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	translate(delta*speedVector)
-#	look_at(global_position+speedVector)
+	lifeLeftNormalized -= delta/lifetime
 	
-	speedVector -= drag*delta*speedVector.normalized()
-	speedVector += addedImpulse
-	speed=clamp(speed - drag*delta, 0, speed)
+	if(lifeLeftNormalized <= 0):
+		destroy()
 	
-	addedImpulse=Vector2.ZERO
+	speed_current = speed * speed_curve.sample(lifeLeftNormalized)
 	
-	if speed <= 0:
+	translate(delta*speed_current*transform.x)
+	
+	if speed_current <= 0:
 		destroy()
 
 
 func on_init()->void:
-	speedVector = speed*global_transform.x
-	
 	scale=Vector2.ZERO
 	
 	var tween = create_tween()
@@ -47,10 +44,10 @@ func _on_Area2D_area_entered(area: Area2D) -> void:
 	if parent is Projectile:
 		var projectile:Projectile = parent
 		
-		if !projectile.is_allied_with(allegiance):
-			var projectilePower = projectile.power
-			projectile.reduce_power(power)
-			reduce_power(projectilePower)
+		#if !projectile.is_allied_with(allegiance):
+		var projectilePower = projectile.power
+		projectile.reduce_power(power)
+		reduce_power(projectilePower)
 	
 	if area is Destructible:
 		var destructible:Destructible = area

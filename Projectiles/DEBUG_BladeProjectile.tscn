@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://cc3qec3nxmxbk"]
+
+[ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile_Linear.gd" id="1_huhrl"]
+[ext_resource type="Texture2D" uid="uid://yjncheaps7od" path="res://Projectiles/Sprites/Projectiles03.png" id="2_huhrl"]
+
+[sub_resource type="Curve" id="Curve_huhrl"]
+_data = [Vector2(0, 0), 0.0, 2.3021889, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CapsuleShape2D" id="1"]
+radius = 7.0
+height = 14.000014
+
+[node name="Projectile" type="CharacterBody2D" unique_id=163435155]
+collision_layer = 4
+collision_mask = 10
+script = ExtResource("1_huhrl")
+speed_curve = SubResource("Curve_huhrl")
+power = 20.0
+speed = 40.0
+lifetime = 1.5
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1520348288]
+texture = ExtResource("2_huhrl")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1636163517]
+collision_layer = 4
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=896404539]
+position = Vector2(-3, 0)
+rotation = 1.5708
+shape = SubResource("1")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

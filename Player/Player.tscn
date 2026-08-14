@@ -12,7 +12,12 @@
 [ext_resource type="Gradient" path="res://trail_gradient.tres" id="9"]
 [ext_resource type="Curve" path="res://trail_curve.tres" id="10"]
 [ext_resource type="Script" uid="uid://ddy71goj8dukq" path="res://Player/Scripts/PlayerFollowLookPoint.gd" id="10_dm7nj"]
-[ext_resource type="Texture2D" uid="uid://bikml8b2ina3g" path="res://Player/Sprites/Hands.png" id="15"]
+[ext_resource type="Script" uid="uid://bki8k0b2opu71" path="res://Weapons/Scripts/Weapons/Weapon_Melee.gd" id="13_3mea3"]
+[ext_resource type="Script" uid="uid://bgc1nh56aa1kq" path="res://Weapons/Scripts/Launchers/Launcher_Melee.gd" id="14_7v5gs"]
+[ext_resource type="Script" uid="uid://cjgc8oyk0fjsx" path="res://Weapons/Scripts/Launchers/Launcher_Offset.gd" id="15_8sa4y"]
+[ext_resource type="PackedScene" uid="uid://cc3qec3nxmxbk" path="res://Projectiles/DEBUG_BladeProjectile.tscn" id="16_8sa4y"]
+[ext_resource type="PackedScene" uid="uid://b23p4vycrt4cv" path="res://Projectiles/DEBUG_BladeSwipe.tscn" id="16_d7xyo"]
+[ext_resource type="Texture2D" uid="uid://cxtqhgkoy6c2y" path="res://Weapons/Sprites/Weapon01.png" id="18_3nb2p"]
 
 [sub_resource type="CircleShape2D" id="1"]
 radius = 8.0
@@ -57,9 +62,9 @@ shape = SubResource("2")
 script = ExtResource("5")
 body = NodePath("..")
 stopwatch = NodePath("Stopwatch")
-maxSpeed = 200.0
-accelerationDuration = 0.3
-decelerationDuration = 0.2
+maxSpeed = 100.0
+accelerationDuration = 0.1
+decelerationDuration = 0.15
 startCurve = SubResource("Curve_5wa8t")
 stopCurve = SubResource("Curve_p7tob")
 
@@ -68,33 +73,38 @@ script = ExtResource("8_5wa8t")
 autostart = true
 metadata/_custom_type_script = "uid://cfe6h0ncf0lgv"
 
-[node name="Hands" type="Node2D" parent="." unique_id=2124445995]
-position = Vector2(0, -5)
-
-[node name="PivotLeft" type="Node2D" parent="Hands" unique_id=1859785852]
-position = Vector2(-8, 0)
-script = ExtResource("10_dm7nj")
-durationMultiplier = 0.05
-
-[node name="Sprite2D" type="Sprite2D" parent="Hands/PivotLeft" unique_id=701064059]
-texture = ExtResource("15")
-
-[node name="PivotRight" type="Node2D" parent="Hands" unique_id=1973748679]
-position = Vector2(8, 0)
-script = ExtResource("10_dm7nj")
-durationMultiplier = 0.05
-
-[node name="Sprite2D" type="Sprite2D" parent="Hands/PivotRight" unique_id=1509277480]
-texture = ExtResource("15")
-flip_v = true
-
 [node name="Input Direction" type="Node2D" parent="." unique_id=1325068034]
 script = ExtResource("6")
 
 [node name="Input" type="Node" parent="." unique_id=464753604]
 script = ExtResource("4")
 
+[node name="Pivot" type="Node2D" parent="." unique_id=1351299915]
+script = ExtResource("10_dm7nj")
+_duration_multiplier = 1.0
+
+[node name="Weapon" type="Node2D" parent="Pivot" unique_id=1674022408 node_paths=PackedStringArray("launcher", "melee")]
+script = ExtResource("13_3mea3")
+launcher = NodePath("LauncherWave")
+melee = NodePath("LauncherMelee")
+projectile_prefab = ExtResource("16_8sa4y")
+fire_rate = 1.5
+metadata/_custom_type_script = "uid://b2rvjp80i6g2a"
+
+[node name="LauncherMelee" type="Node2D" parent="Pivot/Weapon" unique_id=764631596]
+position = Vector2(7, 0)
+script = ExtResource("14_7v5gs")
+projectile_melee = ExtResource("16_d7xyo")
+
+[node name="LauncherWave" type="Node2D" parent="Pivot/Weapon" unique_id=967019388]
+position = Vector2(6, 0)
+script = ExtResource("15_8sa4y")
+
+[node name="Sprite2D" type="Sprite2D" parent="Pivot/Weapon" unique_id=1342650404]
+texture = ExtResource("18_3nb2p")
+
 [connection signal="look_point_changed" from="Input Direction" to="AnimatedSprite2D" method="_on_input_direction_look_point_changed"]
-[connection signal="look_point_changed" from="Input Direction" to="Hands/PivotLeft" method="_on_input_direction_look_point_changed"]
-[connection signal="look_point_changed" from="Input Direction" to="Hands/PivotRight" method="_on_input_direction_look_point_changed"]
+[connection signal="look_point_changed" from="Input Direction" to="Pivot" method="aim_at"]
+[connection signal="fire_01_pressed" from="Input" to="Pivot/Weapon" method="press_trigger"]
+[connection signal="fire_01_released" from="Input" to="Pivot/Weapon" method="release_trigger"]
 [connection signal="movement_input_updated" from="Input" to="Movement" method="_on_input_movement_input_updated"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3skrewm6e71c"
-path="res://.godot/imported/Projectiles04.png-b1569b9c916e026c710a7e78d7c465fc.ctex"
+uid="uid://dign5vl2kht11"
+path="res://.godot/imported/character_test.png-745911ba111256b6944dcf74f2f69289.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Weapons/Sprites/Projectiles04.png"
-dest_files=["res://.godot/imported/Projectiles04.png-b1569b9c916e026c710a7e78d7c465fc.ctex"]
+source_file="res://Player/Sprites/character_test.png"
+dest_files=["res://.godot/imported/character_test.png-745911ba111256b6944dcf74f2f69289.ctex"]
 
 [params]
 

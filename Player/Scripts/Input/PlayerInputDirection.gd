@@ -19,7 +19,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event is InputEventMouseMotion:
 		process_mouse(event as InputEventMouseMotion)
 	
-	print_debug("Relative Look Point "+str(lookPointRelative))
+	#print_debug("Relative Look Point "+str(lookPointRelative))
 
 func _process(delta: float) -> void:
 	lookPoint = global_position + lookPointRelative
@@ -32,7 +32,7 @@ func process_joypad(event: InputEventJoypadMotion)->void:
 	lookPoint = joypadDirectionMultiplier * direction
 	lookPointRelative=lookPoint-global_position
 	
-	emit_signal("look_point_changed", lookPointRelative)
+	emit_signal("look_point_changed", lookPoint)
 
 func process_mouse(event: InputEventMouseMotion)->void:
 	#directionDevice=DirectionDevice.MOUSE
@@ -40,15 +40,4 @@ func process_mouse(event: InputEventMouseMotion)->void:
 	lookPoint = get_global_mouse_position()
 	lookPointRelative=lookPoint-global_position
 	
-	emit_signal("look_point_changed", lookPointRelative)
-
-
-#func get_target_angle()->float:
-	#return body.get_angle_to(cam.get_global_mouse_position())
-
-#func StepRotateTowards(targetAngle:float, delta:float)->void:
-	#var speed = rotationSpeed*delta
-	#var rotation = clamp(targetAngle, -speed, speed)
-	#
-##	// Smoothly rotate towards the target angle
-	#body.rotate(rotation)
+	emit_signal("look_point_changed", lookPoint)

@@ -4,20 +4,9 @@ signal weapon_fired
 
 #export var allegiance:Allegiance
 
-@export var launcherPath:NodePath
-@onready var launcher:WeaponLauncher = get_node(launcherPath)
-
-@export var cooldown:float
-@export var allegiance:int
-
-var spaceObject:SpaceObject
-var weaponData:WeaponData
-
+var cooldown:float = 0
 var triggerPressed = false
 
-
-func init(allegiance:int)->void:
-	self.allegiance = allegiance
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -29,12 +18,10 @@ func _process(delta: float) -> void:
 		cooldown=clamp(cooldown-delta, 0, cooldown)
 
 
-func press_trigger(object:SpaceObject, stats:WeaponData)->void:
+func press_trigger()->void:
 	if triggerPressed:
 		return
 	
-	weaponData=stats
-	spaceObject=object
 	triggerPressed = true
 	
 	on_trigger_pressed()
@@ -55,8 +42,5 @@ func on_trigger_released()->void:
 	pass
 
 
-func try_fire(stats:WeaponData)->bool:
+func try_fire()->bool:
 	return false
-
-func fire(stats:WeaponData)->void:
-	pass
