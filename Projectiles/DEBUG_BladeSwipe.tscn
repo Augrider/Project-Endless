@@ -1,15 +1,14 @@
 [gd_scene format=3 uid="uid://b23p4vycrt4cv"]
 
 [ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile_Linear.gd" id="1_nr5x5"]
-[ext_resource type="Texture2D" uid="uid://csqbeow5xd2am" path="res://Projectiles/Sprites/Projectiles02.png" id="2_fk6mn"]
+[ext_resource type="Texture2D" uid="uid://c56dm07wtv4ek" path="res://Player/Sprites/Player_Blade.png" id="2_nr5x5"]
 
 [sub_resource type="Curve" id="Curve_huhrl"]
 _data = [Vector2(0, 0), 0.0, 2.3021889, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CapsuleShape2D" id="1"]
-radius = 13.0
-height = 26.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nr5x5"]
+size = Vector2(18, 7)
 
 [node name="Projectile" type="CharacterBody2D" unique_id=163435155]
 collision_layer = 4
@@ -21,15 +20,17 @@ speed = 10.0
 lifetime = 0.3
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1520348288]
-texture = ExtResource("2_fk6mn")
+texture = ExtResource("2_nr5x5")
+region_enabled = true
+region_rect = Rect2(0, 16, 16, 16)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1636163517]
 collision_layer = 4
 collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=896404539]
-position = Vector2(-3, 0)
+position = Vector2(0.5, -1.9967556e-06)
 rotation = 1.5708
-shape = SubResource("1")
+shape = SubResource("RectangleShape2D_nr5x5")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

@@ -4,10 +4,10 @@ class_name Enemy extends CharacterBody2D
 
 
 func _ready() -> void:
-	pass
+	EnemyStorage.spawned.emit(self)
 
 func _exit_tree() -> void:
-	pass
+	EnemyStorage.despawned.emit(self)
 
 
 func follow_target(target:Node2D):

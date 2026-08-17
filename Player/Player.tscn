@@ -17,10 +17,10 @@
 [ext_resource type="Script" uid="uid://cjgc8oyk0fjsx" path="res://Weapons/Scripts/Launchers/Launcher_Offset.gd" id="15_8sa4y"]
 [ext_resource type="PackedScene" uid="uid://cc3qec3nxmxbk" path="res://Projectiles/DEBUG_BladeProjectile.tscn" id="16_8sa4y"]
 [ext_resource type="PackedScene" uid="uid://b23p4vycrt4cv" path="res://Projectiles/DEBUG_BladeSwipe.tscn" id="16_d7xyo"]
-[ext_resource type="Texture2D" uid="uid://cxtqhgkoy6c2y" path="res://Weapons/Sprites/Weapon01.png" id="18_3nb2p"]
+[ext_resource type="Texture2D" uid="uid://c56dm07wtv4ek" path="res://Player/Sprites/Player_Blade.png" id="18_3nb2p"]
 
 [sub_resource type="CircleShape2D" id="1"]
-radius = 8.0
+radius = 6.0
 
 [sub_resource type="CircleShape2D" id="2"]
 radius = 1.0
@@ -54,6 +54,7 @@ maxPointsCount = 100
 [node name="Health" type="Area2D" parent="." unique_id=1687765006]
 position = Vector2(1, 0)
 script = ExtResource("3")
+max_health = 999999999999
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Health" unique_id=1963525701]
 shape = SubResource("2")
@@ -101,7 +102,10 @@ position = Vector2(6, 0)
 script = ExtResource("15_8sa4y")
 
 [node name="Sprite2D" type="Sprite2D" parent="Pivot/Weapon" unique_id=1342650404]
+position = Vector2(3, 1)
 texture = ExtResource("18_3nb2p")
+region_enabled = true
+region_rect = Rect2(0, 32, 16, 16)
 
 [connection signal="look_point_changed" from="Input Direction" to="AnimatedSprite2D" method="_on_input_direction_look_point_changed"]
 [connection signal="look_point_changed" from="Input Direction" to="Pivot" method="aim_at"]

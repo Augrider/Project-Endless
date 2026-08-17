@@ -19,4 +19,7 @@ func is_allied_with(value:int)->bool:
 
 func apply_damage(value:float)->bool:
 	health = clamp(health - value, 0, max_health)
+	
+	if health == 0:
+		get_parent().queue_free()
 	return true

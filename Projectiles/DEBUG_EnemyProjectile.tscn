@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://du4576dwtntag"]
 
 [ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile_Linear.gd" id="1_xefyd"]
-[ext_resource type="Texture2D" uid="uid://bs7h2f3tal8q0" path="res://Projectiles/Sprites/Projectiles01.png" id="2_gueyc"]
+[ext_resource type="Texture2D" uid="uid://d2o5t7kqyp8ph" path="res://Enemies/Sprites/Enemy_Projectile.png" id="2_xefyd"]
 
 [sub_resource type="Curve" id="Curve_y1hf8"]
 _data = [Vector2(0, 0), 0.0, 5.8812203, 0, 0, Vector2(0.24890828, 0.8089888), 0.8576776, 0.8576776, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="CapsuleShape2D" id="1"]
-radius = 3.0
-height = 14.0
+radius = 2.0
+height = 6.0
 
 [node name="Projectile" type="CharacterBody2D" unique_id=163435155]
 collision_layer = 8
@@ -21,7 +21,8 @@ speed = 60.0
 lifetime = 3.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1520348288]
-texture = ExtResource("2_gueyc")
+position = Vector2(-1, 0)
+texture = ExtResource("2_xefyd")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1636163517]
 collision_layer = 8

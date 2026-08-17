@@ -52,6 +52,6 @@ func _on_Area2D_area_entered(area: Area2D) -> void:
 	if area is Destructible:
 		var destructible:Destructible = area
 		
-		if !destructible.is_allied_with(allegiance):
-			destructible.apply_damage(power)
-			destroy()
+		#if !destructible.is_allied_with(allegiance):
+		destructible.apply_damage(power)
+		destroy()
