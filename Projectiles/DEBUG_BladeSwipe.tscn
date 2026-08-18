@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile_Linear.gd" id="1_nr5x5"]
 [ext_resource type="Texture2D" uid="uid://c56dm07wtv4ek" path="res://Player/Sprites/Player_Blade.png" id="2_nr5x5"]
+[ext_resource type="Script" uid="uid://ckd8x1hw8ub5c" path="res://Projectiles/Scripts/Hit Detection/ProjectileHitbox.gd" id="3_fk6mn"]
+[ext_resource type="Script" uid="uid://cefbedj1l64rp" path="res://Projectiles/Scripts/Effects/Projectile_DealDamage.gd" id="4_avdvq"]
 
 [sub_resource type="Curve" id="Curve_huhrl"]
 _data = [Vector2(0, 0), 0.0, 2.3021889, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -27,10 +29,16 @@ region_rect = Rect2(0, 16, 16, 16)
 [node name="Area2D" type="Area2D" parent="." unique_id=1636163517]
 collision_layer = 4
 collision_mask = 10
+script = ExtResource("3_fk6mn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=896404539]
 position = Vector2(0.5, -1.9967556e-06)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_nr5x5")
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[node name="DamageEffect" type="Node2D" parent="." unique_id=698197405 node_paths=PackedStringArray("owner_projectile")]
+script = ExtResource("4_avdvq")
+owner_projectile = NodePath("..")
+
+[connection signal="enemy_hit" from="Area2D" to="DamageEffect" method="_on_enemy_hit"]
+[connection signal="projectile_hit" from="Area2D" to="DamageEffect" method="_on_projectile_hit"]

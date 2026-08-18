@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile_Linear.gd" id="1_xefyd"]
 [ext_resource type="Texture2D" uid="uid://d2o5t7kqyp8ph" path="res://Enemies/Sprites/Enemy_Projectile.png" id="2_xefyd"]
+[ext_resource type="Script" uid="uid://ckd8x1hw8ub5c" path="res://Projectiles/Scripts/Hit Detection/ProjectileHitbox.gd" id="3_he43r"]
+[ext_resource type="Script" uid="uid://cefbedj1l64rp" path="res://Projectiles/Scripts/Effects/Projectile_DealDamage.gd" id="4_77pso"]
 
 [sub_resource type="Curve" id="Curve_y1hf8"]
 _data = [Vector2(0, 0), 0.0, 5.8812203, 0, 0, Vector2(0.24890828, 0.8089888), 0.8576776, 0.8576776, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -27,9 +29,18 @@ texture = ExtResource("2_xefyd")
 [node name="Area2D" type="Area2D" parent="." unique_id=1636163517]
 collision_layer = 8
 collision_mask = 4
+script = ExtResource("3_he43r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=896404539]
 rotation = 1.5708
 shape = SubResource("1")
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[node name="DamageEffect" type="Node2D" parent="." unique_id=1865099451 node_paths=PackedStringArray("owner_projectile")]
+script = ExtResource("4_77pso")
+owner_projectile = NodePath("")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1558243646]
+rotation = 1.5708
+shape = SubResource("1")
+
+[connection signal="projectile_hit" from="Area2D" to="DamageEffect" method="_on_projectile_hit"]

@@ -23,6 +23,10 @@ func _process(delta: float) -> void:
 		destroy()
 
 
+func set_allegiance(allegiance:int):
+	self.allegiance = allegiance
+	#Change collision mask values
+
 func is_allied_with(value:int)->bool:
 	return allegiance==value
 
