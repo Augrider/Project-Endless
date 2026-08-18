@@ -5,7 +5,7 @@
 @abstract
 func any_spot_available()->bool
 @abstract
-func get_spots_available()->Dictionary[Vector2, int]
+func get_spots_available()->Array[int]
 
 @abstract
 func get_spot(index:int)->Vector2
@@ -16,14 +16,16 @@ func get_closest(position:Vector2)->int
 func append(enemy:Enemy)->Vector2
 @abstract
 func append_to_spot(enemy:Enemy, spot:int)->Vector2
-@abstract
-func get_spot_of(enemy:Enemy)->int
 
 @abstract
 func remove(enemy:Enemy)->void
 
 @abstract
+func get_spot_of(enemy:Enemy)->int
+@abstract
 func get_enemies()->Array[Enemy]
+@abstract
+func get_enemy(spot:int)->Enemy
 
 @abstract
 func count()->int

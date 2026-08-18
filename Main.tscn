@@ -29,13 +29,12 @@ outer_circle = NodePath("Circle_Outer")
 [node name="Circle_Inner" type="Node2D" parent="Environment" unique_id=1616828660]
 script = ExtResource("5_fos0i")
 radius = 70.0
-size = 27
+size = 19
 
 [node name="Circle_Outer" type="Node2D" parent="Environment" unique_id=360548864]
 script = ExtResource("5_fos0i")
-radius = 75.0
-offset = 0.5
-size = 28
+radius = 90.0
+size = 19
 
 [node name="Projectiles" type="Node2D" parent="Environment" unique_id=11947576]
 

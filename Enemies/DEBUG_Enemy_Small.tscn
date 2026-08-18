@@ -6,48 +6,26 @@
 [ext_resource type="Texture2D" uid="uid://djg08bicjgpam" path="res://Enemies/Sprites/Enemy.png" id="2_vkbag"]
 [ext_resource type="Script" uid="uid://4com5kf7gw2p" path="res://Enemies/Scripts/EnemyMovement.gd" id="3_b2fr2"]
 [ext_resource type="Script" uid="uid://cjgc8oyk0fjsx" path="res://Weapons/Scripts/Launchers/Launcher_Offset.gd" id="5_b7dvi"]
+[ext_resource type="Script" uid="uid://cm581hdrply5r" path="res://Enemies/Scripts/Abilities/DEBUG_Ability_Targeted.gd" id="7_5e8k3"]
 [ext_resource type="Script" uid="uid://kgm4y55dvs1r" path="res://Player/Scripts/PlayerHealth.gd" id="7_vx07x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b2fr2"]
-radius = 4.0
+radius = 7.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5e8k3"]
-radius = 4.0
+radius = 8.0
 
-[node name="DEBUG_Enemy_Small" type="CharacterBody2D" unique_id=1124543649]
+[node name="DEBUG_Enemy_Small" type="CharacterBody2D" unique_id=1124543649 node_paths=PackedStringArray("ability_targeted", "ability_spread", "ability_arena", "ability_chase")]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_s4o6d")
-projectile_prefab = ExtResource("2_kafru")
-
-[node name="Visuals" type="Sprite2D" parent="." unique_id=1924707109]
-unique_name_in_owner = true
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_vkbag")
-script = ExtResource("2_b2fr2")
-
-[node name="Movement" type="NavigationAgent2D" parent="." unique_id=2087549942 node_paths=PackedStringArray("body")]
-unique_name_in_owner = true
-path_desired_distance = 5.0
-avoidance_enabled = true
-radius = 5.0
-neighbor_distance = 50.0
-debug_enabled = true
-script = ExtResource("3_b2fr2")
-body = NodePath("..")
-
-[node name="RepathTimer" type="Timer" parent="Movement" unique_id=616442296]
-wait_time = 0.6
-autostart = true
+ability_targeted = NodePath("Ability_Targeted")
+ability_spread = NodePath("Ability_Targeted")
+ability_arena = NodePath("Ability_Targeted")
+ability_chase = NodePath("Ability_Targeted")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1126737213]
 shape = SubResource("CircleShape2D_b2fr2")
-
-[node name="AbilityUser" type="Node2D" parent="." unique_id=242422743]
-
-[node name="Launcher" type="Node2D" parent="AbilityUser" unique_id=849237996]
-unique_name_in_owner = true
-script = ExtResource("5_b7dvi")
 
 [node name="Health" type="Area2D" parent="." unique_id=1712348552]
 position = Vector2(1, 0)
@@ -58,5 +36,33 @@ script = ExtResource("7_vx07x")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Health" unique_id=726813179]
 position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_5e8k3")
+
+[node name="Visuals" type="Sprite2D" parent="." unique_id=1924707109]
+unique_name_in_owner = true
+texture = ExtResource("2_vkbag")
+script = ExtResource("2_b2fr2")
+
+[node name="Movement" type="NavigationAgent2D" parent="." unique_id=2087549942 node_paths=PackedStringArray("body")]
+unique_name_in_owner = true
+path_desired_distance = 5.0
+avoidance_enabled = true
+neighbor_distance = 50.0
+debug_enabled = true
+script = ExtResource("3_b2fr2")
+body = NodePath("..")
+
+[node name="RepathTimer" type="Timer" parent="Movement" unique_id=616442296]
+wait_time = 0.6
+autostart = true
+
+[node name="AbilityUser" type="Node2D" parent="." unique_id=242422743]
+
+[node name="Launcher" type="Node2D" parent="AbilityUser" unique_id=849237996]
+unique_name_in_owner = true
+script = ExtResource("5_b7dvi")
+
+[node name="Ability_Targeted" type="Node2D" parent="." unique_id=1181017405]
+script = ExtResource("7_5e8k3")
+projectile_prefab = ExtResource("2_kafru")
 
 [connection signal="timeout" from="Movement/RepathTimer" to="Movement" method="_on_repath_timer"]

@@ -7,104 +7,113 @@ extends Node2D
 @export var inner_circle: Formation2D
 @export var outer_circle: Formation2D
 
-#@export var cooldown:Timer
-
-var _enemies:Array[Enemy]
-#var _active_enemies:Array[Enemy]
+var wave_ready:bool=false
 
 
 func _ready() -> void:
 	EnemyStorage.despawned.connect(_on_enemy_despawned)
 
 
-func spawn_wave() -> void:
-	for i in inner_circle.size:
-		var enemy:Enemy = EnemyStorage.request_spawn(enemy_prefab)
-		
-		enemy.global_position = inner_circle.append_to_spot(enemy, i)
-		enemy.look_at_target(player)
-		
-		_enemies.append(enemy)
-		#_active_enemies.append(enemy)
-	
-	for i in outer_circle.size:
-		var enemy:Enemy = EnemyStorage.request_spawn(enemy_prefab)
-
-		enemy.global_position = outer_circle.append_to_spot(enemy, i)
-		enemy.look_at_target(player)
-		
-		_enemies.append(enemy)
-
-
 func _on_spawn_timer() -> void:
 	#print_debug("Sending units")
-	spawn_wave()
+	for i in inner_circle.size:
+		spawn_new(enemy_prefab, inner_circle, i)
 	
-	#for enemy:Enemy in _enemies:
-		#enemy.go_to_target(player.global_position)
+	for i in outer_circle.size:
+		spawn_new(enemy_prefab, outer_circle, i)
+	
+	wave_ready=true
+
+func _process(delta:float) -> void:
+	#Look at enemies at circles, do rearrangement
+	
+	if !wave_ready:
+		return
+	
+	while inner_circle.any_spot_available() && _move_to_front():
+		pass
+	
+	#Spawn new enemies
+	for spot in outer_circle.get_spots_available():
+		spawn_new(enemy_prefab, outer_circle, spot)
 
 
 func _on_enemy_despawned(enemy:Enemy):
-	_enemies.erase(enemy)
-	var active_enemies := inner_circle.get_enemies()
-	var outer_enemies := outer_circle.get_enemies()
-	
-	# enemy is not in active - do nothing for now
-	if !active_enemies.has(enemy):
-		return
-	
-	var spot = inner_circle.get_spot_of(enemy)
-	
 	inner_circle.remove(enemy)
-	var new_enemy := _get_closest(enemy, outer_enemies)
-	
-	if new_enemy == enemy:
-		return
-	
-	outer_circle.remove(new_enemy)
-	var position = inner_circle.append_to_spot(new_enemy, spot)
-	
-	new_enemy.go_to_target(position)
-	
-	#Spawn new at the end
+	outer_circle.remove(enemy)
 
 func _on_wave_attack_timer() -> void:
-	var _active_enemies := inner_circle.get_enemies()
-	for enemy in _active_enemies:
+	#Need to get attacker from currently present enemies
+	#Get enemy array before each attack
+	#Alternatively, give tasks without wait, let enemies handle time themselves
+	var enemy:Enemy
+	
+	for i in inner_circle.size:
+		enemy = inner_circle.get_enemy(i)
+		
 		if enemy == null:
 			continue
 		
-		enemy.stop_moving()
-		enemy.perform_ability(player)
-		await get_tree().create_timer(0.2).timeout
+		enemy.perform_ability_targeted(1, 2)
+		
+		await get_tree().create_timer(0.3).timeout
 	
+	#Select random enemy
+	var _active_enemies := inner_circle.get_enemies()
 	_active_enemies.shuffle()
-	var enemy = _active_enemies[0]
+	enemy = _active_enemies[0]
+	var spot_position := enemy.global_position
 	
 	if enemy == null:
 		return
-
+	
 	enemy.follow_target(player)
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(2).timeout
 	
-	for i in randi() % 6 + 5:
-		enemy.perform_ability(player)
-		await get_tree().create_timer(0.4).timeout
+	if enemy == null:
+		return
+	
+	await enemy.perform_ability_chase(3, 5)
+	await get_tree().create_timer(0.2).timeout
+	
+	enemy.go_to_target(spot_position)
 
 
-func _get_closest(target:Enemy, candidates:Array[Enemy])->Enemy:
+func _get_closest(target:Vector2, candidates:Array[Enemy])->Enemy:
 	if candidates.size()<=0:
-		return target
+		return null
 	
-	var dis = target.position.distance_squared_to(candidates[0].position)
+	var dis = target.distance_squared_to(candidates[0].position)
 	var closest = candidates[0]
 	
 	var temp_dis
 	
 	for n in candidates:
-		temp_dis = target.position.distance_squared_to(n.position)
+		temp_dis = target.distance_squared_to(n.position)
 		if temp_dis < dis:
 			dis = temp_dis
 			closest = n
 	
 	return closest
+
+func _move_to_front() -> bool:
+	var outer_enemies := outer_circle.get_enemies()
+	var free_spot:int = inner_circle.get_spots_available()[0]
+	
+	var new_enemy := _get_closest(inner_circle.get_spot(free_spot), outer_enemies)
+	
+	if new_enemy == null:
+		return false
+	
+	outer_circle.remove(new_enemy)
+	var target = inner_circle.append_to_spot(new_enemy, free_spot)
+	
+	new_enemy.go_to_target(target)
+	
+	return true
+
+func spawn_new(enemy_prefab:PackedScene, formation:Formation2D, spot:int):
+		var enemy:Enemy = EnemyStorage.request_spawn(enemy_prefab)
+
+		enemy.global_position = formation.append_to_spot(enemy, spot)
+		enemy.look_at_target(player)

@@ -1,6 +1,9 @@
 class_name Enemy extends CharacterBody2D
 
-@export var projectile_prefab: PackedScene
+@export var ability_targeted:EnemyAbility
+@export var ability_spread:EnemyAbility
+@export var ability_arena:EnemyAbility
+@export var ability_chase:EnemyAbility
 
 
 func _ready() -> void:
@@ -32,10 +35,22 @@ func stop_looking():
 
 #TODO: Some way to get a target. Give all valid targets as struct?
 
-func perform_ability(target:Node2D):
-	%Launcher.look_at(target.global_position)
-	
-	var projectiles = %Launcher.spawn(projectile_prefab)
-	
-	for projectile:Projectile in projectiles:
-		projectile.init()
+#Abilities for units:
+#	Formation attack. Two modes: spray and targeted
+#	Chase attack (change behavior and go to arena and actively engage player)
+#	Arena attack (shoot in the middle of arena for a duration. May be useless)
+#Other abilities are solely part of each enemy and activate by conditions
+#Bosses can operate under chase attack, having entire AI with patterns hidden inside
+#Add stop current ability
+
+func perform_ability_targeted(duration:float, intensity:=1.0):
+	await ability_targeted.perform(self, duration, intensity)
+
+func perform_ability_spray(duration:float, intensity:=1.0):
+	await ability_spread.perform(self, duration, intensity)
+
+func perform_ability_arena(duration:float, intensity:=1.0):
+	await ability_arena.perform(self, duration, intensity)
+
+func perform_ability_chase(duration:float, intensity:=1.0):
+	await ability_chase.perform(self, duration, intensity)

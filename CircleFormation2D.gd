@@ -11,12 +11,14 @@ func any_spot_available()->bool:
 			return true
 	return false
 
-func get_spots_available()->Dictionary[Vector2, int]:
-	var dict:Dictionary[Vector2, int]
+func get_spots_available()->Array[int]:
+	var result:Array[int]
+	
 	for i in size:
 		if !_enemies.has(i):
-			dict.set(get_spot(i), i)
-	return dict
+			result.append(i)
+	
+	return result
 
 
 func get_spot(index:int)->Vector2:
@@ -37,7 +39,6 @@ func get_closest(position:Vector2)->int:
 	return closest_spot
 
 
-
 func append(enemy:Enemy)->Vector2:
 	for i in size:
 		if !_enemies.has(i):
@@ -48,17 +49,6 @@ func append(enemy:Enemy)->Vector2:
 func append_to_spot(enemy:Enemy, spot:int)->Vector2:
 	_enemies.set(spot, enemy)
 	return get_spot(spot)
-
-
-func get_spot_of(enemy:Enemy)->int:
-	var key = -1
-	
-	for i in _enemies:
-		if _enemies[i] == enemy:
-			key = i
-			break
-	
-	return key
 
 
 func remove(enemy:Enemy)->void:
@@ -72,8 +62,25 @@ func remove(enemy:Enemy)->void:
 		_enemies.erase(key)
 
 
+func get_spot_of(enemy:Enemy)->int:
+	var key = -1
+	
+	for i in _enemies:
+		if _enemies[i] == enemy:
+			key = i
+			break
+	
+	return key
+
 func get_enemies()->Array[Enemy]:
 	return _enemies.values()
+
+func get_enemy(spot:int)->Enemy:
+	if _enemies.has(spot):
+		return _enemies[spot]
+	
+	return null
+
 
 func count()->int:
 	return _enemies.size()
