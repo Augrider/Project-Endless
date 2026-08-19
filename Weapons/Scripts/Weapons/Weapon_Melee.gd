@@ -4,6 +4,7 @@ extends Weapon
 @export var melee:Launcher_Melee
 
 @export var projectile_prefab:PackedScene
+@export var projectile_melee_prefab:PackedScene
 
 @export var fire_rate:float = 3
 
@@ -33,9 +34,11 @@ func fire()->void:
 	#If something collided with blade (works as a projectile) - deal damage
 	#return
 	#Projectile modifiers applied only to shot
-	melee.perform(1/fire_rate)
-	
 	var projectiles:Array[Projectile]=launcher.spawn(projectile_prefab, 1)
-
+	var projectiles_melee:Array[Projectile]=melee.spawn(projectile_melee_prefab, 1)
+	
 	for projectile in projectiles:
-		projectile.init()
+		projectile.init(0)
+	
+	for projectile in projectiles_melee:
+		projectile.init(0)

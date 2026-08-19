@@ -16,26 +16,30 @@ size = Vector2(18, 7)
 
 [node name="Projectile" type="CharacterBody2D" unique_id=163435155]
 collision_layer = 4
-collision_mask = 10
+collision_mask = 0
 script = ExtResource("1_nr5x5")
 speed_curve = SubResource("Curve_huhrl")
-power = 20.0
+power = 60.0
 speed = 0.2
-lifetime = 0.3
+lifetime = 3.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1520348288]
 texture = ExtResource("2_nr5x5")
 region_enabled = true
 region_rect = Rect2(0, 16, 16, 16)
 
-[node name="Area2D" type="Area2D" parent="." unique_id=1636163517]
+[node name="Hitbox" type="Area2D" parent="." unique_id=1636163517 node_paths=PackedStringArray("owner_projectile")]
+unique_name_in_owner = true
 collision_layer = 4
-collision_mask = 10
+collision_mask = 15
+monitoring = false
 script = ExtResource("3_fk6mn")
+owner_projectile = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=896404539]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=896404539]
 position = Vector2(0.5, -1.9967556e-06)
 rotation = 1.5708
+scale = Vector2(1.05, 1.05)
 shape = SubResource("RectangleShape2D_nr5x5")
 
 [node name="DamageEffect" type="Node2D" parent="." unique_id=698197405 node_paths=PackedStringArray("owner_projectile")]
@@ -50,5 +54,10 @@ owner_projectile = NodePath("..")
 script = ExtResource("6_hwvvl")
 owner_projectile = NodePath("..")
 
-[connection signal="enemy_hit" from="Area2D" to="DamageEffect" method="_on_enemy_hit"]
-[connection signal="projectile_hit" from="Area2D" to="DeflectEffect" method="_on_projectile_hit"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=873116227]
+position = Vector2(0.5, -1.9967556e-06)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_nr5x5")
+
+[connection signal="opponent_hit" from="Hitbox" to="DamageEffect" method="_on_unit_hit"]
+[connection signal="opponent_projectile_hit" from="Hitbox" to="DeflectEffect" method="_on_opponent_projectile_hit"]

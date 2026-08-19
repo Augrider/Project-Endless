@@ -121,6 +121,7 @@ func _move_to_front() -> bool:
 
 func spawn_new(enemy_prefab:PackedScene, formation:Formation2D, spot:int):
 		var enemy:Enemy = EnemyStorage.request_spawn(enemy_prefab)
-
+		
+		enemy.set_allegiance(1)
 		enemy.global_position = formation.append_to_spot(enemy, spot)
 		enemy.look_at_target(player)

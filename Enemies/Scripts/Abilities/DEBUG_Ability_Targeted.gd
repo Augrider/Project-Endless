@@ -19,6 +19,6 @@ func perform(enemy:Enemy, duration:float, intensity:float = 1):
 		var projectiles = %Launcher.spawn(projectile_prefab)
 		
 		for projectile:Projectile in projectiles:
-			projectile.init()
+			projectile.init(enemy.allegiance)
 		
 		await get_tree().create_timer(1/(fire_rate*self.intensity)).timeout

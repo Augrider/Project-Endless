@@ -1,4 +1,4 @@
-class_name Enemy extends CharacterBody2D
+class_name Enemy extends Unit
 
 enum SizeClass { SMALL=1, MEDIUM=2, BIG=3, LARGE=4 }
 
@@ -15,6 +15,10 @@ func _ready() -> void:
 
 func _exit_tree() -> void:
 	EnemyStorage.despawned.emit(self)
+
+
+func deal_damage(value:float):
+	queue_free()
 
 
 func follow_target(target:Node2D):

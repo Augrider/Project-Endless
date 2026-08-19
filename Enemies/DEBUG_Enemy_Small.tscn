@@ -17,7 +17,7 @@ radius = 8.0
 
 [node name="DEBUG_Enemy_Small" type="CharacterBody2D" unique_id=1124543649 node_paths=PackedStringArray("ability_targeted", "ability_spread", "ability_arena", "ability_chase")]
 collision_layer = 2
-collision_mask = 7
+collision_mask = 3
 script = ExtResource("1_s4o6d")
 ability_targeted = NodePath("Ability_Targeted")
 ability_spread = NodePath("Ability_Targeted")
@@ -30,7 +30,7 @@ shape = SubResource("CircleShape2D_b2fr2")
 [node name="Health" type="Area2D" parent="." unique_id=1712348552]
 position = Vector2(1, 0)
 collision_layer = 2
-collision_mask = 7
+collision_mask = 15
 script = ExtResource("7_vx07x")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Health" unique_id=726813179]

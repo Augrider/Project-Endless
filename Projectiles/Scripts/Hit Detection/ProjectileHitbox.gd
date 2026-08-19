@@ -1,13 +1,17 @@
 extends Area2D
 
-signal player_hit(player: Player)
-signal enemy_hit(enemy: Enemy)
+signal friendly_hit(hit:Unit)
+signal opponent_hit(hit:Unit)
 
-signal projectile_hit(projectile: Projectile)
+signal friendly_projectile_hit(projectile: Projectile)
+signal opponent_projectile_hit(projectile: Projectile)
 
 #TODO: Wall, ground if needed
 
-signal any_hit(object: Node2D)
+#signal object_hit(object: Node2D)
+
+
+@export var owner_projectile:Projectile
 
 
 # Called when the node enters the scene tree for the first time.
@@ -16,11 +20,21 @@ func _ready() -> void:
 
 
 func _on_body_entered(body: Node2D):
-	if body is Player:
-		player_hit.emit(body)
-	elif body is Enemy:
-		enemy_hit.emit(body)
-	elif body is Projectile:
-		projectile_hit.emit(body)
+	var allied := false
 	
-	any_hit.emit(body)
+	if body is AlliedNode2D:
+		allied = body.is_allied_with(owner_projectile)
+	
+	if body is Unit:
+		if allied:
+			friendly_hit.emit(body)
+		else:
+			opponent_hit.emit(body)
+		
+	elif body is Projectile:
+		if allied:
+			friendly_projectile_hit.emit(body)
+		else:
+			opponent_projectile_hit.emit(body)
+	
+	#any_hit.emit(body)

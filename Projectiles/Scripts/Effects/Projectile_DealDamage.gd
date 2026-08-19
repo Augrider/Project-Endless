@@ -5,15 +5,10 @@ extends Node
 @export var owner_projectile:Projectile
 
 
-func _on_projectile_hit(projectile: Projectile) -> void:
-	print_debug("Projectile collided with projectile")
+func _on_opponent_projectile_hit(projectile: Projectile) -> void:
 	projectile.reduce_power(owner_projectile.power)
 	#owner_projectile.reduce_power(projectile.power)
 
-func _on_player_hit(player:Player):
-	player.deal_damage()
-	owner_projectile.destroy()
-
-func _on_enemy_hit(enemy:Enemy):
-	enemy.queue_free()
+func _on_unit_hit(unit:Unit):
+	unit.deal_damage(owner_projectile.power)
 	owner_projectile.destroy()

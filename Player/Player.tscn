@@ -35,6 +35,7 @@ point_count = 2
 
 [node name="Player" type="CharacterBody2D" unique_id=1896151399]
 light_mask = 4
+collision_mask = 3
 script = ExtResource("2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1015723415]
@@ -53,6 +54,7 @@ maxPointsCount = 100
 
 [node name="Health" type="Area2D" parent="." unique_id=1687765006]
 position = Vector2(1, 0)
+monitoring = false
 script = ExtResource("3")
 max_health = 999999999999
 
@@ -86,18 +88,18 @@ _duration_multiplier = 1.0
 
 [node name="Weapon" type="Node2D" parent="Pivot" unique_id=1674022408 node_paths=PackedStringArray("launcher", "melee")]
 script = ExtResource("13_3mea3")
-launcher = NodePath("LauncherWave")
+launcher = NodePath("LauncherProjectile")
 melee = NodePath("LauncherMelee")
 projectile_prefab = ExtResource("16_8sa4y")
+projectile_melee_prefab = ExtResource("16_d7xyo")
 fire_rate = 1.5
 metadata/_custom_type_script = "uid://b2rvjp80i6g2a"
 
 [node name="LauncherMelee" type="Node2D" parent="Pivot/Weapon" unique_id=764631596]
 position = Vector2(7, 0)
 script = ExtResource("14_7v5gs")
-projectile_melee = ExtResource("16_d7xyo")
 
-[node name="LauncherWave" type="Node2D" parent="Pivot/Weapon" unique_id=967019388]
+[node name="LauncherProjectile" type="Node2D" parent="Pivot/Weapon" unique_id=967019388]
 position = Vector2(6, 0)
 script = ExtResource("15_8sa4y")
 

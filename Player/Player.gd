@@ -1,4 +1,4 @@
-class_name Player extends Node2D
+class_name Player extends Unit
 
 # Handles input from top, health, weapons, movement...
 # Does Godot allow good separation?
@@ -18,6 +18,10 @@ func _ready() -> void:
 
 func _exit_tree() -> void:
 	Players.remove_player(self)
+
+func deal_damage(value:float):
+	pass
+
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:

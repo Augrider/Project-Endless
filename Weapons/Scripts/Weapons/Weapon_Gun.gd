@@ -31,4 +31,4 @@ func fire()->void:
 	var projectiles:Array[Projectile]=launcher.spawn(projectile_prefab, 1)
 
 	for projectile in projectiles:
-		projectile.init()
+		projectile.init(0)
