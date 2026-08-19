@@ -7,7 +7,8 @@ extends Node2D
 @export var inner_circle: Formation2D
 @export var outer_circle: Formation2D
 
-var wave_ready:bool=false
+var wave_ready:bool = false
+var someone_died:bool = false
 
 
 func _ready() -> void:
@@ -27,7 +28,7 @@ func _on_spawn_timer() -> void:
 func _process(delta:float) -> void:
 	#Look at enemies at circles, do rearrangement
 	
-	if !wave_ready:
+	if !wave_ready || !someone_died:
 		return
 	
 	while inner_circle.any_spot_available() && _move_to_front():
@@ -36,11 +37,15 @@ func _process(delta:float) -> void:
 	#Spawn new enemies
 	for spot in outer_circle.get_spots_available():
 		spawn_new(enemy_prefab, outer_circle, spot)
+	
+	someone_died = false
 
 
 func _on_enemy_despawned(enemy:Enemy):
 	inner_circle.remove(enemy)
 	outer_circle.remove(enemy)
+	
+	someone_died = true
 
 func _on_wave_attack_timer() -> void:
 	#Need to get attacker from currently present enemies
@@ -80,8 +85,8 @@ func _on_wave_attack_timer() -> void:
 
 
 func _get_closest(target:Vector2, candidates:Array[Enemy])->Enemy:
-	if candidates.size()<=0:
-		return null
+	#if candidates.size()<=0:
+		#return null
 	
 	var dis = target.distance_squared_to(candidates[0].position)
 	var closest = candidates[0]
@@ -97,9 +102,11 @@ func _get_closest(target:Vector2, candidates:Array[Enemy])->Enemy:
 	return closest
 
 func _move_to_front() -> bool:
-	var outer_enemies := outer_circle.get_enemies()
-	var free_spot:int = inner_circle.get_spots_available()[0]
+	if outer_circle.count()<=0:
+		return false
 	
+	var free_spot:int = inner_circle.get_spots_available()[0]
+	var outer_enemies := outer_circle.get_enemies()
 	var new_enemy := _get_closest(inner_circle.get_spot(free_spot), outer_enemies)
 	
 	if new_enemy == null:

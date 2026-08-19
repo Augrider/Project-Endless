@@ -19,6 +19,7 @@ func reset_container():
 
 func request_spawn(enemy_prefab:PackedScene) -> Enemy:
 	var enemy:Enemy = enemy_prefab.instantiate()
+	enemy.global_position = Vector2.ONE*10000
 	
 	if(container_set):
 		container.add_child(enemy)

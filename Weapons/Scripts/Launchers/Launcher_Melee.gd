@@ -21,6 +21,7 @@ func spawn(projectile_prefab:PackedScene, amount:int=1)->Array[Projectile]:
 		
 		add_child(projectile)
 		projectile.global_position = global_position
+		projectile.rotation = 0
 		
 		result.append(projectile)
 	

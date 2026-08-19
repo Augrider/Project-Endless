@@ -1,13 +1,13 @@
 class_name Enemy extends CharacterBody2D
 
-enum SIZE_CLASS { SMALL=1, MEDIUM=2, BIG=3, LARGE=4 }
+enum SizeClass { SMALL=1, MEDIUM=2, BIG=3, LARGE=4 }
 
 @export var ability_targeted:EnemyAbility
 @export var ability_spread:EnemyAbility
 @export var ability_arena:EnemyAbility
 @export var ability_chase:EnemyAbility
 
-@export var size_class: SIZE_CLASS
+@export var size_class: SizeClass
 
 
 func _ready() -> void:

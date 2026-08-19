@@ -14,12 +14,12 @@ func _on_enemy_hit(enemy:Enemy):
 	var player = Players.get_player()
 	# Enemy push is based on size
 	# If enemy is not bigger than big, then push enemy
-	if enemy.size_class <= Enemy.SIZE_CLASS.BIG:
+	if enemy.size_class <= Enemy.SizeClass.BIG:
 		push(enemy, player.global_position, owner_projectile.power/enemy.size_class)
 	# If enemy is bigger than small, then push player
-	if enemy.size_class > Enemy.SIZE_CLASS.SMALL:
+	if enemy.size_class > Enemy.SizeClass.SMALL:
 		push(player, enemy.global_position, owner_projectile.power*enemy.size_class/2)
-	
+
 
 
 func push(node:Node2D, origin: Vector2, power: float):
