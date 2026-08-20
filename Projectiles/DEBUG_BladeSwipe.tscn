@@ -21,7 +21,7 @@ script = ExtResource("1_nr5x5")
 speed_curve = SubResource("Curve_huhrl")
 power = 60.0
 speed = 0.2
-lifetime = 3.0
+lifetime = 0.5
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1520348288]
 texture = ExtResource("2_nr5x5")
@@ -60,4 +60,5 @@ rotation = 1.5708
 shape = SubResource("RectangleShape2D_nr5x5")
 
 [connection signal="opponent_hit" from="Hitbox" to="DamageEffect" method="_on_unit_hit"]
+[connection signal="opponent_hit" from="Hitbox" to="PushEffect" method="_on_unit_hit"]
 [connection signal="opponent_projectile_hit" from="Hitbox" to="DeflectEffect" method="_on_opponent_projectile_hit"]

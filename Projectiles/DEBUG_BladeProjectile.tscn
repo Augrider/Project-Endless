@@ -20,7 +20,7 @@ script = ExtResource("1_huhrl")
 speed_curve = SubResource("Curve_huhrl")
 power = 10.0
 speed = 40.0
-lifetime = 0.1
+lifetime = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1520348288]
 texture = ExtResource("2_huhrl")

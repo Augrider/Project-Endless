@@ -22,6 +22,8 @@ func _exit_tree() -> void:
 func deal_damage(value:float):
 	pass
 
+func set_pushed(impulse:Vector2):
+	pass
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:

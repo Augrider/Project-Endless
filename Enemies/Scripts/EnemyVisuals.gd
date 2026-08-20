@@ -1,6 +1,7 @@
 extends Sprite2D
 
 var _is_looking: bool = false
+
 var _look_target: Node2D
 var _look_position: Vector2
 

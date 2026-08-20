@@ -2,3 +2,6 @@
 
 @abstract
 func deal_damage(value:float)
+
+@abstract
+func set_pushed(impulse:Vector2)

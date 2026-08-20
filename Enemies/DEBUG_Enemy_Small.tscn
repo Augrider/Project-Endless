@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://kgm4y55dvs1r" path="res://Player/Scripts/PlayerHealth.gd" id="7_vx07x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b2fr2"]
-radius = 7.0
+radius = 6.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5e8k3"]
 radius = 8.0
@@ -23,6 +23,7 @@ ability_targeted = NodePath("Ability_Targeted")
 ability_spread = NodePath("Ability_Targeted")
 ability_arena = NodePath("Ability_Targeted")
 ability_chase = NodePath("Ability_Targeted")
+size_class = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1126737213]
 shape = SubResource("CircleShape2D_b2fr2")
@@ -46,6 +47,7 @@ script = ExtResource("2_b2fr2")
 unique_name_in_owner = true
 path_desired_distance = 5.0
 avoidance_enabled = true
+radius = 8.0
 neighbor_distance = 50.0
 debug_enabled = true
 script = ExtResource("3_b2fr2")

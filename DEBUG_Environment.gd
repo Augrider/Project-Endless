@@ -124,4 +124,5 @@ func spawn_new(enemy_prefab:PackedScene, formation:Formation2D, spot:int):
 		
 		enemy.set_allegiance(1)
 		enemy.global_position = formation.append_to_spot(enemy, spot)
+		enemy.go_to_target(enemy.global_position)
 		enemy.look_at_target(player)

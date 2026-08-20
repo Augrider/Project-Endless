@@ -21,7 +21,7 @@ func try_fire()->bool:
 	if(cooldown > 0):
 		return false
 	
-	print_debug("Firing!")
+	#print_debug("Firing!")
 	fire()
 	
 	cooldown=1/fire_rate

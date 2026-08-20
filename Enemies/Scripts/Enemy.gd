@@ -20,6 +20,11 @@ func _exit_tree() -> void:
 func deal_damage(value:float):
 	queue_free()
 
+func set_pushed(impulse:Vector2):
+	#Set impulse to movement, it will handle movement
+	#Movement will provide signals for push
+	%Movement.set_impulse(impulse)
+
 
 func follow_target(target:Node2D):
 	%Movement.follow_target(target)
