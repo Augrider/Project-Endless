@@ -9,8 +9,12 @@ enum SizeClass { SMALL=1, MEDIUM=2, BIG=3, LARGE=4 }
 
 @export var size_class: SizeClass
 
+@export var max_health:float = 10.0
+var health:float
+
 
 func _ready() -> void:
+	health = max_health
 	EnemyStorage.spawned.emit(self)
 
 func _exit_tree() -> void:
@@ -18,7 +22,9 @@ func _exit_tree() -> void:
 
 
 func deal_damage(value:float):
-	queue_free()
+	health -= value
+	if health < 0:
+		queue_free()
 
 func set_pushed(impulse:Vector2):
 	#Set impulse to movement, it will handle movement

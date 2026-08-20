@@ -30,7 +30,7 @@ func destroy()->void:
 	#power=0
 	#TODO: disable ability to trigger destroy again while it performs
 	#also disable area 2D
-	%Hitbox.monitoring = false
+	%Hitbox.set_deferred("monitoring", false)
 	
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2.ZERO, 0.1)
