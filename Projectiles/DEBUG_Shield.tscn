@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://bnn1d4xgh1gd5"]
+
+[ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile Types/Projectile_Normal.gd" id="1_kj8ca"]
+[ext_resource type="Texture2D" uid="uid://c56dm07wtv4ek" path="res://Player/Sprites/Player_Blade.png" id="2_wxss1"]
+[ext_resource type="Script" uid="uid://ckd8x1hw8ub5c" path="res://Projectiles/Scripts/Hit Detection/ProjectileHitbox.gd" id="3_18qr2"]
+[ext_resource type="Script" uid="uid://d3cs43d2o7507" path="res://Projectiles/Scripts/Effects/Projectile_Deflect.gd" id="4_cvoup"]
+
+[sub_resource type="Curve" id="Curve_huhrl"]
+_data = [Vector2(0, 0), 0.0, 2.3021889, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nr5x5"]
+size = Vector2(18, 7)
+
+[node name="Projectile" type="CharacterBody2D" unique_id=163435155]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_kj8ca")
+base_power = 200.0
+base_lifetime = 1.0
+speed_curve = SubResource("Curve_huhrl")
+destroy_at_stop = false
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1520348288]
+texture = ExtResource("2_wxss1")
+region_enabled = true
+region_rect = Rect2(0, 16, 16, 16)
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1636163517 node_paths=PackedStringArray("owner_projectile")]
+unique_name_in_owner = true
+collision_layer = 4
+collision_mask = 15
+monitoring = false
+script = ExtResource("3_18qr2")
+owner_projectile = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=896404539]
+position = Vector2(0.5, -1.9967556e-06)
+rotation = 1.5708
+scale = Vector2(1.05, 1.05)
+shape = SubResource("RectangleShape2D_nr5x5")
+
+[node name="DeflectEffect" type="Node2D" parent="." unique_id=56327232 node_paths=PackedStringArray("owner_projectile")]
+script = ExtResource("4_cvoup")
+owner_projectile = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=873116227]
+position = Vector2(0.5, -1.9967556e-06)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_nr5x5")
+
+[connection signal="opponent_projectile_hit" from="Hitbox" to="DeflectEffect" method="_on_opponent_projectile_hit"]

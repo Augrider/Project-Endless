@@ -1,5 +1,7 @@
-class_name WeaponLauncher extends Node2D
+@abstract class_name WeaponLauncher extends Node2D
 
-
-func spawn(projectile_prefab:PackedScene, amount:int=1)->Array[Projectile]:
-	return Array()
+#@abstract
+#func spawn(projectile_prefab:PackedScene, amount:int=1)->Array[Projectile]
+#
+@abstract
+func spawn_one(projectile_prefab:PackedScene) -> Projectile

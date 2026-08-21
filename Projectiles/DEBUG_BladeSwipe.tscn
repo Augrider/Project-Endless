@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://b23p4vycrt4cv"]
 
-[ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile_Linear.gd" id="1_nr5x5"]
+[ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile Types/Projectile_Normal.gd" id="1_nr5x5"]
 [ext_resource type="Texture2D" uid="uid://c56dm07wtv4ek" path="res://Player/Sprites/Player_Blade.png" id="2_nr5x5"]
 [ext_resource type="Script" uid="uid://ckd8x1hw8ub5c" path="res://Projectiles/Scripts/Hit Detection/ProjectileHitbox.gd" id="3_fk6mn"]
 [ext_resource type="Script" uid="uid://cefbedj1l64rp" path="res://Projectiles/Scripts/Effects/Projectile_DealDamage.gd" id="4_avdvq"]
-[ext_resource type="Script" uid="uid://d3cs43d2o7507" path="res://Projectiles/Scripts/Effects/Projectile_Deflect.gd" id="5_hhpjd"]
+[ext_resource type="Script" uid="uid://bekcs43k3ly5j" path="res://Projectiles/Scripts/Effects/Projectile_Reflect.gd" id="5_hhpjd"]
 [ext_resource type="Script" uid="uid://56g3rl3ndopo" path="res://Projectiles/Scripts/Effects/Projectile_Push.gd" id="6_hwvvl"]
 
 [sub_resource type="Curve" id="Curve_huhrl"]
@@ -18,10 +18,10 @@ size = Vector2(18, 7)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_nr5x5")
+base_power = 30.0
+base_speed = 15.0
+base_lifetime = 0.15
 speed_curve = SubResource("Curve_huhrl")
-power = 60.0
-speed = 0.2
-lifetime = 0.5
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1520348288]
 texture = ExtResource("2_nr5x5")
@@ -46,7 +46,7 @@ shape = SubResource("RectangleShape2D_nr5x5")
 script = ExtResource("4_avdvq")
 owner_projectile = NodePath("..")
 
-[node name="DeflectEffect" type="Node2D" parent="." unique_id=56327232 node_paths=PackedStringArray("owner_projectile")]
+[node name="ReflectEffect" type="Node2D" parent="." unique_id=56327232 node_paths=PackedStringArray("owner_projectile")]
 script = ExtResource("5_hhpjd")
 owner_projectile = NodePath("..")
 
@@ -61,4 +61,4 @@ shape = SubResource("RectangleShape2D_nr5x5")
 
 [connection signal="opponent_hit" from="Hitbox" to="DamageEffect" method="_on_unit_hit"]
 [connection signal="opponent_hit" from="Hitbox" to="PushEffect" method="_on_unit_hit"]
-[connection signal="opponent_projectile_hit" from="Hitbox" to="DeflectEffect" method="_on_opponent_projectile_hit"]
+[connection signal="opponent_projectile_hit" from="Hitbox" to="ReflectEffect" method="_on_opponent_projectile_hit"]

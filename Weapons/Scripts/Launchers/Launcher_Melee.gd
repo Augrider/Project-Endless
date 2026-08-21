@@ -4,16 +4,11 @@ class_name Launcher_Melee extends WeaponLauncher
 signal clash_occured(object)
 
 
-func spawn(projectile_prefab:PackedScene, amount:int=1)->Array[Projectile]:
-	var result:Array[Projectile]
+func spawn_one(projectile_prefab:PackedScene) -> Projectile:
+	var projectile:Projectile = projectile_prefab.instantiate()
 	
-	for i in amount:
-		var projectile:Projectile = projectile_prefab.instantiate()
-		
-		projectile.position = Vector2.ZERO
-		projectile.rotation = 0
-		add_child(projectile)
-		
-		result.append(projectile)
+	projectile.position = Vector2.ZERO
+	projectile.rotation = 0
+	add_child(projectile)
 	
-	return result
+	return projectile

@@ -1,23 +1,26 @@
 extends WeaponLauncher
 
-#@export var spreadMultiplier=1
+#func spawn(projectile_prefab:PackedScene, amount:int=1)->Array[Projectile]:
+	#var result:Array[Projectile]
+	#
+	#for i in amount:
+		#var projectile:Projectile = projectile_prefab.instantiate()
+		#
+		#projectile.global_position = global_position
+		#projectile.global_rotation = global_rotation
+		#
+		#get_tree().root.add_child(projectile)
+		#
+		#result.append(projectile)
+	#
+	#return result
 
-# Called when the node enters the scene tree for the first time.
-#func _ready() -> void:
-#	pass # Replace with function body.
-
-
-func spawn(projectile_prefab:PackedScene, amount:int=1)->Array[Projectile]:
-	var result:Array[Projectile]
+func spawn_one(projectile_prefab:PackedScene) -> Projectile:
+	var projectile:Projectile = projectile_prefab.instantiate()
 	
-	for i in amount:
-		var projectile:Projectile = projectile_prefab.instantiate()
-		
-		projectile.global_position = global_position
-		projectile.global_rotation = global_rotation
-		
-		get_tree().root.add_child(projectile)
-		
-		result.append(projectile)
+	projectile.global_position = global_position
+	projectile.global_rotation = global_rotation
 	
-	return result
+	get_tree().root.add_child(projectile)
+	
+	return projectile

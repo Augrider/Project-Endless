@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cc3qec3nxmxbk"]
 
-[ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile_Linear.gd" id="1_huhrl"]
+[ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile Types/Projectile_Normal.gd" id="1_huhrl"]
 [ext_resource type="Texture2D" uid="uid://c56dm07wtv4ek" path="res://Player/Sprites/Player_Blade.png" id="2_huhrl"]
 [ext_resource type="Script" uid="uid://ckd8x1hw8ub5c" path="res://Projectiles/Scripts/Hit Detection/ProjectileHitbox.gd" id="3_jnw5o"]
 [ext_resource type="Script" uid="uid://cefbedj1l64rp" path="res://Projectiles/Scripts/Effects/Projectile_DealDamage.gd" id="4_h8ua1"]
@@ -9,18 +9,17 @@
 _data = [Vector2(0, 0), 0.0, 2.3021889, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CapsuleShape2D" id="1"]
-radius = 8.0
-height = 16.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3nb2p"]
+size = Vector2(15.238097, 7.6190486)
 
 [node name="Projectile" type="CharacterBody2D" unique_id=163435155]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_huhrl")
+base_power = 15.0
+base_speed = 50.0
+base_lifetime = 1.0
 speed_curve = SubResource("Curve_huhrl")
-power = 10.0
-speed = 40.0
-lifetime = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1520348288]
 texture = ExtResource("2_huhrl")
@@ -36,19 +35,19 @@ script = ExtResource("3_jnw5o")
 owner_projectile = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=896404539]
-position = Vector2(-1, 0)
+position = Vector2(-8.940697e-08, -3.1809013e-06)
 rotation = 1.5708
 scale = Vector2(1.05, 1.05)
-shape = SubResource("1")
+shape = SubResource("RectangleShape2D_3nb2p")
 
 [node name="DamageEffect" type="Node2D" parent="." unique_id=937166733 node_paths=PackedStringArray("owner_projectile")]
 script = ExtResource("4_h8ua1")
 owner_projectile = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1257771501]
-position = Vector2(-1, 0)
-rotation = -3.1415854
-shape = SubResource("1")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=520436300]
+position = Vector2(-8.940697e-08, -3.1809013e-06)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_3nb2p")
 
 [connection signal="opponent_hit" from="Hitbox" to="DamageEffect" method="_on_unit_hit"]
 [connection signal="opponent_projectile_hit" from="Hitbox" to="DamageEffect" method="_on_opponent_projectile_hit"]

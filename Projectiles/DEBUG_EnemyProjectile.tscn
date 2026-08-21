@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://du4576dwtntag"]
 
-[ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile_Linear.gd" id="1_xefyd"]
+[ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile Types/Projectile_Normal.gd" id="1_xefyd"]
 [ext_resource type="Texture2D" uid="uid://d2o5t7kqyp8ph" path="res://Enemies/Sprites/Enemy_Projectile.png" id="2_xefyd"]
 [ext_resource type="Script" uid="uid://ckd8x1hw8ub5c" path="res://Projectiles/Scripts/Hit Detection/ProjectileHitbox.gd" id="3_he43r"]
 [ext_resource type="Script" uid="uid://cefbedj1l64rp" path="res://Projectiles/Scripts/Effects/Projectile_DealDamage.gd" id="4_77pso"]
@@ -17,10 +17,10 @@ height = 6.0
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("1_xefyd")
+base_power = 5.0
+base_speed = 50.0
+base_lifetime = 3.0
 speed_curve = SubResource("Curve_y1hf8")
-power = 5.0
-speed = 60.0
-lifetime = 3.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1520348288]
 position = Vector2(-1, 0)

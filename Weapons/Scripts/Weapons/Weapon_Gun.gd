@@ -3,14 +3,15 @@ extends Weapon
 #nothing unusual, just shoot projectiles
 #TODO: support for different fire modes
 @export var launcher:WeaponLauncher
-
 @export var projectile_prefab:PackedScene
 
 @export var fire_rate:float = 3
 
+var cooldown:float = 0
+
 
 func _process(delta: float) -> void:
-	if triggerPressed:
+	if trigger_pressed:
 		try_fire()
 	
 	if cooldown > 0:
@@ -28,7 +29,5 @@ func try_fire()->bool:
 
 
 func fire()->void:
-	var projectiles:Array[Projectile]=launcher.spawn(projectile_prefab, 1)
-
-	for projectile in projectiles:
-		projectile.init(0)
+	var projectile := launcher.spawn_one(projectile_prefab)
+	projectile.init(0)
