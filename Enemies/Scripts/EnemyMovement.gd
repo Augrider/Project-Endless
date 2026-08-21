@@ -31,13 +31,13 @@ func _physics_process(delta: float) -> void:
 	
 	movement_target = get_next_path_position()
 	
-	body.look_at(movement_target)
+	#body.look_at(movement_target)
 	
 	body.velocity = speed * speed_multiplier * (movement_target - body.global_position).limit_length()
 	body.move_and_slide()
 
 func _process_push(delta: float):
-	body.look_at(body.global_position - impulse)
+	#body.look_at(body.global_position - impulse)
 	
 	var collision = body.move_and_collide(impulse*delta)
 	if collision:

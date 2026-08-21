@@ -3,9 +3,10 @@
 [ext_resource type="Script" uid="uid://e35awnyfg0m1" path="res://Enemies/Scripts/Enemy.gd" id="1_s4o6d"]
 [ext_resource type="Script" uid="uid://b1mpu1rm8sn7h" path="res://Enemies/Scripts/EnemyVisuals.gd" id="2_b2fr2"]
 [ext_resource type="PackedScene" uid="uid://du4576dwtntag" path="res://Projectiles/DEBUG_EnemyProjectile.tscn" id="2_kafru"]
-[ext_resource type="Texture2D" uid="uid://djg08bicjgpam" path="res://Enemies/Sprites/Enemy.png" id="2_vkbag"]
 [ext_resource type="Script" uid="uid://4com5kf7gw2p" path="res://Enemies/Scripts/EnemyMovement.gd" id="3_b2fr2"]
+[ext_resource type="Texture2D" uid="uid://c2mlcng6lq48a" path="res://Aseprite/Enemy_DEBUG(Full_Body_DEBUG) _0001.png" id="3_r3qmc"]
 [ext_resource type="Script" uid="uid://cjgc8oyk0fjsx" path="res://Weapons/Scripts/Launchers/Launcher_Offset.gd" id="5_b7dvi"]
+[ext_resource type="Texture2D" uid="uid://b76i3tf6nc1eq" path="res://Aseprite/Enemy_DEBUG(Head) _0001.png" id="7_5dn3h"]
 [ext_resource type="Script" uid="uid://cm581hdrply5r" path="res://Enemies/Scripts/Abilities/DEBUG_Ability_Targeted.gd" id="7_5e8k3"]
 [ext_resource type="Script" uid="uid://kgm4y55dvs1r" path="res://Player/Scripts/PlayerHealth.gd" id="7_vx07x"]
 
@@ -38,10 +39,20 @@ script = ExtResource("7_vx07x")
 position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_5e8k3")
 
-[node name="Visuals" type="Sprite2D" parent="." unique_id=1924707109]
+[node name="Visuals" type="Node2D" parent="." unique_id=1770240641 node_paths=PackedStringArray("top", "bottom", "body")]
 unique_name_in_owner = true
-texture = ExtResource("2_vkbag")
 script = ExtResource("2_b2fr2")
+top = NodePath("Sprite2D_Head")
+bottom = NodePath("Sprite2D_Body")
+body = NodePath("..")
+_rotation_multiplier = 10.0
+
+[node name="Sprite2D_Body" type="Sprite2D" parent="Visuals" unique_id=1924707109]
+texture = ExtResource("3_r3qmc")
+
+[node name="Sprite2D_Head" type="Sprite2D" parent="Visuals" unique_id=1306039881]
+position = Vector2(0, -1)
+texture = ExtResource("7_5dn3h")
 
 [node name="Movement" type="NavigationAgent2D" parent="." unique_id=2087549942 node_paths=PackedStringArray("body")]
 unique_name_in_owner = true

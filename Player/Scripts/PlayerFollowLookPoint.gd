@@ -11,7 +11,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	var angle_delta = _get_target_delta(_current_point)
-	rotate(angle_delta * _duration_multiplier)
+	rotate(angle_delta * _duration_multiplier * delta)
 
 
 func aim_at(value:Vector2) -> void:
