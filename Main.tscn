@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://x5ag23blnj42"]
 
 [ext_resource type="PackedScene" uid="uid://bb7dqkjvtgyxx" path="res://Player/Player.tscn" id="1"]
-[ext_resource type="PackedScene" uid="uid://i5jwoan1v5dw" path="res://UI.tscn" id="3"]
 [ext_resource type="Script" uid="uid://b0g4jv0m6dcyk" path="res://DEBUG_Environment.gd" id="3_r0du0"]
 [ext_resource type="PackedScene" uid="uid://jpahwcw6fs8p" path="res://Enemies/DEBUG_Enemy_Small.tscn" id="4_cm0pq"]
 [ext_resource type="Script" uid="uid://yji43ynf5uer" path="res://CircleFormation2D.gd" id="5_fos0i"]
 [ext_resource type="Script" uid="uid://bxw8mb38f7tbs" path="res://Enemies/Scripts/EnemyContainer.gd" id="6_3dxm6"]
+[ext_resource type="PackedScene" uid="uid://n8a3ggjtvkmr" path="res://UI/DEBUG_UI.tscn" id="6_lgr22"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_cm0pq"]
 vertices = PackedVector2Array(134, 70, -134, 70, -134, -70, 134, -70)
@@ -13,9 +13,6 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-144, -80, 144, -80, 144, 80, -144, 80)])
 
 [node name="Main" type="Node2D" unique_id=653154250]
-
-[node name="UI" parent="." unique_id=1158798207 instance=ExtResource("3")]
-layer = 5
 
 [node name="Player" parent="." unique_id=1288758572 instance=ExtResource("1")]
 
@@ -45,11 +42,6 @@ navigation_polygon = SubResource("NavigationPolygon_cm0pq")
 wait_time = 15.0
 autostart = true
 
-[node name="SpawnTimer" type="Timer" parent="Environment" unique_id=2120606944]
-wait_time = 10.0
-one_shot = true
-autostart = true
-
 [node name="EnemyContainer" type="Node2D" parent="Environment" unique_id=1138170557]
 script = ExtResource("6_3dxm6")
 metadata/_custom_type_script = "uid://bxw8mb38f7tbs"
@@ -57,5 +49,8 @@ metadata/_custom_type_script = "uid://bxw8mb38f7tbs"
 [node name="Camera2D" type="Camera2D" parent="." unique_id=856213346]
 zoom = Vector2(8, 8)
 
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=220603782]
+
+[node name="Control" parent="CanvasLayer" unique_id=1012204217 instance=ExtResource("6_lgr22")]
+
 [connection signal="timeout" from="Environment/WaveAttackTimer" to="Environment" method="_on_wave_attack_timer"]
-[connection signal="timeout" from="Environment/SpawnTimer" to="Environment" method="_on_spawn_timer"]

@@ -13,15 +13,15 @@ var someone_died:bool = false
 
 func _ready() -> void:
 	EnemyStorage.despawned.connect(_on_enemy_despawned)
+	Turns.new_turn_started.connect(spawn_wave)
 
 
-func _on_spawn_timer() -> void:
-	#print_debug("Sending units")
-	for i in inner_circle.size:
-		spawn_new(enemy_prefab, inner_circle, i)
+func spawn_wave() -> void:
+	for spot in outer_circle.get_spots_available():
+		spawn_new(enemy_prefab, outer_circle, spot)
 	
-	for i in outer_circle.size:
-		spawn_new(enemy_prefab, outer_circle, i)
+	for spot in inner_circle.get_spots_available():
+		spawn_new(enemy_prefab, inner_circle, spot)
 	
 	wave_ready=true
 
@@ -31,14 +31,7 @@ func _process(delta:float) -> void:
 	if !wave_ready || !someone_died:
 		return
 	
-	while inner_circle.any_spot_available() && _move_to_front():
-		pass
-	
-	#Spawn new enemies
-	for spot in outer_circle.get_spots_available():
-		spawn_new(enemy_prefab, outer_circle, spot)
-	
-	someone_died = false
+	call_deferred("_move_everyone_to_front")
 
 
 func _on_enemy_despawned(enemy:Enemy):
@@ -46,6 +39,7 @@ func _on_enemy_despawned(enemy:Enemy):
 	outer_circle.remove(enemy)
 	
 	someone_died = true
+
 
 func _on_wave_attack_timer() -> void:
 	#Need to get attacker from currently present enemies
@@ -81,15 +75,29 @@ func _on_wave_attack_timer() -> void:
 	await enemy.perform_ability_chase(3, 5)
 	await get_tree().create_timer(0.2).timeout
 	
+	if enemy == null:
+		return
+	
 	enemy.go_to_target(spot_position)
+
+
+func _move_everyone_to_front():
+	while inner_circle.any_spot_available() && _move_to_front():
+		pass
+	
+	#Spawn new enemies
+	#for spot in outer_circle.get_spots_available():
+		#spawn_new(enemy_prefab, outer_circle, spot)
+	
+	someone_died = false
 
 
 func _get_closest(target:Vector2, candidates:Array[Enemy])->Enemy:
 	#if candidates.size()<=0:
 		#return null
 	
-	var dis = target.distance_squared_to(candidates[0].position)
-	var closest = candidates[0]
+	var dis = 99999999
+	var closest: Enemy
 	
 	var temp_dis
 	
@@ -118,6 +126,7 @@ func _move_to_front() -> bool:
 	new_enemy.go_to_target(target)
 	
 	return true
+
 
 func spawn_new(enemy_prefab:PackedScene, formation:Formation2D, spot:int):
 		var enemy:Enemy = EnemyStorage.request_spawn(enemy_prefab)
