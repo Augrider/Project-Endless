@@ -1,5 +1,9 @@
-class_name PlayerMovement extends Node2D
+extends NavigationAgent2D
+
 const MAX_SPEED:float=250.0
+
+const DISTANCE_CHECK:float = 1
+const DAMPENING:float = 3
 
 #TODO: Proper speed handling
 
@@ -38,10 +42,17 @@ func _ready() -> void:
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	speedRel = get_relative_speed()
-
-	body.set_velocity(speedRel * maxSpeed * movementInput)
+	
+	target_position = body.global_position + (movementInput) * DISTANCE_CHECK
+	var next_position = get_next_path_position()
+	var direction_unclamped = next_position - body.global_position
+	
+	if movementInput.dot(direction_unclamped.normalized()) <= 0:
+		return
+	
+	body.set_velocity(speedRel * maxSpeed * direction_unclamped.limit_length(DAMPENING) / DAMPENING)
 	body.move_and_slide()
 
 
