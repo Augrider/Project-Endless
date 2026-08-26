@@ -18,9 +18,10 @@ func _ready() -> void:
 			
 			var offset = Vector2i(i*chunk_size.x, j*chunk_size.y)
 			new_chunk.place_on_map(tilemap_ground, offset)
-			
-			#new_chunk.position = Vector2(i*chunk_size.x, j*chunk_size.y)
-			#tilemap_ground.call_deferred("add_child", new_chunk)
+	
+	tilemap_ground.set_cells_terrain_connect(tilemap_ground.get_used_cells(), 0, 0)
+
+
 #TODO: When new turn started:
 #Spawn new resources. If nothing is placed on tile - randomly place new object, based on biome
 
@@ -29,3 +30,5 @@ func _ready() -> void:
 
 #Support save/load from files, both map and placed objects with their state
 #Support map modification
+
+#Chunks should have corridors for connection. Either generate or rotate chunks
