@@ -2,7 +2,7 @@ class_name MapChunk extends TileMapLayer
 
 @export var chunk_size: Vector2i
 
-func place_on_map(map: TileMapLayer, offset: Vector2i):
+func place_map_tiles(map: TileMapLayer, offset: Vector2i):
 	#print_debug("Placing tiles")
 	for i in range(-chunk_size.x / 2 , chunk_size.x / 2):
 		for j in range(-chunk_size.y / 2, chunk_size.y / 2):
@@ -15,3 +15,7 @@ func place_on_map(map: TileMapLayer, offset: Vector2i):
 			#print_debug(alter_tile)
 			
 			map.set_cell(cell+offset, source_id, atlas_coords, alter_tile)
+
+#Copies and places objects on chunk
+func place_objects(map: MainMap, offset: Vector2i):
+	pass

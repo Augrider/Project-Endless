@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://ia8xcbdh7rnw"]
+
+[ext_resource type="Texture2D" uid="uid://d2o5t7kqyp8ph" path="res://Enemies/Sprites/Enemy_Projectile.png" id="1_d5bjh"]
+
+[node name="DebugObject" type="Node2D" unique_id=1687301027]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1452650585]
+position = Vector2(0, -5)
+rotation = 1.5707964
+texture = ExtResource("1_d5bjh")

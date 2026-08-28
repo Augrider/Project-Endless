@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BiomeObjects" format=3 uid="uid://c871jw0v1kqjm"]
+
+[ext_resource type="PackedScene" uid="uid://ia8xcbdh7rnw" path="res://Map/Biomes/Grass/DEBUG_Object.tscn" id="1_ta3j5"]
+[ext_resource type="Script" uid="uid://dst03nxvtpui8" path="res://Map/Scripts/BiomeObjects.gd" id="2_h5kf5"]
+
+[resource]
+script = ExtResource("2_h5kf5")
+objects = Array[PackedScene]([ExtResource("1_ta3j5")])
+metadata/_custom_type_script = "uid://dst03nxvtpui8"
