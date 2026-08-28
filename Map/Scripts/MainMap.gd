@@ -42,7 +42,10 @@ func place_object(object_copy: MapObject, cell:Vector2i):
 
 
 func spawn_biome_objects():
-	for cell in tilemap_ground.get_used_cells():
+	var cells = tilemap_ground.get_used_cells()
+	cells.shuffle()
+	
+	for cell in cells:
 		if object_cells.has(cell):
 			continue
 		
