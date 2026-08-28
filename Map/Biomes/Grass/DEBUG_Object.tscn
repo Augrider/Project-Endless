@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://ia8xcbdh7rnw"]
 
 [ext_resource type="Texture2D" uid="uid://d2o5t7kqyp8ph" path="res://Enemies/Sprites/Enemy_Projectile.png" id="1_d5bjh"]
+[ext_resource type="Script" uid="uid://b62ughj74ul4f" path="res://Map/Scripts/MapObject.gd" id="1_m0du6"]
 
 [node name="DebugObject" type="Node2D" unique_id=1687301027]
+script = ExtResource("1_m0du6")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1452650585]
 position = Vector2(0, -5)
