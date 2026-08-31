@@ -47,5 +47,6 @@ owner_projectile = NodePath("..")
 rotation = 1.5708
 shape = SubResource("1")
 
+[connection signal="object_hit" from="Hitbox" to="DamageEffect" method="_on_object_hit"]
 [connection signal="opponent_hit" from="Hitbox" to="DamageEffect" method="_on_unit_hit"]
 [connection signal="opponent_projectile_hit" from="Hitbox" to="DamageEffect" method="_on_opponent_projectile_hit"]

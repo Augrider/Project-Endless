@@ -8,7 +8,7 @@ signal opponent_projectile_hit(projectile: Projectile)
 
 #TODO: Wall, ground if needed
 
-#signal object_hit(object: Node2D)
+signal object_hit(object: MapObject)
 
 
 @export var owner_projectile:Projectile
@@ -24,17 +24,24 @@ func _on_body_entered(body: Node2D):
 	
 	if body is AlliedNode2D:
 		allied = body.is_allied_with(owner_projectile)
+	else:
+		return
 	
 	if body is Unit:
 		if allied:
 			friendly_hit.emit(body)
+			return
 		else:
 			opponent_hit.emit(body)
+			return
 		
 	elif body is Projectile:
 		if allied:
 			friendly_projectile_hit.emit(body)
+			return
 		else:
 			opponent_projectile_hit.emit(body)
+			return
 	
-	#any_hit.emit(body)
+	if body is MapObject:
+		object_hit.emit(body)

@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://bkw2pr320c38"]
+
+[ext_resource type="Script" uid="uid://bsbbg4eagnbsf" path="res://Map/Scripts/MainMap.gd" id="1_av5uh"]
+[ext_resource type="TileSet" uid="uid://dxhnislx624xo" path="res://ground_tile_set.tres" id="1_q1m20"]
+[ext_resource type="PackedScene" uid="uid://c383bcacaovm7" path="res://Chunk.tscn" id="2_06xy4"]
+[ext_resource type="Script" uid="uid://pnh8ogrekeen" path="res://Player/Player.gd" id="2_kihph"]
+[ext_resource type="SpriteFrames" uid="uid://dubjv2co4dln5" path="res://Player/Animations/Player_frames.tres" id="3_av5uh"]
+[ext_resource type="Script" uid="uid://dst03nxvtpui8" path="res://Map/Scripts/BiomeObjects.gd" id="3_o6wko"]
+[ext_resource type="Script" uid="uid://bmbefbuxs6sac" path="res://Player/Scripts/Visuals/PlayerSprite.gd" id="4_06xy4"]
+[ext_resource type="Resource" uid="uid://c871jw0v1kqjm" path="res://Map/Biomes/Grass/biome_grass.tres" id="4_sg2o3"]
+[ext_resource type="Curve" path="res://trail_curve.tres" id="5_vwj75"]
+[ext_resource type="Gradient" path="res://trail_gradient.tres" id="6_o6wko"]
+[ext_resource type="Script" uid="uid://di8hipxsacs2y" path="res://Player/Scripts/Visuals/Trail2D.gd" id="7_sg2o3"]
+[ext_resource type="Script" uid="uid://kgm4y55dvs1r" path="res://Player/Scripts/PlayerHealth.gd" id="8_6suf4"]
+[ext_resource type="Script" uid="uid://dsy6jtgdpv5ti" path="res://Player/Scripts/Movement/PlayerNavMeshMovement.gd" id="9_g0q6i"]
+[ext_resource type="Script" uid="uid://cfe6h0ncf0lgv" path="res://Common/Stopwatch.gd" id="10_3pqxq"]
+[ext_resource type="Script" uid="uid://cgywojitp42dr" path="res://Player/Scripts/Input/PlayerInputDirection.gd" id="11_ufg6h"]
+[ext_resource type="Script" uid="uid://dq6f0d42krwo5" path="res://Player/Scripts/Input/PlayerInput.gd" id="12_c0iiw"]
+[ext_resource type="Script" uid="uid://ddy71goj8dukq" path="res://Player/Scripts/PlayerFollowLookPoint.gd" id="13_18gs1"]
+[ext_resource type="Script" uid="uid://bki8k0b2opu71" path="res://Weapons/Scripts/Weapons/Weapon_Melee.gd" id="14_0ejps"]
+[ext_resource type="PackedScene" uid="uid://cc3qec3nxmxbk" path="res://Projectiles/DEBUG_BladeProjectile.tscn" id="15_x5m5v"]
+[ext_resource type="PackedScene" uid="uid://b23p4vycrt4cv" path="res://Projectiles/DEBUG_BladeSwipe.tscn" id="16_s5cbp"]
+[ext_resource type="Script" uid="uid://cjgc8oyk0fjsx" path="res://Weapons/Scripts/Launchers/Launcher_Offset.gd" id="17_yyisd"]
+[ext_resource type="Texture2D" uid="uid://c56dm07wtv4ek" path="res://Player/Sprites/Player_Blade.png" id="18_54kfl"]
+[ext_resource type="Script" uid="uid://b436ynixox52p" path="res://Weapons/Scripts/Weapons/Weapon_Shield.gd" id="19_sf8fc"]
+[ext_resource type="PackedScene" uid="uid://bnn1d4xgh1gd5" path="res://Projectiles/DEBUG_Shield.tscn" id="20_lyb82"]
+[ext_resource type="Script" uid="uid://bgc1nh56aa1kq" path="res://Weapons/Scripts/Launchers/Launcher_Melee.gd" id="21_oe2dl"]
+
+[sub_resource type="CircleShape2D" id="1"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="2"]
+radius = 1.0
+
+[sub_resource type="Curve" id="Curve_5wa8t"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_p7tob"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Map" type="Node2D" unique_id=15225567 node_paths=PackedStringArray("tilemap_ground")]
+script = ExtResource("1_av5uh")
+tilemap_ground = NodePath("TileMapLayer")
+chunk_test = ExtResource("2_06xy4")
+chunk_size = Vector2i(10, 10)
+map_size = Vector2i(1, 1)
+biome_objects = Dictionary[int, ExtResource("3_o6wko")]({
+0: ExtResource("4_sg2o3")
+})
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=648403599]
+tile_set = ExtResource("1_q1m20")
+
+[node name="DEBUG_Camera2D" type="Camera2D" parent="." unique_id=1678507878]
+zoom = Vector2(8, 8)
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1896151399]
+light_mask = 4
+position = Vector2(0, -6)
+collision_mask = 3
+script = ExtResource("2_kihph")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1015723415]
+shape = SubResource("1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=922357269]
+sprite_frames = ExtResource("3_av5uh")
+script = ExtResource("4_06xy4")
+
+[node name="Trail2D" type="Line2D" parent="Player/AnimatedSprite2D" unique_id=45516561]
+width = 1.0
+width_curve = ExtResource("5_vwj75")
+gradient = ExtResource("6_o6wko")
+script = ExtResource("7_sg2o3")
+maxPointsCount = 100
+
+[node name="Health" type="Area2D" parent="Player" unique_id=1687765006]
+position = Vector2(1, 0)
+monitoring = false
+script = ExtResource("8_6suf4")
+max_health = 999999999999
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Health" unique_id=1963525701]
+shape = SubResource("2")
+
+[node name="Movement" type="NavigationAgent2D" parent="Player" unique_id=1001192756 node_paths=PackedStringArray("body", "stopwatch")]
+path_desired_distance = 0.1
+target_desired_distance = 1.0
+simplify_path = true
+debug_enabled = true
+script = ExtResource("9_g0q6i")
+body = NodePath("..")
+stopwatch = NodePath("Stopwatch")
+maxSpeed = 200.0
+accelerationDuration = 0.1
+decelerationDuration = 0.15
+startCurve = SubResource("Curve_5wa8t")
+stopCurve = SubResource("Curve_p7tob")
+
+[node name="Stopwatch" type="Node" parent="Player/Movement" unique_id=1360585420]
+script = ExtResource("10_3pqxq")
+autostart = true
+metadata/_custom_type_script = "uid://cfe6h0ncf0lgv"
+
+[node name="Input Direction" type="Node2D" parent="Player" unique_id=1325068034]
+script = ExtResource("11_ufg6h")
+
+[node name="Input" type="Node" parent="Player" unique_id=464753604]
+script = ExtResource("12_c0iiw")
+
+[node name="Pivot_Blade" type="Node2D" parent="Player" unique_id=1351299915]
+script = ExtResource("13_18gs1")
+_duration_multiplier = 25.0
+
+[node name="Weapon" type="Node2D" parent="Player/Pivot_Blade" unique_id=1674022408 node_paths=PackedStringArray("launcher_projectile", "launcher_melee")]
+script = ExtResource("14_0ejps")
+launcher_projectile = NodePath("LauncherProjectile")
+launcher_melee = NodePath("LauncherMelee")
+projectile_prefab = ExtResource("15_x5m5v")
+projectile_melee_prefab = ExtResource("16_s5cbp")
+fire_rate = 1.5
+metadata/_custom_type_script = "uid://b2rvjp80i6g2a"
+
+[node name="LauncherMelee" type="Node2D" parent="Player/Pivot_Blade/Weapon" unique_id=764631596]
+position = Vector2(7, 0)
+script = ExtResource("17_yyisd")
+
+[node name="LauncherProjectile" type="Node2D" parent="Player/Pivot_Blade/Weapon" unique_id=967019388]
+position = Vector2(6, 0)
+script = ExtResource("17_yyisd")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player/Pivot_Blade/Weapon" unique_id=1342650404]
+position = Vector2(3, 1)
+texture = ExtResource("18_54kfl")
+region_enabled = true
+region_rect = Rect2(0, 32, 16, 16)
+
+[node name="Pivot_Shield" type="Node2D" parent="Player" unique_id=364566014]
+script = ExtResource("13_18gs1")
+_duration_multiplier = 25.0
+
+[node name="Weapon" type="Node2D" parent="Player/Pivot_Shield" unique_id=975702369 node_paths=PackedStringArray("launcher")]
+script = ExtResource("19_sf8fc")
+launcher = NodePath("LauncherMelee")
+projectile_shield_prefab = ExtResource("20_lyb82")
+metadata/_custom_type_script = "uid://b2rvjp80i6g2a"
+
+[node name="LauncherMelee" type="Node2D" parent="Player/Pivot_Shield/Weapon" unique_id=208497252]
+position = Vector2(7, 0)
+script = ExtResource("21_oe2dl")
+
+[connection signal="look_point_changed" from="Player/Input Direction" to="Player/AnimatedSprite2D" method="_on_input_direction_look_point_changed"]
+[connection signal="look_point_changed" from="Player/Input Direction" to="Player/Pivot_Blade" method="aim_at"]
+[connection signal="look_point_changed" from="Player/Input Direction" to="Player/Pivot_Shield" method="aim_at"]
+[connection signal="fire_01_pressed" from="Player/Input" to="Player/Pivot_Blade/Weapon" method="press_trigger"]
+[connection signal="fire_01_released" from="Player/Input" to="Player/Pivot_Blade/Weapon" method="release_trigger"]
+[connection signal="fire_02_pressed" from="Player/Input" to="Player/Pivot_Shield/Weapon" method="press_trigger"]
+[connection signal="fire_02_released" from="Player/Input" to="Player/Pivot_Shield/Weapon" method="release_trigger"]
+[connection signal="movement_input_updated" from="Player/Input" to="Player/Movement" method="_on_input_movement_input_updated"]

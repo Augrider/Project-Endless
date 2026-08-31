@@ -20,6 +20,7 @@ config/icon="res://icon.png"
 Players="*res://AutoLoad/PlayersController.gd"
 ProjectileStorage="*uid://dnwk4upkt8ujv"
 EnemyStorage="*uid://bxy7h4ba8eawj"
+Turns="*uid://dsm8ljb105nub"
 
 [display]
 
@@ -106,6 +107,7 @@ common/enable_pause_aware_picking=true
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.065599985, 0.5936799, 0.82, 1)
 occlusion_culling/use_occlusion_culling=true
 environment/defaults/default_environment="res://default_env.tres"
 quality/intended_usage/framebuffer_allocation=0
