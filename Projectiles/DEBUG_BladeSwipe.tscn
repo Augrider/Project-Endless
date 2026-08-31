@@ -59,6 +59,7 @@ position = Vector2(0.5, -1.9967556e-06)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_nr5x5")
 
+[connection signal="object_hit" from="Hitbox" to="DamageEffect" method="_on_object_hit"]
 [connection signal="opponent_hit" from="Hitbox" to="DamageEffect" method="_on_unit_hit"]
 [connection signal="opponent_hit" from="Hitbox" to="PushEffect" method="_on_unit_hit"]
 [connection signal="opponent_projectile_hit" from="Hitbox" to="ReflectEffect" method="_on_opponent_projectile_hit"]

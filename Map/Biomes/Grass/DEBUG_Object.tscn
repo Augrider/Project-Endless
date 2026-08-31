@@ -2,11 +2,36 @@
 
 [ext_resource type="Texture2D" uid="uid://d2o5t7kqyp8ph" path="res://Enemies/Sprites/Enemy_Projectile.png" id="1_d5bjh"]
 [ext_resource type="Script" uid="uid://b62ughj74ul4f" path="res://Map/Scripts/MapObject.gd" id="1_m0du6"]
+[ext_resource type="Script" uid="uid://bpv1q814ymto4" path="res://Common/Destructible.gd" id="3_l3xa3"]
 
-[node name="DebugObject" type="Node2D" unique_id=1687301027]
+[sub_resource type="CircleShape2D" id="CircleShape2D_jnba6"]
+radius = 2.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l3xa3"]
+radius = 2.6
+
+[node name="DebugObject" type="StaticBody2D" unique_id=380274369]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_m0du6")
+allegiance = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1452650585]
 position = Vector2(0, -5)
 rotation = 1.5707964
 texture = ExtResource("1_d5bjh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1113771144]
+shape = SubResource("CircleShape2D_jnba6")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1431250308]
+collision_layer = 3
+collision_mask = 3
+monitoring = false
+script = ExtResource("3_l3xa3")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" unique_id=885721259]
+shape = SubResource("CircleShape2D_l3xa3")
+debug_color = Color(0.85755646, 0.0007348603, 0.8831125, 0.41960785)
+
+[connection signal="damage_received" from="." to="Area2D" method="apply_damage"]
