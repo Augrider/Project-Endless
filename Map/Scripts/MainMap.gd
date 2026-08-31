@@ -1,7 +1,5 @@
 class_name MainMap extends Node2D
 
-@export var navmesh: NavigationRegion2D
-
 @export var tilemap_ground: TileMapLayer
 
 @export var chunk_test: PackedScene
@@ -51,7 +49,7 @@ func spawn_biome_objects():
 		
 		#Check the chance to spawn
 		var spawn_rand = randf()
-		if spawn_rand < 0.5:
+		if spawn_rand > tilemap_ground.get_cell_tile_data(cell).get_custom_data("object_chance"):
 			continue
 		
 		var biome: Enums.BiomeType = tilemap_ground.get_cell_tile_data(cell).get_custom_data("biome")
