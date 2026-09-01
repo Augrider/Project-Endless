@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://b76i3tf6nc1eq" path="res://Aseprite/Enemy_DEBUG(Head) _0001.png" id="7_5dn3h"]
 [ext_resource type="Script" uid="uid://cm581hdrply5r" path="res://Enemies/Scripts/Abilities/DEBUG_Ability_Targeted.gd" id="7_5e8k3"]
 [ext_resource type="Script" uid="uid://kgm4y55dvs1r" path="res://Player/Scripts/PlayerHealth.gd" id="7_vx07x"]
+[ext_resource type="Script" uid="uid://tyrnbnoqybdp" path="res://Enemies/Scripts/Abilities/Ability_Chase.gd" id="10_5dn3h"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b2fr2"]
 radius = 6.0
@@ -23,7 +24,7 @@ script = ExtResource("1_s4o6d")
 ability_targeted = NodePath("Ability_Targeted")
 ability_spread = NodePath("Ability_Targeted")
 ability_arena = NodePath("Ability_Targeted")
-ability_chase = NodePath("Ability_Targeted")
+ability_chase = NodePath("Ability_Chase")
 size_class = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1126737213]
@@ -77,5 +78,10 @@ script = ExtResource("5_b7dvi")
 [node name="Ability_Targeted" type="Node2D" parent="." unique_id=1181017405]
 script = ExtResource("7_5e8k3")
 projectile_prefab = ExtResource("2_kafru")
+
+[node name="Ability_Chase" type="Node2D" parent="." unique_id=685141506]
+script = ExtResource("10_5dn3h")
+projectile_prefab = ExtResource("2_kafru")
+fire_rate = 0.8
 
 [connection signal="timeout" from="Movement/RepathTimer" to="Movement" method="_on_repath_timer"]

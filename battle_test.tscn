@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://crapgw0kr01cb"]
+
+[ext_resource type="PackedScene" uid="uid://bb7dqkjvtgyxx" path="res://Player/Player.tscn" id="1_0q417"]
+[ext_resource type="Script" uid="uid://nvc2yxcodih4" path="res://Dungeon Battles/Scripts/BattleControl.gd" id="1_jhtm6"]
+[ext_resource type="Resource" uid="uid://cb1myyie8t3r" path="res://DEBUG_Attack.tres" id="3_8ru30"]
+[ext_resource type="PackedScene" uid="uid://jpahwcw6fs8p" path="res://Enemies/DEBUG_Enemy_Small.tscn" id="3_inwax"]
+[ext_resource type="Script" uid="uid://yji43ynf5uer" path="res://CircleFormation2D.gd" id="4_rfxk1"]
+[ext_resource type="Script" uid="uid://bxw8mb38f7tbs" path="res://Enemies/Scripts/EnemyContainer.gd" id="5_vplat"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_3813u"]
+vertices = PackedVector2Array(134, 70, -134, 70, -134, -70, 134, -70)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-144, -80, 144, -80, 144, 80, -144, 80)])
+
+[node name="BattleTest" type="Node2D" unique_id=719512692 node_paths=PackedStringArray("formation", "timer")]
+script = ExtResource("1_jhtm6")
+formation = NodePath("Environment/Formation")
+timer = NodePath("ReorderTimer")
+enemy_prefab = ExtResource("3_inwax")
+debug_strategy = ExtResource("3_8ru30")
+
+[node name="Environment" type="Node2D" parent="." unique_id=1229868045]
+
+[node name="Player" parent="Environment" unique_id=1896151399 instance=ExtResource("1_0q417")]
+
+[node name="Formation" type="Node2D" parent="Environment" unique_id=578060177]
+script = ExtResource("4_rfxk1")
+inner_enemies_count = 6
+inner_radius = 60.0
+layer_radius_delta = 15.0
+
+[node name="Projectiles" type="Node2D" parent="Environment" unique_id=1777214934]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="Environment" unique_id=2113450088]
+navigation_polygon = SubResource("NavigationPolygon_3813u")
+
+[node name="EnemyContainer" type="Node2D" parent="Environment" unique_id=1444451772]
+script = ExtResource("5_vplat")
+metadata/_custom_type_script = "uid://bxw8mb38f7tbs"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1049145497]
+zoom = Vector2(8, 8)
+
+[node name="ReorderTimer" type="Timer" parent="." unique_id=708728382]
+autostart = true
+
+[connection signal="timeout" from="ReorderTimer" to="." method="_on_reorder_timer_timeout"]

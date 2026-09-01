@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DebugAttackStrategy" format=3 uid="uid://cb1myyie8t3r"]
+
+[ext_resource type="Script" uid="uid://pmowupxx6e7f" path="res://Dungeon Battles/Scripts/Attack Strategies/AttackStrategy_Debug.gd" id="1_xv3go"]
+
+[resource]
+script = ExtResource("1_xv3go")
+chasers_count = 3
+metadata/_custom_type_script = "uid://pmowupxx6e7f"

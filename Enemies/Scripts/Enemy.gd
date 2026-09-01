@@ -12,6 +12,8 @@ enum SizeClass { SMALL=1, MEDIUM=2, BIG=3, LARGE=4 }
 @export var max_health:float = 10.0
 var health:float
 
+var current_ability: EnemyAbility
+
 
 func _ready() -> void:
 	health = max_health
@@ -62,14 +64,35 @@ func stop_looking():
 #Bosses can operate under chase attack, having entire AI with patterns hidden inside
 #Add stop current ability
 
+#TODO: Add stop current ability
 func perform_ability_targeted(duration:float, intensity:=1.0):
+	if current_ability != null:
+		return
+	
+	current_ability = ability_targeted
 	await ability_targeted.perform(self, duration, intensity)
+	current_ability = null
 
 func perform_ability_spray(duration:float, intensity:=1.0):
+	if current_ability != null:
+		return
+	
+	current_ability = ability_targeted
 	await ability_spread.perform(self, duration, intensity)
+	current_ability = null
 
 func perform_ability_arena(duration:float, intensity:=1.0):
+	if current_ability != null:
+		return
+	
+	current_ability = ability_targeted
 	await ability_arena.perform(self, duration, intensity)
+	current_ability = null
 
 func perform_ability_chase(duration:float, intensity:=1.0):
+	if current_ability != null:
+		return
+	
+	current_ability = ability_targeted
 	await ability_chase.perform(self, duration, intensity)
+	current_ability = null

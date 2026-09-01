@@ -18,20 +18,16 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-144, -80, 144, -80, 14
 
 [node name="Environment" type="Node2D" parent="." unique_id=472585184 node_paths=PackedStringArray("player", "inner_circle", "outer_circle")]
 script = ExtResource("3_r0du0")
-player = NodePath("../Player")
 enemy_prefab = ExtResource("4_cm0pq")
+player = NodePath("../Player")
 inner_circle = NodePath("Circle_Inner")
 outer_circle = NodePath("Circle_Outer")
 
 [node name="Circle_Inner" type="Node2D" parent="Environment" unique_id=1616828660]
 script = ExtResource("5_fos0i")
-radius = 70.0
-size = 19
 
 [node name="Circle_Outer" type="Node2D" parent="Environment" unique_id=360548864]
 script = ExtResource("5_fos0i")
-radius = 90.0
-size = 19
 
 [node name="Projectiles" type="Node2D" parent="Environment" unique_id=11947576]
 
