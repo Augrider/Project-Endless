@@ -6,16 +6,17 @@
 [ext_resource type="PackedScene" uid="uid://jpahwcw6fs8p" path="res://Enemies/DEBUG_Enemy_Small.tscn" id="3_inwax"]
 [ext_resource type="Script" uid="uid://yji43ynf5uer" path="res://CircleFormation2D.gd" id="4_rfxk1"]
 [ext_resource type="Script" uid="uid://bxw8mb38f7tbs" path="res://Enemies/Scripts/EnemyContainer.gd" id="5_vplat"]
+[ext_resource type="Script" uid="uid://boe0o0ku1tnsy" path="res://Common/TimerProvider.gd" id="7_inwax"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_3813u"]
 vertices = PackedVector2Array(134, 70, -134, 70, -134, -70, 134, -70)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-144, -80, 144, -80, 144, 80, -144, 80)])
 
-[node name="BattleTest" type="Node2D" unique_id=719512692 node_paths=PackedStringArray("formation", "timer")]
+[node name="BattleTest" type="Node2D" unique_id=719512692 node_paths=PackedStringArray("formation", "timers")]
 script = ExtResource("1_jhtm6")
 formation = NodePath("Environment/Formation")
-timer = NodePath("ReorderTimer")
+timers = NodePath("TimerProvider")
 enemy_prefab = ExtResource("3_inwax")
 debug_strategy = ExtResource("3_8ru30")
 
@@ -43,5 +44,9 @@ zoom = Vector2(8, 8)
 
 [node name="ReorderTimer" type="Timer" parent="." unique_id=708728382]
 autostart = true
+
+[node name="TimerProvider" type="Node" parent="." unique_id=941008027]
+script = ExtResource("7_inwax")
+metadata/_custom_type_script = "uid://boe0o0ku1tnsy"
 
 [connection signal="timeout" from="ReorderTimer" to="." method="_on_reorder_timer_timeout"]

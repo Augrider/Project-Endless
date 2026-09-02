@@ -13,7 +13,7 @@ extends Node2D
 enum BattlePhase { ATTACK, COOLDOWN }
 
 @export var formation: CircleFormation2D
-@export var timer: Timer
+@export var timers: TimerProvider
 
 @export var enemy_prefab:PackedScene
 
@@ -55,8 +55,8 @@ func start_battle() -> void:
 func perform_attack_phase():
 	phase = BattlePhase.ATTACK
 	
-	await get_tree().create_timer(0.5).timeout
-	await debug_strategy.perform(formation, intensity)
+	await timers.get_oneshot(0.5).timeout
+	await debug_strategy.perform(formation, timers, intensity)
 	
 	intensity += 0.1
 	perform_cooldown_phase()
@@ -69,7 +69,7 @@ func perform_attack_phase():
 func perform_cooldown_phase():
 	phase = BattlePhase.COOLDOWN
 	
-	await debug_strategy.perform(formation, intensity / 2)
+	await debug_strategy.perform(formation, timers, intensity / 2)
 	
 	perform_attack_phase()
 	#await get_tree().create_timer(cooldown_phase_duration).timeout
