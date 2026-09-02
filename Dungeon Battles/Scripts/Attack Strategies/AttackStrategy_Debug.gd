@@ -17,15 +17,25 @@ func perform(formation: CircleFormation2D, timers: TimerProvider, intensity: flo
 		return
 	
 	var chasers: EnemyGroup = EnemyGroup.new()
+	var shoot_timer := timers.get_timer()
+	
+	shoot_timer.timeout.connect(_on_repeat_attack)
 	
 	for i in range(chasers_count):
 		chasers.append(enemies.pick_random())
+	
+	for enemy in chasers.get_enemies():
+		formation.remove(enemy)
+	
+	shoot_timer.start(0.5)
 	
 	while chasers.size() > 0:
 		for enemy in chasers.get_enemies():
 			enemy.perform_ability_chase(10, intensity)
 		
 		await timers.get_oneshot(0.5).timeout
+	
+	shoot_timer.stop()
 
 #Get timer for repeating actions
 

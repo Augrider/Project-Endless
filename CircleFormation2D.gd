@@ -76,14 +76,10 @@ func append(enemy:Enemy) -> Vector2:
 
 
 func remove(enemy:Enemy)->void:
-	var key = -1
-	for i in _enemies:
-		if _enemies[i] == enemy:
-			key = i
-			break
+	var spot = _get_enemy_spot(enemy)
 	
-	if key > 0:
-		_enemies.erase(key)
+	if spot != -Vector2i.ONE:
+		_enemies.erase(spot)
 
 
 func get_enemies()->Array[Enemy]:
