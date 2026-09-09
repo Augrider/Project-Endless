@@ -21,6 +21,7 @@ var intensity: float:
 var phase: BattlePhase = BattlePhase.COOLDOWN
 var phase_cycle: int = 1
 
+@export var formation: CircleFormation2D
 @export var attack_phase_timer: Timer
 
 @export var _starting_level: float = 1
@@ -41,6 +42,8 @@ func _process(delta: float) -> void:
 		#BattlePhase.ATTACK: process_attack_phase(delta)
 	
 	#TODO: Get all enemies and set their intensity
+	for enemy in formation.get_enemies():
+		enemy.intensity = intensity
 
 
 func process_cooldown_phase(delta:float):

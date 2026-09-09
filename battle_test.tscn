@@ -60,8 +60,9 @@ autostart = true
 script = ExtResource("7_inwax")
 metadata/_custom_type_script = "uid://boe0o0ku1tnsy"
 
-[node name="BattlePhaseComponent" type="Node" parent="." unique_id=397882546 node_paths=PackedStringArray("attack_phase_timer")]
+[node name="BattlePhaseComponent" type="Node" parent="." unique_id=397882546 node_paths=PackedStringArray("formation", "attack_phase_timer")]
 script = ExtResource("7_rfxk1")
+formation = NodePath("../Environment/Formation")
 attack_phase_timer = NodePath("AttackPhaseTimer")
 _attack_phase_multiplier = 0.5
 _cooldown_phase_duration = 15.0
