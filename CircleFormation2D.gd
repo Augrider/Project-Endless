@@ -1,4 +1,4 @@
-class_name CircleFormation2D extends Formation2D
+class_name CircleFormation2D extends LayeredFormation2D
 
 @export var layers:int = 3
 
@@ -23,8 +23,8 @@ func _ready() -> void:
 
 #Works with at least 2 layers
 func reorder():
-	print_debug("Reordering")
-	_erase_non_active()
+	#print_debug("Reordering")
+	#_erase_non_active()
 	
 	for layer in range(0, layers - 1):
 		var index = _get_layer_free_spot(layer)
@@ -40,21 +40,23 @@ func reorder():
 			else:
 				index = -1
 			#TODO: Check other 2 next to it 
- 
 
 func any_spot_available() -> bool:
-	_erase_non_active()
+	#_erase_non_active()
 	return _enemies.size() < _max_enemies_count
 
 func layer_spot_available(layer:int) -> bool:
-	_erase_non_active()
+	#_erase_non_active()
 	return _get_layer_free_spot(layer) != -1
+
+func get_free_spot(layer: int) -> Vector2i:
+	return Vector2i(layer, _get_layer_free_spot(layer))
 
 
 func append(enemy:Enemy) -> Vector2:
 	var spot: Vector2i = -Vector2i.ONE
 	
-	_erase_non_active()
+	#_erase_non_active()
 	
 	if _enemies.values().has(enemy):
 		spot = _get_enemy_spot(enemy)
@@ -74,6 +76,19 @@ func append(enemy:Enemy) -> Vector2:
 	enemy.go_to_target(target)
 	return target
 
+func append_to(enemy: Enemy, spot: Vector2i) -> Vector2:
+	#_erase_non_active()
+	
+	if _enemies.has(spot):
+		return Vector2.ZERO
+	
+	if spot.x >= 0:
+		_enemies[spot] = enemy
+	
+	var target = _get_spot_position(spot)
+	
+	enemy.go_to_target(target)
+	return target
 
 func remove(enemy:Enemy)->void:
 	var spot = _get_enemy_spot(enemy)
@@ -83,11 +98,11 @@ func remove(enemy:Enemy)->void:
 
 
 func get_enemies()->Array[Enemy]:
-	_erase_non_active()
+	#_erase_non_active()
 	return _enemies.values()
 
 func get_inner_enemies()->Array[Enemy]:
-	_erase_non_active()
+	#_erase_non_active()
 	var enemies: Array[Enemy]
 	
 	for spot in _enemies:

@@ -9,79 +9,60 @@ extends Node2D
 #When small amount of enemies left - no cooldown phase anymore?
 #When to move enemies to front? At cooldown? When places available?
 
-#Better formations? One formation instead of multiple
-enum BattlePhase { ATTACK, COOLDOWN }
-
 @export var formation: CircleFormation2D
 @export var timers: TimerProvider
+@export var battle_phase: BattlePhaseComponent
 
-@export var enemy_prefab:PackedScene
-
-@export var debug_strategy: EnemyAttackStrategy
+@export var attack_strategies: Array[EnemyAttackStrategy]
+@export var cooldown_strategies: Array[EnemyAttackStrategy]
 
 @export var battle_start_cooldown: float = 0.5
-@export var cooldown_phase_duration: float = 0.5
 
-var phase: BattlePhase = BattlePhase.COOLDOWN
-var intensity: float = 0.5
-
-var player:Player
+var current_strategy: EnemyAttackStrategy
 
 
 func _ready() -> void:
-	player = Players.get_player()
+	battle_phase.phase_changed.connect(_on_battle_phase_changed)
 	
-	get_tree().create_timer(battle_start_cooldown).timeout.connect(start_battle)
-
-
-func _on_reorder_timer_timeout() -> void:
-	formation.reorder()
+	timers.get_oneshot(battle_start_cooldown).timeout.connect(start_battle)
 
 
 func start_battle() -> void:
-	while formation.any_spot_available():
-		var enemy = _spawn_new(enemy_prefab)
-		enemy.global_position = formation.append(enemy)
+	pass
+
+func _process(delta:float) -> void:
+	if current_strategy != null:
+		return
 	
-	perform_attack_phase()
-
-#func _process(delta:float) -> void:
-	#start_battle()
-	#if phase != BattlePhase.ATTACK:
-		#perform_attack_phase()
-	#Formation manages place arrangement, just spawn new when needed
+	match battle_phase.phase:
+		BattlePhaseComponent.BattlePhase.ATTACK:
+			perform_attack_phase()
+		BattlePhaseComponent.BattlePhase.COOLDOWN:
+			perform_cooldown_phase()
 
 
+#TODO: Looks like duration of phases is dependant on new intensity mechanic
 func perform_attack_phase():
-	phase = BattlePhase.ATTACK
-	
-	await timers.get_oneshot(0.5).timeout
-	await debug_strategy.perform(formation, timers, intensity)
-	
-	intensity += 0.1
-	perform_cooldown_phase()
-	#Choose attack strategy
-	#Wait while performing
-	#Strategy will use formation and enemies within
-	#Some enemies might leave formation to actively engage enemies
-	#Attack Phase continues until they die or strategy performed
+	#print_debug("Performing Attack")
+	_perform_attack_strategy(attack_strategies.pick_random())
 
 func perform_cooldown_phase():
-	phase = BattlePhase.COOLDOWN
-	
-	await debug_strategy.perform(formation, timers, intensity / 2)
-	
-	perform_attack_phase()
-	#await get_tree().create_timer(cooldown_phase_duration).timeout
-	#Just some waiting
-	#Maybe spawn enemies here
-	#Or use alternate strategies with less intensity
+	#print_debug("Performing Cooldown")
+	_perform_attack_strategy(cooldown_strategies.pick_random())
 
 
-func _spawn_new(enemy_prefab:PackedScene) -> Enemy:
-	var enemy:Enemy = EnemyStorage.request_spawn(enemy_prefab)
+func _on_battle_phase_changed(value: BattlePhaseComponent.BattlePhase):
+	print_debug("Phase change detected")
+	if current_strategy != null:
+		current_strategy.stop()
+		current_strategy = null
+
+
+func _perform_attack_strategy(strategy: EnemyAttackStrategy):
+	current_strategy = strategy
 	
-	enemy.set_allegiance(1)
-	enemy.look_at_target(player)
+	await strategy.perform(formation, timers, battle_phase)
 	
-	return enemy
+	print_debug("Strategy finished")
+	if current_strategy == strategy && !current_strategy.active:
+		current_strategy = null

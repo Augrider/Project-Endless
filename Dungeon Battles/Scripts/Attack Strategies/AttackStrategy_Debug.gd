@@ -5,17 +5,20 @@ class_name DebugAttackStrategy extends EnemyAttackStrategy
 @export var targeters_count: int = 1
 
 var formation: CircleFormation2D
-var intensity: float
+var battle_phase: BattlePhaseComponent
 
 
-func perform(formation: CircleFormation2D, timers: TimerProvider, intensity: float):
+func perform(formation: CircleFormation2D, timers: TimerProvider, battle_phase: BattlePhaseComponent):
 	self.formation = formation
-	self.intensity = intensity
+	self.battle_phase = battle_phase
+	
+	active = true
 	
 	var enemies = formation.get_inner_enemies()
 	if enemies.size() <= 0:
 		return
 	
+	print_debug("Started pursuit")
 	var chasers: EnemyGroup = EnemyGroup.new()
 	var shoot_timer := timers.get_timer()
 	
@@ -30,13 +33,19 @@ func perform(formation: CircleFormation2D, timers: TimerProvider, intensity: flo
 	shoot_timer.start(0.5)
 	
 	while chasers.size() > 0:
+		if !active:
+			shoot_timer.stop()
+			return
+		
 		for enemy in chasers.get_enemies():
-			enemy.perform_ability_chase(10, intensity)
+			enemy.perform_ability_chase(0.6)
 		
 		await timers.get_oneshot(0.5).timeout
 	
 	shoot_timer.stop()
 
+func stop():
+	active = false
 #Get timer for repeating actions
 
 func _on_repeat_attack():
@@ -50,4 +59,4 @@ func _on_repeat_attack():
 		shooters.append(enemies.pick_random())
 	
 	for enemy in shooters:
-		enemy.perform_ability_spray(0.5, intensity)
+		enemy.perform_ability_spray(0.5)

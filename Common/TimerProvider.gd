@@ -23,6 +23,10 @@ func get_timer() -> Timer:
 	
 	return timer
 
+func do_after(callable: Callable, seconds: float):
+	await get_oneshot(seconds).timeout
+	callable.call()
+
 
 func _is_free_timer(timer) -> bool:
 	return timer.is_stopped()

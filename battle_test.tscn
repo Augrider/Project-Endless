@@ -4,21 +4,26 @@
 [ext_resource type="Script" uid="uid://nvc2yxcodih4" path="res://Dungeon Battles/Scripts/BattleControl.gd" id="1_jhtm6"]
 [ext_resource type="Resource" uid="uid://cb1myyie8t3r" path="res://DEBUG_Attack.tres" id="3_8ru30"]
 [ext_resource type="PackedScene" uid="uid://jpahwcw6fs8p" path="res://Enemies/DEBUG_Enemy_Small.tscn" id="3_inwax"]
+[ext_resource type="Script" uid="uid://cb57nb55w11q2" path="res://Dungeon Battles/Scripts/EnemyAttackStrategy.gd" id="3_vplat"]
 [ext_resource type="Script" uid="uid://yji43ynf5uer" path="res://CircleFormation2D.gd" id="4_rfxk1"]
+[ext_resource type="Resource" uid="uid://ckuf7i1owvd4a" path="res://DEBUG_SpreadStrategy.tres" id="5_3813u"]
 [ext_resource type="Script" uid="uid://bxw8mb38f7tbs" path="res://Enemies/Scripts/EnemyContainer.gd" id="5_vplat"]
 [ext_resource type="Script" uid="uid://boe0o0ku1tnsy" path="res://Common/TimerProvider.gd" id="7_inwax"]
+[ext_resource type="Script" uid="uid://cvvve75gj6g5p" path="res://Dungeon Battles/Scripts/BattlePhaseComponent.gd" id="7_rfxk1"]
+[ext_resource type="Script" uid="uid://bb6mtx3qvx8la" path="res://Dungeon Battles/Scripts/EnemiesBattleController.gd" id="8_qnwog"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_3813u"]
 vertices = PackedVector2Array(134, 70, -134, 70, -134, -70, 134, -70)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-144, -80, 144, -80, 144, 80, -144, 80)])
 
-[node name="BattleTest" type="Node2D" unique_id=719512692 node_paths=PackedStringArray("formation", "timers")]
+[node name="BattleTest" type="Node2D" unique_id=719512692 node_paths=PackedStringArray("formation", "timers", "battle_phase")]
 script = ExtResource("1_jhtm6")
 formation = NodePath("Environment/Formation")
 timers = NodePath("TimerProvider")
-enemy_prefab = ExtResource("3_inwax")
-debug_strategy = ExtResource("3_8ru30")
+battle_phase = NodePath("BattlePhaseComponent")
+attack_strategies = Array[ExtResource("3_vplat")]([ExtResource("3_8ru30")])
+cooldown_strategies = Array[ExtResource("3_vplat")]([ExtResource("5_3813u")])
 
 [node name="Environment" type="Node2D" parent="." unique_id=1229868045]
 
@@ -39,6 +44,12 @@ navigation_polygon = SubResource("NavigationPolygon_3813u")
 script = ExtResource("5_vplat")
 metadata/_custom_type_script = "uid://bxw8mb38f7tbs"
 
+[node name="BattleEnemies" type="Node2D" parent="." unique_id=783342939 node_paths=PackedStringArray("formation")]
+script = ExtResource("8_qnwog")
+formation = NodePath("../Environment/Formation")
+enemy_prefab = ExtResource("3_inwax")
+spawns_left = 30
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1049145497]
 zoom = Vector2(8, 8)
 
@@ -49,4 +60,15 @@ autostart = true
 script = ExtResource("7_inwax")
 metadata/_custom_type_script = "uid://boe0o0ku1tnsy"
 
-[connection signal="timeout" from="ReorderTimer" to="." method="_on_reorder_timer_timeout"]
+[node name="BattlePhaseComponent" type="Node" parent="." unique_id=397882546 node_paths=PackedStringArray("attack_phase_timer")]
+script = ExtResource("7_rfxk1")
+attack_phase_timer = NodePath("AttackPhaseTimer")
+_attack_phase_multiplier = 0.5
+_cooldown_phase_duration = 15.0
+_attack_phase_duration = 10.0
+metadata/_custom_type_script = "uid://cvvve75gj6g5p"
+
+[node name="AttackPhaseTimer" type="Timer" parent="BattlePhaseComponent" unique_id=315390639]
+one_shot = true
+
+[connection signal="timeout" from="ReorderTimer" to="BattleEnemies" method="_on_reorder_timer_timeout"]

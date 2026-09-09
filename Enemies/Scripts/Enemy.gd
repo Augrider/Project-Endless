@@ -13,6 +13,7 @@ enum SizeClass { SMALL=1, MEDIUM=2, BIG=3, LARGE=4 }
 var health:float
 
 var current_ability: EnemyAbility
+var intensity: float = 1.0
 
 
 func _ready() -> void:
@@ -65,7 +66,7 @@ func stop_looking():
 #Add stop current ability
 
 #TODO: Add stop current ability
-func perform_ability_targeted(duration:float, intensity:=1.0):
+func perform_ability_targeted(duration:float):
 	if current_ability != null:
 		return
 	
@@ -73,7 +74,7 @@ func perform_ability_targeted(duration:float, intensity:=1.0):
 	await ability_targeted.perform(self, duration, intensity)
 	current_ability = null
 
-func perform_ability_spray(duration:float, intensity:=1.0):
+func perform_ability_spray(duration:float):
 	if current_ability != null:
 		return
 	
@@ -81,7 +82,7 @@ func perform_ability_spray(duration:float, intensity:=1.0):
 	await ability_spread.perform(self, duration, intensity)
 	current_ability = null
 
-func perform_ability_arena(duration:float, intensity:=1.0):
+func perform_ability_arena(duration:float):
 	if current_ability != null:
 		return
 	
@@ -89,7 +90,7 @@ func perform_ability_arena(duration:float, intensity:=1.0):
 	await ability_arena.perform(self, duration, intensity)
 	current_ability = null
 
-func perform_ability_chase(duration:float, intensity:=1.0):
+func perform_ability_chase(duration:float):
 	if current_ability != null:
 		return
 	

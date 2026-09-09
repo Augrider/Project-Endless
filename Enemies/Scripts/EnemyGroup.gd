@@ -8,7 +8,13 @@ var _enemies: Array[Enemy]
 
 func append(enemy:Enemy):
 	_enemies.append(enemy)
-	_clear_unused()
+
+func append_array(enemies: Array[Enemy]):
+	_enemies.append_array(enemies)
+
+func clear():
+	_enemies.clear()
+
 
 #returns only alive enemies
 func get_enemies() -> Array[Enemy]:

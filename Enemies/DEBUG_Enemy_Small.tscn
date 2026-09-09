@@ -64,6 +64,7 @@ neighbor_distance = 50.0
 debug_enabled = true
 script = ExtResource("3_b2fr2")
 body = NodePath("..")
+speed = 50.0
 
 [node name="RepathTimer" type="Timer" parent="Movement" unique_id=616442296]
 wait_time = 0.6

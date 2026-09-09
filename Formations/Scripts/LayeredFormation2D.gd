@@ -1,0 +1,1 @@
+@abstract class_name LayeredFormation2D extends Formation2D
