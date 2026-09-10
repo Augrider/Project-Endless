@@ -5,6 +5,6 @@ class_name EnemyAttackStrategy extends Resource
 var active: bool = false
 
 @abstract
-func perform(formation: CircleFormation2D, timers: TimerProvider, battle_phase: BattlePhaseComponent)
+func perform(formation: CircleFormation2D, timers: TimerProvider)
 @abstract
 func stop()

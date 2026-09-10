@@ -8,7 +8,7 @@ var formation: CircleFormation2D
 var battle_phase: BattlePhaseComponent
 
 
-func perform(formation: CircleFormation2D, timers: TimerProvider, battle_phase: BattlePhaseComponent):
+func perform(formation: CircleFormation2D, timers: TimerProvider):
 	self.formation = formation
 	self.battle_phase = battle_phase
 	

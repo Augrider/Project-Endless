@@ -50,11 +50,11 @@ formation = NodePath("../Environment/Formation")
 enemy_prefab = ExtResource("3_inwax")
 spawns_left = 30
 
+[node name="ReorderTimer" type="Timer" parent="BattleEnemies" unique_id=708728382]
+autostart = true
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1049145497]
 zoom = Vector2(8, 8)
-
-[node name="ReorderTimer" type="Timer" parent="." unique_id=708728382]
-autostart = true
 
 [node name="TimerProvider" type="Node" parent="." unique_id=941008027]
 script = ExtResource("7_inwax")
@@ -72,4 +72,4 @@ metadata/_custom_type_script = "uid://cvvve75gj6g5p"
 [node name="AttackPhaseTimer" type="Timer" parent="BattlePhaseComponent" unique_id=315390639]
 one_shot = true
 
-[connection signal="timeout" from="ReorderTimer" to="BattleEnemies" method="_on_reorder_timer_timeout"]
+[connection signal="timeout" from="BattleEnemies/ReorderTimer" to="BattleEnemies" method="_on_reorder_timer_timeout"]

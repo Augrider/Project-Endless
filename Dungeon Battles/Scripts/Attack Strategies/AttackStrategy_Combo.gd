@@ -4,15 +4,15 @@ class_name ComboAttackStrategy extends EnemyAttackStrategy
 @export var restart_inactive: bool
 
 
-func perform(formation: CircleFormation2D, timers: TimerProvider, battle_phase: BattlePhaseComponent):
+func perform(formation: CircleFormation2D, timers: TimerProvider):
 	active = true
 	
 	print_debug("Starting Combo")
-	_start_inactive(formation, timers, battle_phase)
+	_start_inactive(formation, timers)
 	
 	while active:
 		if restart_inactive:
-			_start_inactive(formation, timers, battle_phase)
+			_start_inactive(formation, timers)
 		elif !_any_active():
 			active = false
 			break
@@ -30,10 +30,10 @@ func stop():
 	_stop_active()
 
 
-func _start_inactive(formation: CircleFormation2D, timers: TimerProvider, battle_phase: BattlePhaseComponent):
+func _start_inactive(formation: CircleFormation2D, timers: TimerProvider):
 	for strategy in strategies:
 		if !strategy.active:
-			strategy.perform(formation, timers, battle_phase)
+			strategy.perform(formation, timers)
 
 func _any_active() -> bool:
 	return strategies.any(func(strategy): return strategy.active)

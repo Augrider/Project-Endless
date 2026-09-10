@@ -3,7 +3,7 @@ class_name PursuitAttackStrategy extends EnemyAttackStrategy
 @export var chasers_count: int = 1
 
 
-func perform(formation: CircleFormation2D, timers: TimerProvider, battle_phase: BattlePhaseComponent):
+func perform(formation: CircleFormation2D, timers: TimerProvider):
 	active = true
 	
 	print_debug("Started pursuit")
