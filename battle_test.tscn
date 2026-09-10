@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://boe0o0ku1tnsy" path="res://Common/TimerProvider.gd" id="7_inwax"]
 [ext_resource type="Script" uid="uid://cvvve75gj6g5p" path="res://Dungeon Battles/Scripts/BattlePhaseComponent.gd" id="7_rfxk1"]
 [ext_resource type="Script" uid="uid://bb6mtx3qvx8la" path="res://Dungeon Battles/Scripts/EnemiesBattleController.gd" id="8_qnwog"]
+[ext_resource type="Script" uid="uid://baoex6u40wuqd" path="res://Dungeon Battles/UI/Scripts/BattlePhaseUI.gd" id="12_fo01t"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_3813u"]
 vertices = PackedVector2Array(134, 70, -134, 70, -134, -70, 134, -70)
@@ -65,11 +66,24 @@ script = ExtResource("7_rfxk1")
 formation = NodePath("../Environment/Formation")
 attack_phase_timer = NodePath("AttackPhaseTimer")
 _attack_phase_multiplier = 0.5
+_enemy_despawn_increase = 0.05
 _cooldown_phase_duration = 15.0
 _attack_phase_duration = 10.0
 metadata/_custom_type_script = "uid://cvvve75gj6g5p"
 
 [node name="AttackPhaseTimer" type="Timer" parent="BattlePhaseComponent" unique_id=315390639]
 one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=440833070]
+
+[node name="ProgressBar_Intensity" type="ProgressBar" parent="CanvasLayer" unique_id=58871945 node_paths=PackedStringArray("battle_phase", "intensity_bar")]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
+max_value = 1.0
+script = ExtResource("12_fo01t")
+battle_phase = NodePath("../../BattlePhaseComponent")
+intensity_bar = NodePath(".")
 
 [connection signal="timeout" from="BattleEnemies/ReorderTimer" to="BattleEnemies" method="_on_reorder_timer_timeout"]

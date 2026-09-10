@@ -61,7 +61,7 @@ func _on_battle_phase_changed(value: BattlePhaseComponent.BattlePhase):
 func _perform_attack_strategy(strategy: EnemyAttackStrategy):
 	current_strategy = strategy
 	
-	await strategy.perform(formation, timers, battle_phase)
+	await strategy.perform(formation, timers)
 	
 	print_debug("Strategy finished")
 	if current_strategy == strategy && !current_strategy.active:
