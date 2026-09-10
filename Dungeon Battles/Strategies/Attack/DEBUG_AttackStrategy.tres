@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ComboAttackStrategy" format=3 uid="uid://b32r8i7ybs5i8"]
+
+[ext_resource type="Script" uid="uid://s4jfk4kl2mng" path="res://Dungeon Battles/Scripts/Attack Strategies/AttackStrategy_Combo.gd" id="1_vm7fa"]
+[ext_resource type="Script" uid="uid://cb57nb55w11q2" path="res://Dungeon Battles/Scripts/EnemyAttackStrategy.gd" id="2_3qfvk"]
+[ext_resource type="Script" uid="uid://clmxxlprcnb0h" path="res://Dungeon Battles/Scripts/Attack Strategies/AttackStrategy_Pursuit.gd" id="3_dbixc"]
+[ext_resource type="Script" uid="uid://d2wpint6esirq" path="res://Dungeon Battles/Scripts/Attack Strategies/AttackStrategy_Spread.gd" id="4_mambg"]
+
+[sub_resource type="Resource" id="Resource_dbixc"]
+script = ExtResource("3_dbixc")
+chasers_count = 2
+metadata/_custom_type_script = "uid://clmxxlprcnb0h"
+
+[sub_resource type="Resource" id="Resource_mambg"]
+script = ExtResource("4_mambg")
+spreader_count = 3
+duration = 5.0
+attack_duration = 5.0
+metadata/_custom_type_script = "uid://d2wpint6esirq"
+
+[resource]
+script = ExtResource("1_vm7fa")
+strategies = Array[ExtResource("2_3qfvk")]([SubResource("Resource_dbixc"), SubResource("Resource_mambg")])
+metadata/_custom_type_script = "uid://s4jfk4kl2mng"

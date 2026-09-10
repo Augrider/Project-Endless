@@ -2,11 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://bb7dqkjvtgyxx" path="res://Player/Player.tscn" id="1_0q417"]
 [ext_resource type="Script" uid="uid://nvc2yxcodih4" path="res://Dungeon Battles/Scripts/BattleControl.gd" id="1_jhtm6"]
-[ext_resource type="Resource" uid="uid://cb1myyie8t3r" path="res://DEBUG_Attack.tres" id="3_8ru30"]
 [ext_resource type="PackedScene" uid="uid://jpahwcw6fs8p" path="res://Enemies/DEBUG_Enemy_Small.tscn" id="3_inwax"]
+[ext_resource type="Resource" uid="uid://b32r8i7ybs5i8" path="res://Dungeon Battles/Strategies/Attack/DEBUG_AttackStrategy.tres" id="3_qnwog"]
 [ext_resource type="Script" uid="uid://cb57nb55w11q2" path="res://Dungeon Battles/Scripts/EnemyAttackStrategy.gd" id="3_vplat"]
 [ext_resource type="Script" uid="uid://yji43ynf5uer" path="res://CircleFormation2D.gd" id="4_rfxk1"]
-[ext_resource type="Resource" uid="uid://ckuf7i1owvd4a" path="res://DEBUG_SpreadStrategy.tres" id="5_3813u"]
+[ext_resource type="Resource" uid="uid://ckuf7i1owvd4a" path="res://Dungeon Battles/Strategies/Cooldown/DEBUG_SpreadStrategy.tres" id="5_3813u"]
 [ext_resource type="Script" uid="uid://bxw8mb38f7tbs" path="res://Enemies/Scripts/EnemyContainer.gd" id="5_vplat"]
 [ext_resource type="Script" uid="uid://boe0o0ku1tnsy" path="res://Common/TimerProvider.gd" id="7_inwax"]
 [ext_resource type="Script" uid="uid://cvvve75gj6g5p" path="res://Dungeon Battles/Scripts/BattlePhaseComponent.gd" id="7_rfxk1"]
@@ -22,7 +22,7 @@ script = ExtResource("1_jhtm6")
 formation = NodePath("Environment/Formation")
 timers = NodePath("TimerProvider")
 battle_phase = NodePath("BattlePhaseComponent")
-attack_strategies = Array[ExtResource("3_vplat")]([ExtResource("3_8ru30")])
+attack_strategies = Array[ExtResource("3_vplat")]([ExtResource("3_qnwog")])
 cooldown_strategies = Array[ExtResource("3_vplat")]([ExtResource("5_3813u")])
 
 [node name="Environment" type="Node2D" parent="." unique_id=1229868045]

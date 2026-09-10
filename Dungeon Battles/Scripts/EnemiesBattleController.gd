@@ -37,7 +37,7 @@ func _on_reorder_timer_timeout() -> void:
 	
 	while formation.layer_spot_available(formation.layers - 1) && spawns_left > 0:
 		var enemy = _spawn_new(enemy_prefab)
-		enemy.global_position = formation.append_to(enemy, formation.get_free_spot(formation.layers - 1))
+		enemy.global_position = formation.append_to(enemy, formation.get_free_layer_spot(formation.layers - 1))
 		spawns_left -= 1
 
 

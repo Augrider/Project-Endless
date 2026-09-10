@@ -41,7 +41,6 @@ func _process(delta: float) -> void:
 		BattlePhase.COOLDOWN: process_cooldown_phase(delta)
 		#BattlePhase.ATTACK: process_attack_phase(delta)
 	
-	#TODO: Get all enemies and set their intensity
 	for enemy in formation.get_enemies():
 		enemy.intensity = intensity
 
