@@ -21,7 +21,7 @@ var intensity: float:
 var phase: BattlePhase = BattlePhase.COOLDOWN
 var phase_cycle: int = 1
 
-@export var formation: CircleFormation2D
+@export var formation: LayeredFormation2D
 @export var attack_phase_timer: Timer
 
 @export var _starting_level: float = 1

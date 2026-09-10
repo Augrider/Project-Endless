@@ -1,8 +1,5 @@
 class_name CircleFormation2D extends LayeredFormation2D
 
-@export var layers:int = 3
-
-@export var inner_enemies_count:int = 4
 #@export var layer_enemies_delta:int = 0
 
 @export var inner_radius:float = 30.0
@@ -41,6 +38,7 @@ func reorder():
 				index = -1
 			#TODO: Check other 2 next to it 
 
+
 func any_spot_available() -> bool:
 	#_erase_non_active()
 	return _enemies.size() < _max_enemies_count
@@ -49,7 +47,7 @@ func layer_spot_available(layer:int) -> bool:
 	#_erase_non_active()
 	return _get_layer_free_spot(layer) != -1
 
-func get_free_spot(layer: int) -> Vector2i:
+func get_free_layer_spot(layer: int) -> Vector2i:
 	return Vector2i(layer, _get_layer_free_spot(layer))
 
 
@@ -115,7 +113,7 @@ func get_inner_enemies()->Array[Enemy]:
 func count()->int:
 	return _enemies.size()
 
-func layer_count(layer:int) -> int:
+func count_on_layer(layer:int) -> int:
 	var count = 0
 	
 	for spot in _enemies:
@@ -123,6 +121,12 @@ func layer_count(layer:int) -> int:
 			count += 1
 	
 	return count
+
+
+func erase_non_active():
+	for spot in _enemies.keys():
+		if _enemies[spot]==null or _enemies[spot].health <= 0:
+			_enemies.erase(spot)
 
 
 func _get_layer_size(layer:int) -> int:
@@ -155,8 +159,3 @@ func _move_enemy_to(enemy:Enemy, spot:Vector2i, from:Vector2i = -Vector2i.ONE):
 	
 	if from != -Vector2i.ONE:
 		_enemies.erase(from)
-
-func _erase_non_active():
-	for spot in _enemies.keys():
-		if _enemies[spot]==null or _enemies[spot].health <= 0:
-			_enemies.erase(spot)

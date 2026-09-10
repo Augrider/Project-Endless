@@ -31,9 +31,9 @@ cooldown_strategies = Array[ExtResource("3_vplat")]([ExtResource("5_3813u")])
 
 [node name="Formation" type="Node2D" parent="Environment" unique_id=578060177]
 script = ExtResource("4_rfxk1")
-inner_enemies_count = 6
 inner_radius = 60.0
 layer_radius_delta = 15.0
+inner_enemies_count = 6
 
 [node name="Projectiles" type="Node2D" parent="Environment" unique_id=1777214934]
 

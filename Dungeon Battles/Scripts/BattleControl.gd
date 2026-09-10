@@ -9,7 +9,7 @@ extends Node2D
 #When small amount of enemies left - no cooldown phase anymore?
 #When to move enemies to front? At cooldown? When places available?
 
-@export var formation: CircleFormation2D
+@export var formation: LayeredFormation2D
 @export var timers: TimerProvider
 @export var battle_phase: BattlePhaseComponent
 
