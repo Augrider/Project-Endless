@@ -1,6 +1,7 @@
 class_name PursuitAttackStrategy extends EnemyAttackStrategy
 
 @export var chasers_count: int = 1
+@export var cooldown: float
 
 
 func perform(formation: CircleFormation2D, timers: TimerProvider):
@@ -8,8 +9,9 @@ func perform(formation: CircleFormation2D, timers: TimerProvider):
 	
 	print_debug("Started pursuit")
 	var chasers: EnemyGroup = _pick_enemies(EnemyGroup.new(), formation)
-	
 	_send_chasers(chasers, formation)
+	
+	await  timers.get_oneshot(cooldown).timeout
 	active = false
 
 func stop():
@@ -32,4 +34,4 @@ func _pick_enemies(group: EnemyGroup, formation: CircleFormation2D) -> EnemyGrou
 func _send_chasers(group: EnemyGroup, formation: CircleFormation2D):
 	for enemy in group.get_enemies():
 		formation.remove(enemy)
-		enemy.perform_ability_chase(0.6)
+		enemy.perform_ability_chase()

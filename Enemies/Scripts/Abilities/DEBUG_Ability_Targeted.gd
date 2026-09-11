@@ -1,22 +1,31 @@
 extends EnemyAbility
 
 @export var projectile_prefab: PackedScene
+@export var shot_count: int = 3
 @export var fire_rate: float = 1
+@export var cooldown: float = 0.5
 
-func _process(delta: float) -> void:
-	if durationLeft > 0:
-		durationLeft = clamp(durationLeft - delta, 0, durationLeft)
 
-func perform(enemy:Enemy, duration:float, intensity:float = 1):
-	durationLeft = duration
-	self.intensity = intensity
+func perform(enemy:Enemy):
+	active = true
 	
 	var player = Players.get_player()
 	
-	while durationLeft > 0:
+	await get_tree().create_timer(0.3 * randf()).timeout
+	
+	for i in shot_count:
+		if !active:
+			return
+		
 		%Launcher.look_at(player.global_position)
 		
 		var projectile = %Launcher.spawn_one(projectile_prefab)
 		projectile.init(enemy.allegiance)
 		
-		await get_tree().create_timer(1/(fire_rate*self.intensity)).timeout
+		await get_tree().create_timer(1/(fire_rate * enemy.intensity)).timeout
+	
+	await get_tree().create_timer(cooldown).timeout
+	active = false
+
+func stop():
+	active = false

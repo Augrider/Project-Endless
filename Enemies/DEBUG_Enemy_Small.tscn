@@ -79,6 +79,7 @@ script = ExtResource("5_b7dvi")
 [node name="Ability_Targeted" type="Node2D" parent="." unique_id=1181017405]
 script = ExtResource("7_5e8k3")
 projectile_prefab = ExtResource("2_kafru")
+fire_rate = 1.3
 
 [node name="Ability_Chase" type="Node2D" parent="." unique_id=685141506]
 script = ExtResource("10_5dn3h")
