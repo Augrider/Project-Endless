@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SpreadAttackStrategy" format=3 uid="uid://ckuf7i1owvd4a"]
+
+[ext_resource type="Script" uid="uid://d2wpint6esirq" path="res://Dungeon Battles/Scripts/Attack Strategies/AttackStrategy_Spread.gd" id="1_phk0x"]
+
+[resource]
+script = ExtResource("1_phk0x")
+spreader_count = 2
+duration = 10.0
+attack_duration = 2.0
+metadata/_custom_type_script = "uid://d2wpint6esirq"

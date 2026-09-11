@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://crapgw0kr01cb"]
+
+[ext_resource type="PackedScene" uid="uid://bb7dqkjvtgyxx" path="res://Player/Player.tscn" id="1_0q417"]
+[ext_resource type="Script" uid="uid://nvc2yxcodih4" path="res://Dungeon Battles/Scripts/BattleControl.gd" id="1_jhtm6"]
+[ext_resource type="PackedScene" uid="uid://jpahwcw6fs8p" path="res://Enemies/DEBUG_Enemy_Small.tscn" id="3_inwax"]
+[ext_resource type="Resource" uid="uid://b32r8i7ybs5i8" path="res://Dungeon Battles/Strategies/Attack/DEBUG_AttackStrategy.tres" id="3_qnwog"]
+[ext_resource type="Script" uid="uid://cb57nb55w11q2" path="res://Dungeon Battles/Scripts/EnemyAttackStrategy.gd" id="3_vplat"]
+[ext_resource type="Script" uid="uid://yji43ynf5uer" path="res://CircleFormation2D.gd" id="4_rfxk1"]
+[ext_resource type="Resource" uid="uid://ckuf7i1owvd4a" path="res://Dungeon Battles/Strategies/Cooldown/DEBUG_SpreadStrategy.tres" id="5_3813u"]
+[ext_resource type="Script" uid="uid://bxw8mb38f7tbs" path="res://Enemies/Scripts/EnemyContainer.gd" id="5_vplat"]
+[ext_resource type="Script" uid="uid://boe0o0ku1tnsy" path="res://Common/TimerProvider.gd" id="7_inwax"]
+[ext_resource type="Script" uid="uid://cvvve75gj6g5p" path="res://Dungeon Battles/Scripts/BattlePhaseComponent.gd" id="7_rfxk1"]
+[ext_resource type="Script" uid="uid://bb6mtx3qvx8la" path="res://Dungeon Battles/Scripts/EnemiesBattleController.gd" id="8_qnwog"]
+[ext_resource type="Script" uid="uid://baoex6u40wuqd" path="res://Dungeon Battles/UI/Scripts/BattlePhaseUI.gd" id="12_fo01t"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_3813u"]
+vertices = PackedVector2Array(134, 70, -134, 70, -134, -70, 134, -70)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-144, -80, 144, -80, 144, 80, -144, 80)])
+
+[node name="BattleTest" type="Node2D" unique_id=719512692 node_paths=PackedStringArray("formation", "timers", "battle_phase")]
+script = ExtResource("1_jhtm6")
+formation = NodePath("Environment/Formation")
+timers = NodePath("TimerProvider")
+battle_phase = NodePath("BattlePhaseComponent")
+attack_strategies = Array[ExtResource("3_vplat")]([ExtResource("3_qnwog")])
+cooldown_strategies = Array[ExtResource("3_vplat")]([ExtResource("5_3813u")])
+
+[node name="Environment" type="Node2D" parent="." unique_id=1229868045]
+
+[node name="Player" parent="Environment" unique_id=1896151399 instance=ExtResource("1_0q417")]
+
+[node name="Formation" type="Node2D" parent="Environment" unique_id=578060177]
+script = ExtResource("4_rfxk1")
+inner_radius = 60.0
+layer_radius_delta = 15.0
+inner_enemies_count = 6
+
+[node name="Projectiles" type="Node2D" parent="Environment" unique_id=1777214934]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="Environment" unique_id=2113450088]
+navigation_polygon = SubResource("NavigationPolygon_3813u")
+
+[node name="EnemyContainer" type="Node2D" parent="Environment" unique_id=1444451772]
+script = ExtResource("5_vplat")
+metadata/_custom_type_script = "uid://bxw8mb38f7tbs"
+
+[node name="BattleEnemies" type="Node2D" parent="." unique_id=783342939 node_paths=PackedStringArray("formation")]
+script = ExtResource("8_qnwog")
+formation = NodePath("../Environment/Formation")
+enemy_prefab = ExtResource("3_inwax")
+spawns_left = 30
+
+[node name="ReorderTimer" type="Timer" parent="BattleEnemies" unique_id=708728382]
+autostart = true
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1049145497]
+zoom = Vector2(8, 8)
+
+[node name="TimerProvider" type="Node" parent="." unique_id=941008027]
+script = ExtResource("7_inwax")
+metadata/_custom_type_script = "uid://boe0o0ku1tnsy"
+
+[node name="BattlePhaseComponent" type="Node" parent="." unique_id=397882546 node_paths=PackedStringArray("formation", "attack_phase_timer")]
+script = ExtResource("7_rfxk1")
+formation = NodePath("../Environment/Formation")
+attack_phase_timer = NodePath("AttackPhaseTimer")
+_attack_phase_multiplier = 0.5
+_enemy_despawn_increase = 0.05
+_cooldown_phase_duration = 15.0
+_attack_phase_duration = 10.0
+metadata/_custom_type_script = "uid://cvvve75gj6g5p"
+
+[node name="AttackPhaseTimer" type="Timer" parent="BattlePhaseComponent" unique_id=315390639]
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=440833070]
+
+[node name="ProgressBar_Intensity" type="ProgressBar" parent="CanvasLayer" unique_id=58871945 node_paths=PackedStringArray("battle_phase", "intensity_bar")]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
+max_value = 1.0
+script = ExtResource("12_fo01t")
+battle_phase = NodePath("../../BattlePhaseComponent")
+intensity_bar = NodePath(".")
+
+[connection signal="timeout" from="BattleEnemies/ReorderTimer" to="BattleEnemies" method="_on_reorder_timer_timeout"]
