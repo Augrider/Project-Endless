@@ -4,7 +4,7 @@ class_name SpreadAttackStrategy extends EnemyAttackStrategy
 #TODO: How this strategy picks units for attack
 
 @export var duration: float = 1
-@export var attack_duration: float = 1
+@export var spread_wave_duration: float = 1
 @export var return_immediately: bool
 
 
@@ -25,7 +25,7 @@ func perform(formation: CircleFormation2D, timers: TimerProvider):
 		spreaders = _pick_enemies(spreaders, formation)
 		_perform_spread(spreaders)
 		
-		await timers.get_oneshot(attack_duration).timeout
+		await timers.get_oneshot(spread_wave_duration).timeout
 	
 	active = false
 
@@ -53,4 +53,4 @@ func _perform_spread(spreaders: EnemyGroup):
 		return
 
 	for enemy in enemies:
-		enemy.perform_ability_targeted(attack_duration)
+		enemy.perform_ability_spray()

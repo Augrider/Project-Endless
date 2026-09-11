@@ -2,18 +2,19 @@ class_name Enemy extends Unit
 
 enum SizeClass { SMALL=1, MEDIUM=2, BIG=3, LARGE=4 }
 
-@export var ability_targeted:EnemyAbility
-@export var ability_spread:EnemyAbility
-@export var ability_arena:EnemyAbility
-@export var ability_chase:EnemyAbility
+@export var ability_targeted: EnemyAbility
+@export var ability_spread: EnemyAbility
+@export var ability_arena: EnemyAbility
+@export var ability_chase: EnemyAbility
 
 @export var size_class: SizeClass
 
-@export var max_health:float = 10.0
-var health:float
+@export var max_health: float = 10.0
+var health: float
+
+var intensity: float = 1.0
 
 var current_ability: EnemyAbility
-var intensity: float = 1.0
 
 
 func _ready() -> void:
@@ -66,34 +67,47 @@ func stop_looking():
 #Add stop current ability
 
 #TODO: Add stop current ability
-func perform_ability_targeted(duration:float):
+#We want to continue to perform behavior until called to stop
+#Either have ability on repeat or start after each perform cycle
+#Second way is more controllable
+func perform_ability_targeted() -> bool:
 	if current_ability != null:
-		return
+		return false
 	
-	current_ability = ability_targeted
-	await ability_targeted.perform(self, duration, intensity)
-	current_ability = null
+	_start_ability(ability_targeted)
+	return true
 
-func perform_ability_spray(duration:float):
+func perform_ability_spray() -> bool:
 	if current_ability != null:
-		return
+		return false
 	
-	current_ability = ability_targeted
-	await ability_spread.perform(self, duration, intensity)
-	current_ability = null
+	_start_ability(ability_spread)
+	return true
 
-func perform_ability_arena(duration:float):
+func perform_ability_arena() -> bool:
 	if current_ability != null:
-		return
+		return false
 	
-	current_ability = ability_targeted
-	await ability_arena.perform(self, duration, intensity)
-	current_ability = null
+	_start_ability(ability_arena)
+	return true
 
-func perform_ability_chase(duration:float):
+func perform_ability_chase() -> bool:
 	if current_ability != null:
-		return
+		return false
 	
-	current_ability = ability_targeted
-	await ability_chase.perform(self, duration, intensity)
-	current_ability = null
+	_start_ability(ability_chase)
+	return true
+
+func stop_abilities():
+	if current_ability != null:
+		current_ability.stop()
+		current_ability = null # We can safely do that, abilities should stop at place
+
+
+func _start_ability(ability: EnemyAbility):
+	current_ability = ability
+	
+	await ability.perform(self)
+	
+	if current_ability == ability && !ability.active:
+		current_ability = null

@@ -1,7 +1,9 @@
 @abstract class_name EnemyAbility extends Node2D
 
-var durationLeft:float
-var intensity:float = 1
+var active: bool = false
 
 @abstract
-func perform(enemy:Enemy, duration:float, intensity:float = 1)
+func perform(enemy:Enemy)
+
+@abstract
+func stop()
