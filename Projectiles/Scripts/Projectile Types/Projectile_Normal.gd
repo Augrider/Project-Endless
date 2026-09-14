@@ -62,7 +62,7 @@ func on_power_changed(value:float):
 		_set_scale(power/base_power)
 
 
-func apply_effects_to(projectile: Projectile):
+func call_collision_with(projectile: Projectile):
 	if %Hitbox.collided_with(projectile):
 		return
 	

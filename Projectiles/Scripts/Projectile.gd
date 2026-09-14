@@ -47,7 +47,7 @@ func set_power(value: float) -> void:
 	_power_delta = value - power
 
 @abstract func on_power_changed(delta: float)
-@abstract func apply_effects_to(projectile: Projectile)
+@abstract func call_collision_with(projectile: Projectile)
 
 @abstract func on_init() -> void
 @abstract func destroy() -> void

@@ -1,29 +1,31 @@
-extends Node
+extends ProjectileComponent
 
-@export var owner_projectile:Projectile
+@export var deflect_multiplier: float = 0.9
+@export var deflect_cost: float
 
 
 func _on_opponent_projectile_hit(projectile: Projectile) -> void:
 	#first, reverse the direction
 	#then, based on small random, random direction and power of both projectiles
 	#rotate the direction
-	projectile.global_rotation_degrees = _get_projectile_direction(projectile)
-	projectile.set_power(projectile.power * 0.8)
-	projectile.speed *= 0.7
-	projectile.lifeLeftNormalized * 0.6
+	projectile.global_rotation_degrees = _get_deflect_direction(projectile)
+	
+	projectile.set_power(projectile.power * deflect_multiplier)
+	projectile.speed *= deflect_multiplier
+	projectile.lifeLeftNormalized *= deflect_multiplier
 
-	#And reduce our own (in addition to projectile hit itself)
-	owner_projectile.add_power(-1)
+	owner_projectile.add_power(-deflect_cost)
 
-func _get_projectile_direction(projectile:Projectile):
+
+func _get_deflect_direction(projectile:Projectile):
 	var target_rotation: float = owner_projectile.global_rotation_degrees
 	var delta: float = randf_range(-45, 45)
 	
-	var power_left: float = owner_projectile.power/owner_projectile.base_power
+	var relative_strength: float = owner_projectile.power / owner_projectile.base_power
 	
-	if power_left < 1:
-		var angle: float = (1 - power_left) * 135.0
-		delta += angle * sign(delta)
+	if relative_strength < 1:
+		var angle: float = (1 - relative_strength) * 135.0
+		delta += angle * sign(0.5 - randf())
 	
 	target_rotation += delta
 	return target_rotation

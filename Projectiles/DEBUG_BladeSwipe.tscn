@@ -48,6 +48,8 @@ owner_projectile = NodePath("..")
 
 [node name="ReflectEffect" type="Node2D" parent="." unique_id=56327232 node_paths=PackedStringArray("owner_projectile")]
 script = ExtResource("5_hhpjd")
+boost_multiplier = 1.3
+reflect_cost = 2.0
 owner_projectile = NodePath("..")
 
 [node name="PushEffect" type="Node2D" parent="." unique_id=1484422871 node_paths=PackedStringArray("owner_projectile")]

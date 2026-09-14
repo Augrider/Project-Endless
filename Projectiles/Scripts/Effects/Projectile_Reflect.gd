@@ -1,27 +1,31 @@
-extends Node
+extends ProjectileComponent
 
-@export var owner_projectile:Projectile
+@export var boost_multiplier: float = 1.1
+@export var reflect_cost: float
 
 
 func _on_opponent_projectile_hit(projectile: Projectile) -> void:
 	#change projectile allegiance
-	projectile.set_allegiance(owner_projectile.allegiance)
 	#first, reverse the direction
 	#then, based on small random, random direction and power of both projectiles
 	#rotate the direction
-	projectile.global_rotation_degrees = _get_projectile_direction(projectile)
 	#And add some velocity and power
-	projectile.add_power(owner_projectile.power)
-	projectile.speed *= 1.2
-	#And reduce our own (in addition to projectile hit itself)
-	owner_projectile.add_power(-1)
+	
+	projectile.global_rotation_degrees = _get_reflect_direction(projectile)
+	
+	projectile.set_allegiance(owner_projectile.allegiance)
+	projectile.set_power(projectile.power * boost_multiplier)
+	projectile.speed *= boost_multiplier
+	
+	owner_projectile.add_power(-reflect_cost)
 
-func _get_projectile_direction(projectile:Projectile):
+
+func _get_reflect_direction(projectile:Projectile):
 	var target_rotation:float = owner_projectile.global_rotation_degrees
-	var delta: float = randf_range(-5, 5)
+	var delta: float = randf_range(-10, 10)
 	
 	if projectile.power > owner_projectile.power:
-		var angle: float = clamp(projectile.power-owner_projectile.power, 0, 10.0)*6.0
+		var angle: float = clamp(projectile.power - owner_projectile.power, 0, 10.0)*6.0
 		delta += angle * sign(delta)
 	
 	target_rotation += delta

@@ -59,7 +59,8 @@ func apply_effects_to(body: Node2D):
 		else:
 			opponent_projectile_hit.emit(body)
 		
-		body.apply_effects_to(owner_projectile)
+		#Call collision on other projectile too
+		body.call_collision_with(owner_projectile)
 		return
 	
 	if body is MapObject:
