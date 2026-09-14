@@ -14,7 +14,6 @@ metadata/_custom_type_script = "uid://clmxxlprcnb0h"
 script = ExtResource("4_mambg")
 spreader_count = 3
 duration = 5.0
-attack_duration = 5.0
 metadata/_custom_type_script = "uid://d2wpint6esirq"
 
 [resource]

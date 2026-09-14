@@ -14,7 +14,7 @@ func _on_opponent_projectile_hit(projectile: Projectile) -> void:
 	projectile.add_power(owner_projectile.power)
 	projectile.speed *= 1.2
 	#And reduce our own (in addition to projectile hit itself)
-	owner_projectile.reduce_power(1)
+	owner_projectile.add_power(-1)
 
 func _get_projectile_direction(projectile:Projectile):
 	var target_rotation:float = owner_projectile.global_rotation_degrees

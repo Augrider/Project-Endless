@@ -8,12 +8,12 @@ func _on_opponent_projectile_hit(projectile: Projectile) -> void:
 	#then, based on small random, random direction and power of both projectiles
 	#rotate the direction
 	projectile.global_rotation_degrees = _get_projectile_direction(projectile)
-	projectile.reduce_power(projectile.power * 0.2)
+	projectile.set_power(projectile.power * 0.8)
 	projectile.speed *= 0.7
 	projectile.lifeLeftNormalized * 0.6
 
 	#And reduce our own (in addition to projectile hit itself)
-	owner_projectile.reduce_power(1)
+	owner_projectile.add_power(-1)
 
 func _get_projectile_direction(projectile:Projectile):
 	var target_rotation: float = owner_projectile.global_rotation_degrees

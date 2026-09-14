@@ -26,9 +26,9 @@ battle_phase = NodePath("BattlePhaseComponent")
 attack_strategies = Array[ExtResource("3_vplat")]([ExtResource("3_qnwog")])
 cooldown_strategies = Array[ExtResource("3_vplat")]([ExtResource("5_3813u")])
 
-[node name="Environment" type="Node2D" parent="." unique_id=1229868045]
+[node name="Player" parent="." unique_id=1896151399 instance=ExtResource("1_0q417")]
 
-[node name="Player" parent="Environment" unique_id=1896151399 instance=ExtResource("1_0q417")]
+[node name="Environment" type="Node2D" parent="." unique_id=1229868045]
 
 [node name="Formation" type="Node2D" parent="Environment" unique_id=578060177]
 script = ExtResource("4_rfxk1")
@@ -36,14 +36,8 @@ inner_radius = 60.0
 layer_radius_delta = 15.0
 inner_enemies_count = 6
 
-[node name="Projectiles" type="Node2D" parent="Environment" unique_id=1777214934]
-
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="Environment" unique_id=2113450088]
 navigation_polygon = SubResource("NavigationPolygon_3813u")
-
-[node name="EnemyContainer" type="Node2D" parent="Environment" unique_id=1444451772]
-script = ExtResource("5_vplat")
-metadata/_custom_type_script = "uid://bxw8mb38f7tbs"
 
 [node name="BattleEnemies" type="Node2D" parent="." unique_id=783342939 node_paths=PackedStringArray("formation")]
 script = ExtResource("8_qnwog")
@@ -53,6 +47,12 @@ spawns_left = 30
 
 [node name="ReorderTimer" type="Timer" parent="BattleEnemies" unique_id=708728382]
 autostart = true
+
+[node name="EnemyContainer" type="Node2D" parent="BattleEnemies" unique_id=1444451772]
+script = ExtResource("5_vplat")
+metadata/_custom_type_script = "uid://bxw8mb38f7tbs"
+
+[node name="Projectiles" type="Node2D" parent="." unique_id=1777214934]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1049145497]
 zoom = Vector2(8, 8)
