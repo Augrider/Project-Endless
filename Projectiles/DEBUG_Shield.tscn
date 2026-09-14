@@ -43,6 +43,8 @@ shape = SubResource("RectangleShape2D_nr5x5")
 [node name="DeflectEffect" type="Node2D" parent="." unique_id=56327232 node_paths=PackedStringArray("owner_projectile")]
 script = ExtResource("4_cvoup")
 owner_projectile = NodePath("..")
+deflect_multiplier = 0.7
+deflect_cost = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=873116227]
 position = Vector2(0.5, -1.9967556e-06)

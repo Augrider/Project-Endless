@@ -1,4 +1,4 @@
-extends Projectile
+class_name NormalProjectile extends Projectile
 
 #TODO: connect lifetime to color, size - to relative power
 #TODO: still change power based on lifetime somehow? Decay?
@@ -28,16 +28,7 @@ func on_init()->void:
 	%Hitbox.monitoring = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	if power <= 0:
-		return
-	
-	lifeLeftNormalized -= delta/lifetime
-	
-	if lifeLeftNormalized <= 0:
-		destroy()
-		return
-	
+func on_process(delta: float) -> void:
 	var lifetime_multiplier = speed_curve.sample(lifeLeftNormalized)
 	speed_current = speed * lifetime_multiplier
 	# Power changes based on current
@@ -52,28 +43,31 @@ func _process(delta: float) -> void:
 
 func destroy()->void:
 	power = 0
+	active = false
 	%Hitbox.set_deferred("monitoring", false)
 	
 	var tween = create_tween()
-	tween.tween_property(self, "scale", Vector2.ZERO, 0.2)
+	tween.tween_property(self, "scale", Vector2.ZERO, 0.1)
 	tween.tween_callback(Callable(self, "queue_free"))
 	tween.play()
 
 
-func add_power(value:float)->void:
-	set_power(power + value)
-
-func reduce_power(value:float)->void:
-	set_power(power - value)
-
-func set_power(value:float):
-	power = value
+func on_power_changed(value:float):
+	power += value
 	
 	if power <= 0:
 		power = 0
 		destroy()
 	else:
 		_set_scale(power/base_power)
+
+
+func call_collision_with(projectile: Projectile):
+	if %Hitbox.collided_with(projectile):
+		return
+	
+	%Hitbox.add_to_collided(projectile)
+	%Hitbox.apply_effects_to(projectile)
 
 
 func _set_scale(value:float):
