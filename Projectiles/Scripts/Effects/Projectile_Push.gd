@@ -6,7 +6,7 @@ extends ProjectileComponent
 
 #TODO: on any other object type hit - push owner away
 
-func _on_unit_hit(unit:Unit):
+func _on_unit_hit(unit_hitbox:UnitHitbox):
 	# Player push is not dependant on class, only power
 	# Enemy push is based on size
 	# If enemy is not bigger than big, then push enemy
@@ -14,6 +14,7 @@ func _on_unit_hit(unit:Unit):
 	#TODO: Only player projectiles will move player
 	
 	print_debug('Trying push with '+str(owner_projectile.power))
+	var unit = unit_hitbox.owner_unit
 	
 	if unit is Player:
 		_push(unit, owner_projectile.global_position, owner_projectile.power)

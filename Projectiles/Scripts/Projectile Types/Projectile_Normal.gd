@@ -67,7 +67,7 @@ func call_collision_with(projectile: Projectile):
 		return
 	
 	%Hitbox.add_to_collided(projectile)
-	%Hitbox.apply_effects_to(projectile)
+	%Hitbox.apply_effects_to_projectile(projectile)
 
 
 func _set_scale(value:float):

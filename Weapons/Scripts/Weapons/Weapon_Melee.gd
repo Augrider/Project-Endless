@@ -32,5 +32,7 @@ func fire()->void:
 	var projectile := launcher_projectile.spawn_one(projectile_prefab)
 	var projectile_melee := launcher_melee.spawn_one(projectile_melee_prefab)
 	
+	projectile_melee.reparent(self)
+	
 	projectile.init(0)
 	projectile_melee.init(0)

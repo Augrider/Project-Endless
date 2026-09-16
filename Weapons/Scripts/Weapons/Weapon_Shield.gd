@@ -26,4 +26,6 @@ func on_trigger_released()->void:
 
 func fire()->void:
 	shield_current = launcher.spawn_one(projectile_shield_prefab)
+	shield_current.reparent(self)
+	
 	shield_current.init(0)

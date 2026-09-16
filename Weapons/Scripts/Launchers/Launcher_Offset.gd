@@ -16,11 +16,9 @@ extends WeaponLauncher
 	#return result
 
 func spawn_one(projectile_prefab:PackedScene) -> Projectile:
-	var projectile:Projectile = projectile_prefab.instantiate()
+	var projectile:Projectile = ProjectileStorage.request_spawn(projectile_prefab)
 	
 	projectile.global_position = global_position
 	projectile.global_rotation = global_rotation
-	
-	get_tree().root.add_child(projectile)
 	
 	return projectile
