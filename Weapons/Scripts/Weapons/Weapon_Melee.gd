@@ -1,10 +1,10 @@
-extends Weapon
+class_name MeleeWeapon extends Weapon
 
-@export var launcher_projectile:WeaponLauncher
-@export var launcher_melee:WeaponLauncher
+@export var launcher_projectile: WeaponLauncher
+@export var launcher_melee: WeaponLauncher
 
-@export var projectile_prefab:PackedScene
-@export var projectile_melee_prefab:PackedScene
+@export var projectile_prefab: PackedScene
+@export var projectile_melee_prefab: PackedScene
 
 @export var fire_rate:float = 3
 var cooldown:float = 0
@@ -24,15 +24,13 @@ func try_fire()->bool:
 	
 	fire()
 	
-	cooldown=1/fire_rate
+	cooldown = 1/fire_rate
 	return true
 
 
 func fire()->void:
 	var projectile := launcher_projectile.spawn_one(projectile_prefab)
 	var projectile_melee := launcher_melee.spawn_one(projectile_melee_prefab)
-	
-	projectile_melee.reparent(self)
 	
 	projectile.init(0)
 	projectile_melee.init(0)

@@ -1,5 +1,6 @@
 class_name Player extends Unit
 
+const ALLEGIANCE: int = 0
 # Handles input from top, health, weapons, movement...
 # Does Godot allow good separation?
 

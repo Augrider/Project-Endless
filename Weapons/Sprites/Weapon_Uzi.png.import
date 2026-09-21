@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2mlcng6lq48a"
-path="res://.godot/imported/Enemy_DEBUG(Full_Body_DEBUG) _0001.png-1d59ef0484f7a403377a123e98916785.ctex"
+uid="uid://c8tkhknhwrqd4"
+path="res://.godot/imported/Weapon_Uzi.png-992830b044fccc4d20237f52cb53e5b4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Aseprite/Enemy_DEBUG(Full_Body_DEBUG) _0001.png"
-dest_files=["res://.godot/imported/Enemy_DEBUG(Full_Body_DEBUG) _0001.png-1d59ef0484f7a403377a123e98916785.ctex"]
+source_file="res://Weapons/Sprites/Weapon_Uzi.png"
+dest_files=["res://.godot/imported/Weapon_Uzi.png-992830b044fccc4d20237f52cb53e5b4.ctex"]
 
 [params]
 
