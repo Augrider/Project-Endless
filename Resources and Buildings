@@ -12,3 +12,15 @@
 	Forest worlds - Plants regrow or walk. Or become aggressive and attack everyone close. The progression is tied to agriculture, placing different plants close or far from each other and water sources
 	Robotic worlds - More typical turrets and technological development? No conveyors and hard to create supply chains
 	Bio worlds - splice creatures that collect biomass and fight for you. Hunt, create weapons from parts
+
+Probable design:
+-Energy grains - grown from grain fields, used for a lot of crafting recipes and for powering up land chunks
+-Wood, Minerals - both can be used to create basic parts, roads
+-Basic parts - used for construction of starter buildings and towers
+-Metal Ore - smeltered into metals
+-Metals - used for advanced structures and in creation of Upgrade components
+-Biomass, Metal Scrap, Electronics, Genetic Material - dropped from enemies, used in advanced structures, research
+-Dimension Crystal - endgame material for research and power
+
+Every resource is used to research buildings, once per run
+Towers need to be researched every run?
