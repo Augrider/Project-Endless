@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 func on_trigger_released() -> void:
 	if mag_ammo < mag_size:
 		mag_ammo = mag_size
-		launcher.recoil_normalized = 0
+		#launcher.recoil_normalized = 0
 		
 		cooldown += reload_cooldown
 

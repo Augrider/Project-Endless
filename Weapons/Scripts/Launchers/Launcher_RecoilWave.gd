@@ -7,9 +7,6 @@ var deviation_normalized: float = 0
 
 func _process(delta: float) -> void:
 	_set_recoil_normalized(recoil_normalized - recoil_control * delta)
-	
-	if recoil_normalized <= 0:
-		deviation_normalized = 0
 
 
 func shoot_once(projectile_prefab: PackedScene, projectile_amount: int = 1) -> Array[Projectile]:
@@ -45,7 +42,7 @@ func _add_deviation_step():
 	deviation_normalized += step_pi
 	
 	if deviation_normalized >= 2 || deviation_normalized <= -2:
-		deviation_normalized = 0
+		deviation_normalized = fmod(deviation_normalized, 2)
 
 func _calculate_spread() -> float:
 	return randf_range(-max_spread, max_spread)

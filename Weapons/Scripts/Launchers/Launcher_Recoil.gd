@@ -13,7 +13,6 @@ var _deviation: float = 0
 
 func _process(delta: float) -> void:
 	_set_recoil_normalized(recoil_normalized - recoil_control * delta)
-	print_debug("Old process")
 
 
 func shoot_once(projectile_prefab: PackedScene, projectile_amount: int = 1) -> Array[Projectile]:
@@ -45,9 +44,6 @@ func _set_recoil_normalized(value: float):
 
 func _calculate_deviation() -> float:
 	#Take recoil and current _deviation sign
-	if recoil_normalized == 0:
-		return 0
-	
 	var recoil_sign = signf(_deviation)
 	
 	if recoil_sign == 0:

@@ -10,14 +10,15 @@ script = ExtResource("1_qxytq")
 launcher = NodePath("Launcher")
 projectile_prefab = ExtResource("2_237cc")
 fire_rate = 20.0
-recoil = 0.25
+recoil = -0.1
+recoil_control = -0.8
 max_deviation = 28.0
 max_spread = 0.0
-mag_size = 45
+mag_size = 40
 
 [node name="Launcher" type="Node2D" parent="." unique_id=2073775065 node_paths=PackedStringArray("gun_model")]
 script = ExtResource("3_o56u3")
-step_pi = 0.19
+step_pi = 1.19
 gun_model = NodePath("../Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1275117885]
