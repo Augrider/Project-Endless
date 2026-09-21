@@ -44,7 +44,7 @@ navigation_polygon = SubResource("NavigationPolygon_3813u")
 script = ExtResource("8_qnwog")
 formation = NodePath("../Environment/Formation")
 enemy_prefab = ExtResource("3_inwax")
-spawns_left = 30
+spawns_left = 1
 
 [node name="ReorderTimer" type="Timer" parent="BattleEnemies" unique_id=708728382]
 autostart = true

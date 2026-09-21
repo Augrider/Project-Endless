@@ -1,30 +1,25 @@
-class_name RecoilLauncher extends WeaponLauncher
+class_name RecoilWaveLauncher extends RecoilLauncher
 
-@export var gun_model: Node2D
+@export var step_pi: float = 0.25
 
-var recoil: float = 0.5
-var recoil_control: float = 0.5
-var max_deviation: float = 10
-var max_spread: float = 2
-
-var recoil_normalized: float = 0
-var _deviation: float = 0
+var deviation_normalized: float = 0
 
 
 func _process(delta: float) -> void:
 	_set_recoil_normalized(recoil_normalized - recoil_control * delta)
-	print_debug("Old process")
+	
+	if recoil_normalized <= 0:
+		deviation_normalized = 0
 
 
 func shoot_once(projectile_prefab: PackedScene, projectile_amount: int = 1) -> Array[Projectile]:
-	#Deviation should be based on additional mechanism
-	#To shoot waves, a sine function might be used
 	var projectiles: Array[Projectile]
 	
 	for i in projectile_amount:
 		var projectile = spawn_one(projectile_prefab)
 		projectiles.append(projectile)
 	
+	_add_deviation_step()
 	_set_recoil_normalized(recoil_normalized + recoil)
 	return projectiles
 
@@ -40,20 +35,17 @@ func spawn_one(projectile_prefab: PackedScene) -> Projectile:
 
 func _set_recoil_normalized(value: float):
 	recoil_normalized = clampf(value, 0, 1)
-	_deviation = _calculate_deviation()
-	gun_model.rotation_degrees = randf_range(0, _deviation)
+	gun_model.rotation_degrees = _calculate_deviation()
 
 func _calculate_deviation() -> float:
-	#Take recoil and current _deviation sign
-	if recoil_normalized == 0:
-		return 0
+	#Take recoil and current deviation sign
+	return max_deviation * recoil_normalized * sin(deviation_normalized * PI)
+
+func _add_deviation_step():
+	deviation_normalized += step_pi
 	
-	var recoil_sign = signf(_deviation)
-	
-	if recoil_sign == 0:
-		recoil_sign = randi_range(0, 1) * 2 - 1
-	
-	return max_deviation * recoil_normalized * recoil_sign
+	if deviation_normalized >= 2 || deviation_normalized <= -2:
+		deviation_normalized = 0
 
 func _calculate_spread() -> float:
 	return randf_range(-max_spread, max_spread)

@@ -2,23 +2,22 @@
 
 [ext_resource type="Script" uid="uid://c34ca1fdjhrlu" path="res://Weapons/Scripts/Weapons/Weapon_RecoilGun.gd" id="1_qxytq"]
 [ext_resource type="PackedScene" uid="uid://lwj81gkcl6kd" path="res://Projectiles/DEBUG_GunProjectile.tscn" id="2_237cc"]
-[ext_resource type="Script" uid="uid://3tsv1t7hm27e" path="res://Weapons/Scripts/Launchers/Launcher_Recoil.gd" id="2_o56u3"]
+[ext_resource type="Script" uid="uid://21pyvxow32qo" path="res://Weapons/Scripts/Launchers/Launcher_RecoilWave.gd" id="3_o56u3"]
 [ext_resource type="Texture2D" uid="uid://c8tkhknhwrqd4" path="res://Weapons/Sprites/Weapon_Uzi.png" id="4_o56u3"]
 
 [node name="Weapon_Uzi" type="Node2D" unique_id=598673798 node_paths=PackedStringArray("launcher")]
 script = ExtResource("1_qxytq")
 launcher = NodePath("Launcher")
 projectile_prefab = ExtResource("2_237cc")
-fire_rate = 15.0
-projectiles_amount = 3
-recoil = 0.2
-recoil_control = 1.0
-max_deviation = 25.0
-max_spread = 15.0
+fire_rate = 20.0
+recoil = 0.25
+max_deviation = 28.0
+max_spread = 0.0
 mag_size = 45
 
 [node name="Launcher" type="Node2D" parent="." unique_id=2073775065 node_paths=PackedStringArray("gun_model")]
-script = ExtResource("2_o56u3")
+script = ExtResource("3_o56u3")
+step_pi = 0.19
 gun_model = NodePath("../Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1275117885]

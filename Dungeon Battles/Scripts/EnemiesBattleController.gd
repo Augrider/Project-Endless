@@ -17,9 +17,10 @@ func _ready() -> void:
 	EnemyStorage.spawned.connect(_on_enemy_spawned)
 	EnemyStorage.despawned.connect(_on_enemy_despawned)
 	
-	while formation.any_spot_available():
+	while formation.any_spot_available() && spawns_left > 0:
 		var enemy = _spawn_new(enemy_prefab)
 		enemy.global_position = formation.append(enemy)
+		spawns_left -= 1
 
 
 func _exit_tree() -> void:
