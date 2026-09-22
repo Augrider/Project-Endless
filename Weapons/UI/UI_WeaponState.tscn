@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://bu4ly3xdjh0ug"]
+
+[ext_resource type="Script" uid="uid://c5oii8qr0y81l" path="res://Weapons/UI/Scripts/WeaponStateUI.gd" id="1_lnypq"]
+[ext_resource type="Texture2D" uid="uid://cxtqhgkoy6c2y" path="res://Weapons/Sprites/Weapon01.png" id="2_hndab"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_14hq7"]
+font_size = 36
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Weapon1" type="Control" unique_id=454347151 node_paths=PackedStringArray("icon", "state")]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_lnypq")
+icon = NodePath("TextureRect")
+state = NodePath("Label")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2126869660]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.6
+offset_left = 5.0
+offset_right = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_hndab")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=121570348]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.6
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "0/0/0.0"
+label_settings = SubResource("LabelSettings_14hq7")
+horizontal_alignment = 1
+vertical_alignment = 1

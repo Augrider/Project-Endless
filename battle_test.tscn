@@ -12,7 +12,8 @@
 [ext_resource type="Script" uid="uid://cvvve75gj6g5p" path="res://Dungeon Battles/Scripts/BattlePhaseComponent.gd" id="7_rfxk1"]
 [ext_resource type="Script" uid="uid://bb6mtx3qvx8la" path="res://Dungeon Battles/Scripts/EnemiesBattleController.gd" id="8_qnwog"]
 [ext_resource type="Script" uid="uid://ddfr363kas73a" path="res://Projectiles/Scripts/ProjectileContainer.gd" id="10_rjbpi"]
-[ext_resource type="Script" uid="uid://baoex6u40wuqd" path="res://Dungeon Battles/UI/Scripts/BattlePhaseUI.gd" id="12_fo01t"]
+[ext_resource type="PackedScene" uid="uid://buiqmepp6t7gi" path="res://Dungeon Battles/UI/UI_BattleDisplay.tscn" id="13_rjbpi"]
+[ext_resource type="PackedScene" uid="uid://p5xvcflilfx7" path="res://Weapons/UI/UI_WeaponDisplay.tscn" id="14_ih6p7"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_3813u"]
 vertices = PackedVector2Array(134, 70, -134, 70, -134, -70, 134, -70)
@@ -78,14 +79,10 @@ one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=440833070]
 
-[node name="ProgressBar_Intensity" type="ProgressBar" parent="CanvasLayer" unique_id=58871945 node_paths=PackedStringArray("battle_phase", "intensity_bar")]
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 27.0
-grow_horizontal = 2
-max_value = 1.0
-script = ExtResource("12_fo01t")
+[node name="ProgressBar_Intensity" parent="CanvasLayer" unique_id=1855424901 node_paths=PackedStringArray("battle_phase") instance=ExtResource("13_rjbpi")]
+mouse_filter = 2
 battle_phase = NodePath("../../BattlePhaseComponent")
-intensity_bar = NodePath(".")
+
+[node name="WeaponDisplay" parent="CanvasLayer" unique_id=227258026 instance=ExtResource("14_ih6p7")]
 
 [connection signal="timeout" from="BattleEnemies/ReorderTimer" to="BattleEnemies" method="_on_reorder_timer_timeout"]

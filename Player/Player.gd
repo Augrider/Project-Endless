@@ -26,11 +26,6 @@ func deal_damage(value:float):
 func set_pushed(impulse:Vector2):
 	pass
 
-## Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	speed=movement.speed
-#	acceleration=movement.acceleration
 
-
-# save/load player state and stats
-# 
+func get_held_weapons() -> Array[Weapon]:
+	return [%Weapons.weapon1, %Weapons.weapon2]

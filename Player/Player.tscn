@@ -6,17 +6,14 @@
 [ext_resource type="Script" uid="uid://dq6f0d42krwo5" path="res://Player/Scripts/Input/PlayerInput.gd" id="4"]
 [ext_resource type="Script" uid="uid://cgywojitp42dr" path="res://Player/Scripts/Input/PlayerInputDirection.gd" id="6"]
 [ext_resource type="Script" uid="uid://di8hipxsacs2y" path="res://Player/Scripts/Visuals/Trail2D.gd" id="7"]
+[ext_resource type="Script" uid="uid://6ul3ykxb7nfm" path="res://Player/Scripts/PlayerWeapons.gd" id="7_3nb2p"]
 [ext_resource type="Script" uid="uid://dsy6jtgdpv5ti" path="res://Player/Scripts/Movement/PlayerNavMeshMovement.gd" id="7_evw08"]
 [ext_resource type="Script" uid="uid://cfe6h0ncf0lgv" path="res://Common/Stopwatch.gd" id="8_5wa8t"]
 [ext_resource type="Gradient" path="res://trail_gradient.tres" id="9"]
 [ext_resource type="Curve" path="res://trail_curve.tres" id="10"]
 [ext_resource type="Script" uid="uid://ddy71goj8dukq" path="res://Player/Scripts/PlayerFollowLookPoint.gd" id="10_dm7nj"]
-[ext_resource type="Script" uid="uid://bki8k0b2opu71" path="res://Weapons/Scripts/Weapons/Weapon_Melee.gd" id="13_3mea3"]
-[ext_resource type="Script" uid="uid://cjgc8oyk0fjsx" path="res://Weapons/Scripts/Launchers/Launcher_Offset.gd" id="15_8sa4y"]
-[ext_resource type="PackedScene" uid="uid://cc3qec3nxmxbk" path="res://Projectiles/DEBUG_BladeProjectile.tscn" id="16_8sa4y"]
-[ext_resource type="PackedScene" uid="uid://b23p4vycrt4cv" path="res://Projectiles/DEBUG_BladeSwipe.tscn" id="16_d7xyo"]
+[ext_resource type="PackedScene" uid="uid://dktq20vsp1g8e" path="res://Weapons/weapon_blade.tscn" id="13_dm7nj"]
 [ext_resource type="PackedScene" uid="uid://cbt4iv5u07iuq" path="res://Weapons/weapon_uzi.tscn" id="17_8sa4y"]
-[ext_resource type="Texture2D" uid="uid://c56dm07wtv4ek" path="res://Weapons/Sprites/Player_Blade.png" id="18_3nb2p"]
 
 [sub_resource type="CircleShape2D" id="1"]
 radius = 2.0
@@ -49,7 +46,13 @@ gradient = ExtResource("9")
 script = ExtResource("7")
 maxPointsCount = 100
 
-[node name="Movement2" type="NavigationAgent2D" parent="." unique_id=1980351813 node_paths=PackedStringArray("body", "stopwatch")]
+[node name="Weapons" type="Node2D" parent="." unique_id=1474721726 node_paths=PackedStringArray("weapon1", "weapon2")]
+unique_name_in_owner = true
+script = ExtResource("7_3nb2p")
+weapon1 = NodePath("../Pivot_Weapon01/Weapon_Blade")
+weapon2 = NodePath("../Pivot_Weapon02/Weapon_Uzi")
+
+[node name="Movement" type="NavigationAgent2D" parent="." unique_id=1980351813 node_paths=PackedStringArray("body", "stopwatch")]
 path_desired_distance = 0.1
 target_desired_distance = 1.0
 simplify_path = true
@@ -63,7 +66,7 @@ decelerationDuration = 0.1
 startCurve = SubResource("Curve_roy6y")
 stopCurve = SubResource("Curve_u5tep")
 
-[node name="Stopwatch" type="Node" parent="Movement2" unique_id=1481059032]
+[node name="Stopwatch" type="Node" parent="Movement" unique_id=1481059032]
 script = ExtResource("8_5wa8t")
 autostart = true
 metadata/_custom_type_script = "uid://cfe6h0ncf0lgv"
@@ -79,28 +82,7 @@ position = Vector2(0, -4)
 script = ExtResource("10_dm7nj")
 _duration_multiplier = 25.0
 
-[node name="Weapon" type="Node2D" parent="Pivot_Weapon01" unique_id=1674022408 node_paths=PackedStringArray("launcher_projectile", "launcher_melee")]
-script = ExtResource("13_3mea3")
-launcher_projectile = NodePath("LauncherProjectile")
-launcher_melee = NodePath("LauncherMelee")
-projectile_prefab = ExtResource("16_8sa4y")
-projectile_melee_prefab = ExtResource("16_d7xyo")
-fire_rate = 1.5
-metadata/_custom_type_script = "uid://b2rvjp80i6g2a"
-
-[node name="LauncherMelee" type="Node2D" parent="Pivot_Weapon01/Weapon" unique_id=764631596]
-position = Vector2(7, 0)
-script = ExtResource("15_8sa4y")
-
-[node name="LauncherProjectile" type="Node2D" parent="Pivot_Weapon01/Weapon" unique_id=967019388]
-position = Vector2(6, 0)
-script = ExtResource("15_8sa4y")
-
-[node name="Sprite2D" type="Sprite2D" parent="Pivot_Weapon01/Weapon" unique_id=1342650404]
-position = Vector2(3, 1)
-texture = ExtResource("18_3nb2p")
-region_enabled = true
-region_rect = Rect2(0, 32, 16, 16)
+[node name="Weapon_Blade" parent="Pivot_Weapon01" unique_id=410659941 instance=ExtResource("13_dm7nj")]
 
 [node name="Pivot_Weapon02" type="Node2D" parent="." unique_id=364566014]
 position = Vector2(0, -4)
@@ -112,8 +94,6 @@ _duration_multiplier = 25.0
 [connection signal="look_point_changed" from="Input Direction" to="AnimatedSprite2D" method="_on_input_direction_look_point_changed"]
 [connection signal="look_point_changed" from="Input Direction" to="Pivot_Weapon01" method="aim_at"]
 [connection signal="look_point_changed" from="Input Direction" to="Pivot_Weapon02" method="aim_at"]
-[connection signal="fire_01_pressed" from="Input" to="Pivot_Weapon01/Weapon" method="press_trigger"]
-[connection signal="fire_01_released" from="Input" to="Pivot_Weapon01/Weapon" method="release_trigger"]
 [connection signal="fire_02_pressed" from="Input" to="Pivot_Weapon02/Weapon_Uzi" method="press_trigger"]
 [connection signal="fire_02_released" from="Input" to="Pivot_Weapon02/Weapon_Uzi" method="release_trigger"]
-[connection signal="movement_input_updated" from="Input" to="Movement2" method="_on_input_movement_input_updated"]
+[connection signal="movement_input_updated" from="Input" to="Movement" method="_on_input_movement_input_updated"]

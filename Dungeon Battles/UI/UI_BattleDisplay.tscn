@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://buiqmepp6t7gi"]
+
+[ext_resource type="Script" uid="uid://baoex6u40wuqd" path="res://Dungeon Battles/UI/Scripts/BattlePhaseUI.gd" id="1_hri8q"]
+
+[node name="ProgressBar_Intensity" type="ProgressBar" unique_id=1855424901 node_paths=PackedStringArray("battle_phase", "intensity_bar")]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
+max_value = 1.0
+script = ExtResource("1_hri8q")
+battle_phase = NodePath("")
+intensity_bar = NodePath(".")

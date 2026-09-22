@@ -12,11 +12,7 @@ class_name RecoilGun extends Weapon
 @export var max_deviation: float = 10
 @export var max_spread: float = 1
 
-@export var mag_size: int = 10
 @export var reload_cooldown: float = 1
-
-var cooldown: float = 0
-var mag_ammo: int
 
 
 func _ready() -> void:
@@ -25,32 +21,33 @@ func _ready() -> void:
 	launcher.max_deviation = max_deviation
 	launcher.max_spread = max_spread
 	
-	mag_ammo = mag_size
+	uses_left = max_uses
 
 func _process(delta: float) -> void:
 	if trigger_pressed:
 		try_fire()
 	
-	if cooldown > 0:
-		cooldown = clamp(cooldown - delta, 0, cooldown)
+	process_cooldown(delta)
 
 
 func on_trigger_released() -> void:
-	if mag_ammo < mag_size:
-		mag_ammo = mag_size
-		#launcher.recoil_normalized = 0
+	if max_uses > 0 && uses_left < max_uses:
+		uses_left = max_uses
+		launcher.recoil_normalized = 0
 		
-		cooldown += reload_cooldown
+		set_cooldown(cooldown + reload_cooldown)
 
 
 func try_fire()->bool:
-	if cooldown > 0 || mag_ammo <= 0:
+	if cooldown > 0 || (max_uses > 0 && uses_left <= 0):
 		return false
 	
 	var projectiles := launcher.shoot_once(projectile_prefab, projectiles_amount)
 	for projectile in projectiles:
 		projectile.init(Player.ALLEGIANCE)
 	
-	cooldown = 1/fire_rate
-	mag_ammo -= 1
+	set_cooldown(1 / fire_rate)
+	if uses_left > 0:
+		uses_left -= 1
+	
 	return true

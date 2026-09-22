@@ -7,15 +7,13 @@ class_name MeleeWeapon extends Weapon
 @export var projectile_melee_prefab: PackedScene
 
 @export var fire_rate:float = 3
-var cooldown:float = 0
 
 
 func _process(delta: float) -> void:
 	if trigger_pressed:
 		try_fire()
 	
-	if cooldown > 0:
-		cooldown=clamp(cooldown-delta, 0, cooldown)
+	process_cooldown(delta)
 
 
 func try_fire()->bool:
@@ -24,7 +22,7 @@ func try_fire()->bool:
 	
 	fire()
 	
-	cooldown = 1/fire_rate
+	set_cooldown(1 / fire_rate)
 	return true
 
 
