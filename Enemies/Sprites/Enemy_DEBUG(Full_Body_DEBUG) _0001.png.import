@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b76i3tf6nc1eq"
-path="res://.godot/imported/Enemy_DEBUG(Head) _0001.png-adb46067b5d37df52c18b8933c45b4b0.ctex"
+uid="uid://c2mlcng6lq48a"
+path="res://.godot/imported/Enemy_DEBUG(Full_Body_DEBUG) _0001.png-35ef6437b6231dc14a538c4f4ef0a010.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Aseprite/Enemy_DEBUG(Head) _0001.png"
-dest_files=["res://.godot/imported/Enemy_DEBUG(Head) _0001.png-adb46067b5d37df52c18b8933c45b4b0.ctex"]
+source_file="res://Enemies/Sprites/Enemy_DEBUG(Full_Body_DEBUG) _0001.png"
+dest_files=["res://.godot/imported/Enemy_DEBUG(Full_Body_DEBUG) _0001.png-35ef6437b6231dc14a538c4f4ef0a010.ctex"]
 
 [params]
 

@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dktq20vsp1g8e"]
+
+[ext_resource type="Script" uid="uid://bki8k0b2opu71" path="res://Weapons/Scripts/Weapons/Weapon_Melee.gd" id="1_ywa5w"]
+[ext_resource type="PackedScene" uid="uid://cc3qec3nxmxbk" path="res://Projectiles/DEBUG_BladeProjectile.tscn" id="2_uoxcq"]
+[ext_resource type="PackedScene" uid="uid://b23p4vycrt4cv" path="res://Projectiles/DEBUG_BladeSwipe.tscn" id="3_eshwv"]
+[ext_resource type="Script" uid="uid://cjgc8oyk0fjsx" path="res://Weapons/Scripts/Launchers/Launcher_Offset.gd" id="4_4la07"]
+[ext_resource type="Texture2D" uid="uid://cxtqhgkoy6c2y" path="res://Weapons/Sprites/Weapon01.png" id="4_uoxcq"]
+[ext_resource type="Texture2D" uid="uid://c56dm07wtv4ek" path="res://Weapons/Sprites/Player_Blade.png" id="5_hab51"]
+
+[node name="Weapon_Blade" type="Node2D" unique_id=410659941 node_paths=PackedStringArray("launcher_projectile", "launcher_melee")]
+script = ExtResource("1_ywa5w")
+launcher_projectile = NodePath("LauncherProjectile")
+launcher_melee = NodePath("LauncherMelee")
+projectile_prefab = ExtResource("2_uoxcq")
+projectile_melee_prefab = ExtResource("3_eshwv")
+fire_rate = 1.5
+weapon_name = "Blade"
+weapon_icon = ExtResource("4_uoxcq")
+metadata/_custom_type_script = "uid://b2rvjp80i6g2a"
+
+[node name="LauncherMelee" type="Node2D" parent="." unique_id=384485999]
+position = Vector2(7, 0)
+script = ExtResource("4_4la07")
+
+[node name="LauncherProjectile" type="Node2D" parent="." unique_id=702923977]
+position = Vector2(6, 0)
+script = ExtResource("4_4la07")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=605354256]
+position = Vector2(3, 1)
+texture = ExtResource("5_hab51")
+region_enabled = true
+region_rect = Rect2(0, 32, 16, 16)

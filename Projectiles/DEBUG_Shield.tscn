@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bnn1d4xgh1gd5"]
 
 [ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile Types/Projectile_Normal.gd" id="1_kj8ca"]
-[ext_resource type="Texture2D" uid="uid://c56dm07wtv4ek" path="res://Player/Sprites/Player_Blade.png" id="2_wxss1"]
+[ext_resource type="Texture2D" uid="uid://c56dm07wtv4ek" path="res://Weapons/Sprites/Player_Blade.png" id="2_wxss1"]
 [ext_resource type="Script" uid="uid://ckd8x1hw8ub5c" path="res://Projectiles/Scripts/Hit Detection/ProjectileHitbox.gd" id="3_18qr2"]
 [ext_resource type="Script" uid="uid://d3cs43d2o7507" path="res://Projectiles/Scripts/Effects/Projectile_Deflect.gd" id="4_cvoup"]
 

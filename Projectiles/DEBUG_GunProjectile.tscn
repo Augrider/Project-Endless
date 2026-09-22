@@ -1,28 +1,28 @@
-[gd_scene format=3 uid="uid://cc3qec3nxmxbk"]
+[gd_scene format=3 uid="uid://lwj81gkcl6kd"]
 
-[ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile Types/Projectile_Normal.gd" id="1_huhrl"]
-[ext_resource type="Texture2D" uid="uid://c56dm07wtv4ek" path="res://Weapons/Sprites/Player_Blade.png" id="2_huhrl"]
-[ext_resource type="Script" uid="uid://ckd8x1hw8ub5c" path="res://Projectiles/Scripts/Hit Detection/ProjectileHitbox.gd" id="3_jnw5o"]
-[ext_resource type="Script" uid="uid://cefbedj1l64rp" path="res://Projectiles/Scripts/Effects/Projectile_DealDamage.gd" id="4_h8ua1"]
+[ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile Types/Projectile_Normal.gd" id="1_ggxyl"]
+[ext_resource type="Texture2D" uid="uid://c8tkhknhwrqd4" path="res://Weapons/Sprites/Weapon_Uzi.png" id="2_ggxyl"]
+[ext_resource type="Script" uid="uid://ckd8x1hw8ub5c" path="res://Projectiles/Scripts/Hit Detection/ProjectileHitbox.gd" id="3_eb0mb"]
+[ext_resource type="Script" uid="uid://cefbedj1l64rp" path="res://Projectiles/Scripts/Effects/Projectile_DealDamage.gd" id="4_uj2jq"]
 
 [sub_resource type="Curve" id="Curve_huhrl"]
 _data = [Vector2(0, 0), 0.0, 2.3021889, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3nb2p"]
-size = Vector2(15.238097, 7.6190486)
+size = Vector2(4, 4)
 
 [node name="Projectile" type="CharacterBody2D" unique_id=163435155]
 collision_layer = 4
 collision_mask = 0
-script = ExtResource("1_huhrl")
-base_power = 15.0
-base_speed = 50.0
+script = ExtResource("1_ggxyl")
+base_power = 10.0
+base_speed = 150.0
 base_lifetime = 1.0
 speed_curve = SubResource("Curve_huhrl")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1520348288]
-texture = ExtResource("2_huhrl")
+texture = ExtResource("2_ggxyl")
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 16)
 
@@ -31,7 +31,7 @@ unique_name_in_owner = true
 collision_layer = 4
 collision_mask = 15
 monitoring = false
-script = ExtResource("3_jnw5o")
+script = ExtResource("3_eb0mb")
 owner_projectile = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=896404539]
@@ -41,7 +41,7 @@ scale = Vector2(1.05, 1.05)
 shape = SubResource("RectangleShape2D_3nb2p")
 
 [node name="DamageEffect" type="Node2D" parent="." unique_id=937166733 node_paths=PackedStringArray("owner_projectile")]
-script = ExtResource("4_h8ua1")
+script = ExtResource("4_uj2jq")
 owner_projectile = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=520436300]

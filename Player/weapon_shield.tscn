@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bkvjslr4oqso2"]
+
+[ext_resource type="Script" uid="uid://b436ynixox52p" path="res://Weapons/Scripts/Weapons/Weapon_Shield.gd" id="1_kla6x"]
+[ext_resource type="PackedScene" uid="uid://bnn1d4xgh1gd5" path="res://Projectiles/DEBUG_Shield.tscn" id="2_mpo2s"]
+[ext_resource type="Script" uid="uid://bgc1nh56aa1kq" path="res://Weapons/Scripts/Launchers/Launcher_Melee.gd" id="3_26fb2"]
+
+[node name="Weapon" type="Node2D" unique_id=962105582 node_paths=PackedStringArray("launcher")]
+script = ExtResource("1_kla6x")
+launcher = NodePath("LauncherMelee")
+projectile_shield_prefab = ExtResource("2_mpo2s")
+metadata/_custom_type_script = "uid://b2rvjp80i6g2a"
+
+[node name="LauncherMelee" type="Node2D" parent="." unique_id=1313437698]
+position = Vector2(7, 0)
+script = ExtResource("3_26fb2")
