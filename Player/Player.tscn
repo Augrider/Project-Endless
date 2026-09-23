@@ -94,6 +94,8 @@ _duration_multiplier = 25.0
 [connection signal="look_point_changed" from="Input Direction" to="AnimatedSprite2D" method="_on_input_direction_look_point_changed"]
 [connection signal="look_point_changed" from="Input Direction" to="Pivot_Weapon01" method="aim_at"]
 [connection signal="look_point_changed" from="Input Direction" to="Pivot_Weapon02" method="aim_at"]
+[connection signal="fire_01_pressed" from="Input" to="Pivot_Weapon01/Weapon_Blade" method="press_trigger"]
+[connection signal="fire_01_released" from="Input" to="Pivot_Weapon01/Weapon_Blade" method="release_trigger"]
 [connection signal="fire_02_pressed" from="Input" to="Pivot_Weapon02/Weapon_Uzi" method="press_trigger"]
 [connection signal="fire_02_released" from="Input" to="Pivot_Weapon02/Weapon_Uzi" method="release_trigger"]
 [connection signal="movement_input_updated" from="Input" to="Movement" method="_on_input_movement_input_updated"]

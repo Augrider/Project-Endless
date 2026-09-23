@@ -7,9 +7,12 @@
 [ext_resource type="Texture2D" uid="uid://c2mlcng6lq48a" path="res://Enemies/Sprites/Enemy_DEBUG(Full_Body_DEBUG) _0001.png" id="3_r3qmc"]
 [ext_resource type="Script" uid="uid://cjgc8oyk0fjsx" path="res://Weapons/Scripts/Launchers/Launcher_Offset.gd" id="5_b7dvi"]
 [ext_resource type="Texture2D" uid="uid://b76i3tf6nc1eq" path="res://Enemies/Sprites/Enemy_DEBUG(Head) _0001.png" id="7_5dn3h"]
-[ext_resource type="Script" uid="uid://cm581hdrply5r" path="res://Enemies/Scripts/Abilities/DEBUG_Ability_Targeted.gd" id="7_5e8k3"]
+[ext_resource type="Script" uid="uid://cm581hdrply5r" path="res://Enemies/Scripts/Abilities/Ability_Targeted.gd" id="7_5e8k3"]
+[ext_resource type="Script" uid="uid://bclut15heghne" path="res://Enemies/Scripts/Abilities/Ability_Combo.gd" id="9_hd0vr"]
 [ext_resource type="Script" uid="uid://tyrnbnoqybdp" path="res://Enemies/Scripts/Abilities/Ability_Chase.gd" id="10_5dn3h"]
+[ext_resource type="Script" uid="uid://creplhrfwhcsh" path="res://Enemies/Scripts/Abilities/Ability_Spread.gd" id="10_hfnlx"]
 [ext_resource type="Script" uid="uid://s4seanbpod8j" path="res://Enemies/Scripts/Hitbox/EnemyHitbox.gd" id="10_owe38"]
+[ext_resource type="Script" uid="uid://d3w0wm08sg3kw" path="res://Enemies/Scripts/Abilities/Ability_Arena.gd" id="11_hd0vr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b2fr2"]
 radius = 6.0
@@ -22,12 +25,11 @@ collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_s4o6d")
 ability_targeted = NodePath("Ability_Targeted")
-ability_spread = NodePath("Ability_Targeted")
-ability_arena = NodePath("Ability_Targeted")
+ability_spread = NodePath("Ability_Spread")
+ability_arena = NodePath("Ability_Arena")
 ability_chase = NodePath("Ability_Chase")
 size_class = 1
-max_health = null
-allegiance = null
+allegiance = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1126737213]
 shape = SubResource("CircleShape2D_b2fr2")
@@ -66,15 +68,48 @@ autostart = true
 unique_name_in_owner = true
 script = ExtResource("5_b7dvi")
 
-[node name="Ability_Targeted" type="Node2D" parent="." unique_id=1181017405]
+[node name="Ability_Targeted" type="Node2D" parent="." unique_id=1181017405 node_paths=PackedStringArray("enemy")]
 script = ExtResource("7_5e8k3")
+enemy = NodePath("..")
 projectile_prefab = ExtResource("2_kafru")
-cooldown = 1.0
+fire_rate = 3.0
+cooldown = 0.7
 
-[node name="Ability_Chase" type="Node2D" parent="." unique_id=685141506]
+[node name="Ability_Chase" type="Node2D" parent="." unique_id=685141506 node_paths=PackedStringArray("abilities")]
+script = ExtResource("9_hd0vr")
+abilities = [NodePath("ChaseAbility"), NodePath("../Ability_Targeted")]
+repeat_until_stopped = true
+
+[node name="ChaseAbility" type="Node2D" parent="Ability_Chase" unique_id=1453792506 node_paths=PackedStringArray("enemy")]
 script = ExtResource("10_5dn3h")
+enemy = NodePath("../..")
+cooldown = 1.0
+stop_after_cooldown = true
+metadata/_custom_type_script = "uid://tyrnbnoqybdp"
+
+[node name="TargetedAbility" type="Node2D" parent="Ability_Chase" unique_id=233867617 node_paths=PackedStringArray("enemy")]
+script = ExtResource("7_5e8k3")
+enemy = NodePath("../..")
 projectile_prefab = ExtResource("2_kafru")
-fire_rate = 0.8
+fire_rate = 5.0
+spread_variance = 5.0
+metadata/_custom_type_script = "uid://cm581hdrply5r"
+
+[node name="Ability_Spread" type="Node2D" parent="." unique_id=928507326 node_paths=PackedStringArray("enemy")]
+script = ExtResource("10_hfnlx")
+enemy = NodePath("..")
+projectile_prefab = ExtResource("2_kafru")
+max_spread = 25.0
+fire_rate = 5.0
+
+[node name="Ability_Arena" type="Node2D" parent="." unique_id=948844048 node_paths=PackedStringArray("enemy")]
+script = ExtResource("11_hd0vr")
+enemy = NodePath("..")
+projectile_prefab = ExtResource("2_kafru")
+shot_count = 10
+spread_variance = 0.0
+fire_rate = 15.0
+cooldown = 1.0
 
 [node name="UnitHitbox" type="Area2D" parent="." unique_id=1290063913 node_paths=PackedStringArray("owner_unit")]
 script = ExtResource("10_owe38")

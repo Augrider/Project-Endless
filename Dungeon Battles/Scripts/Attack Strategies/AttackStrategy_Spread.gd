@@ -8,24 +8,26 @@ class_name SpreadAttackStrategy extends EnemyAttackStrategy
 @export var return_immediately: bool
 
 
-func perform(formation: CircleFormation2D, timers: TimerProvider):
+func perform(arena: Arena):
 	active = true
+	
+	var formation = arena.formation
 	
 	print_debug("Starting Spreading")
 	var spreaders: EnemyGroup = EnemyGroup.new()
 	
 	if return_immediately:
 		spreaders = _pick_enemies(spreaders, formation)
-		_perform_spread(spreaders)
+		_perform_spread(spreaders, arena)
 		return
 	
-	timers.do_after(stop, duration)
+	Timers.do_after(stop, duration)
 	
 	while active:
 		spreaders = _pick_enemies(spreaders, formation)
-		_perform_spread(spreaders)
+		_perform_spread(spreaders, arena)
 		
-		await timers.get_oneshot(spread_wave_duration).timeout
+		await Timers.get_oneshot(spread_wave_duration).timeout
 	
 	active = false
 
@@ -46,11 +48,11 @@ func _pick_enemies(group: EnemyGroup, formation: CircleFormation2D) -> EnemyGrou
 	
 	return group
 
-func _perform_spread(spreaders: EnemyGroup):
+func _perform_spread(spreaders: EnemyGroup, arena: Arena):
 	#print_debug("Spreading")
 	var enemies = spreaders.get_enemies()
 	if enemies.size() <= 0:
 		return
 
 	for enemy in enemies:
-		enemy.perform_ability_spray()
+		enemy.perform_ability_spray(arena)

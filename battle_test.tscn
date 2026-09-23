@@ -7,8 +7,9 @@
 [ext_resource type="Script" uid="uid://cb57nb55w11q2" path="res://Dungeon Battles/Scripts/EnemyAttackStrategy.gd" id="3_vplat"]
 [ext_resource type="Script" uid="uid://yji43ynf5uer" path="res://CircleFormation2D.gd" id="4_rfxk1"]
 [ext_resource type="Resource" uid="uid://ckuf7i1owvd4a" path="res://Dungeon Battles/Strategies/Cooldown/DEBUG_SpreadStrategy.tres" id="5_3813u"]
+[ext_resource type="Script" uid="uid://b222yovna12u4" path="res://Dungeon Battles/Scripts/Arena.gd" id="5_ih6p7"]
 [ext_resource type="Script" uid="uid://bxw8mb38f7tbs" path="res://Enemies/Scripts/EnemyContainer.gd" id="5_vplat"]
-[ext_resource type="Script" uid="uid://boe0o0ku1tnsy" path="res://Common/TimerProvider.gd" id="7_inwax"]
+[ext_resource type="Script" uid="uid://boe0o0ku1tnsy" path="res://AutoLoad/AutoloadTimerProvider.gd" id="7_inwax"]
 [ext_resource type="Script" uid="uid://cvvve75gj6g5p" path="res://Dungeon Battles/Scripts/BattlePhaseComponent.gd" id="7_rfxk1"]
 [ext_resource type="Script" uid="uid://bb6mtx3qvx8la" path="res://Dungeon Battles/Scripts/EnemiesBattleController.gd" id="8_qnwog"]
 [ext_resource type="Script" uid="uid://ddfr363kas73a" path="res://Projectiles/Scripts/ProjectileContainer.gd" id="10_rjbpi"]
@@ -20,17 +21,18 @@ vertices = PackedVector2Array(134, 70, -134, 70, -134, -70, 134, -70)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-144, -80, 144, -80, 144, 80, -144, 80)])
 
-[node name="BattleTest" type="Node2D" unique_id=719512692 node_paths=PackedStringArray("formation", "timers", "battle_phase")]
+[node name="BattleTest" type="Node2D" unique_id=719512692 node_paths=PackedStringArray("battle_phase", "arena")]
 script = ExtResource("1_jhtm6")
-formation = NodePath("Environment/Formation")
-timers = NodePath("TimerProvider")
 battle_phase = NodePath("BattlePhaseComponent")
+arena = NodePath("Environment")
 attack_strategies = Array[ExtResource("3_vplat")]([ExtResource("3_qnwog")])
 cooldown_strategies = Array[ExtResource("3_vplat")]([ExtResource("5_3813u")])
 
 [node name="Player" parent="." unique_id=1896151399 instance=ExtResource("1_0q417")]
 
-[node name="Environment" type="Node2D" parent="." unique_id=1229868045]
+[node name="Environment" type="Node2D" parent="." unique_id=1229868045 node_paths=PackedStringArray("formation")]
+script = ExtResource("5_ih6p7")
+formation = NodePath("Formation")
 
 [node name="Formation" type="Node2D" parent="Environment" unique_id=578060177]
 script = ExtResource("4_rfxk1")
@@ -45,7 +47,7 @@ navigation_polygon = SubResource("NavigationPolygon_3813u")
 script = ExtResource("8_qnwog")
 formation = NodePath("../Environment/Formation")
 enemy_prefab = ExtResource("3_inwax")
-spawns_left = 1
+spawns_left = 6
 
 [node name="ReorderTimer" type="Timer" parent="BattleEnemies" unique_id=708728382]
 autostart = true

@@ -47,4 +47,4 @@ func set_cooldown(value: float):
 
 func process_cooldown(delta: float):
 	cooldown = clamp(cooldown - delta, 0, _current_max_cooldown)
-	cooldown_normalized = clamp(cooldown_normalized - delta / _current_max_cooldown, 0, 1)
+	cooldown_normalized = clamp(cooldown / _current_max_cooldown, 0, 1)

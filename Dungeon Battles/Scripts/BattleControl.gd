@@ -9,9 +9,8 @@ extends Node2D
 #When small amount of enemies left - no cooldown phase anymore?
 #When to move enemies to front? At cooldown? When places available?
 
-@export var formation: LayeredFormation2D
-@export var timers: TimerProvider
 @export var battle_phase: BattlePhaseComponent
+@export var arena: Arena
 
 @export var attack_strategies: Array[EnemyAttackStrategy]
 @export var cooldown_strategies: Array[EnemyAttackStrategy]
@@ -24,7 +23,7 @@ var current_strategy: EnemyAttackStrategy
 func _ready() -> void:
 	battle_phase.phase_changed.connect(_on_battle_phase_changed)
 	
-	timers.get_oneshot(battle_start_cooldown).timeout.connect(start_battle)
+	Timers.get_oneshot(battle_start_cooldown).timeout.connect(start_battle)
 
 
 func start_battle() -> void:
@@ -61,7 +60,7 @@ func _on_battle_phase_changed(value: BattlePhaseComponent.BattlePhase):
 func _perform_attack_strategy(strategy: EnemyAttackStrategy):
 	current_strategy = strategy
 	
-	await strategy.perform(formation, timers)
+	await strategy.perform(arena)
 	
 	print_debug("Strategy finished")
 	if current_strategy == strategy && !current_strategy.active:

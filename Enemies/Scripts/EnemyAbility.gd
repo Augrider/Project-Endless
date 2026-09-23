@@ -3,7 +3,7 @@
 var active: bool = false
 
 @abstract
-func perform(enemy:Enemy)
+func perform(arena: Arena)
 
 @abstract
 func stop()

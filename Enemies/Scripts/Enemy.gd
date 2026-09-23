@@ -70,32 +70,32 @@ func stop_looking():
 #We want to continue to perform behavior until called to stop
 #Either have ability on repeat or start after each perform cycle
 #Second way is more controllable
-func perform_ability_targeted() -> bool:
+func perform_ability_targeted(arena: Arena) -> bool:
 	if current_ability != null:
 		return false
 	
-	_start_ability(ability_targeted)
+	_start_ability(ability_targeted, arena)
 	return true
 
-func perform_ability_spray() -> bool:
+func perform_ability_spray(arena: Arena) -> bool:
 	if current_ability != null:
 		return false
 	
-	_start_ability(ability_spread)
+	_start_ability(ability_spread, arena)
 	return true
 
-func perform_ability_arena() -> bool:
+func perform_ability_arena(arena: Arena) -> bool:
 	if current_ability != null:
 		return false
 	
-	_start_ability(ability_arena)
+	_start_ability(ability_arena, arena)
 	return true
 
-func perform_ability_chase() -> bool:
+func perform_ability_chase(arena: Arena) -> bool:
 	if current_ability != null:
 		return false
 	
-	_start_ability(ability_chase)
+	_start_ability(ability_chase, arena)
 	return true
 
 func stop_abilities():
@@ -104,10 +104,10 @@ func stop_abilities():
 		current_ability = null # We can safely do that, abilities should stop at place
 
 
-func _start_ability(ability: EnemyAbility):
+func _start_ability(ability: EnemyAbility, arena: Arena):
 	current_ability = ability
 	
-	await ability.perform(self)
+	await ability.perform(arena)
 	
 	if current_ability == ability && !ability.active:
 		current_ability = null

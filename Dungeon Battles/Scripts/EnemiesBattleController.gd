@@ -46,7 +46,7 @@ func _on_enemy_spawned(enemy: Enemy):
 	pass
 
 func _on_enemy_despawned(enemy: Enemy):
-	formation.remove(enemy)
+	pass
 	#Spawn new enemy wave only when outer level is empty
 	#And reorder should also take neighbors of outer level
 

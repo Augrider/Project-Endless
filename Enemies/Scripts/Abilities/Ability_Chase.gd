@@ -1,25 +1,36 @@
-extends EnemyAbility
+class_name ChaseAbility extends EnemyAbility
 
-@export var projectile_prefab: PackedScene
-@export var fire_rate: float = 1
+enum PositioningMode {PLAYER, RANDOM, AWAY}
+
+@export var enemy: Enemy
+
+@export var positioning: PositioningMode
+
+@export var cooldown: float
+@export var stop_after_cooldown: bool
 
 
-func perform(enemy:Enemy):
+func perform(arena: Arena):
 	active = true
 	
-	var player = Players.get_player()
-	enemy.follow_target(player)
+	var target_position = _calculate_position(arena)
 	
-	while active:
-		%Launcher.look_at(player.global_position)
-		
-		var projectile = %Launcher.spawn_one(projectile_prefab)
-		projectile.init(enemy.allegiance)
-		
-		await get_tree().create_timer(1/(fire_rate * enemy.intensity)).timeout
+	enemy.go_to_target(target_position)
 	
-	enemy.stop_moving()
+	await get_tree().create_timer(cooldown).timeout
+	
+	if stop_after_cooldown:
+		enemy.stop_moving()
+	
 	active = false
 
 func stop():
 	active = false
+
+
+func _calculate_position(arena: Arena) -> Vector2:
+	match positioning:
+		PositioningMode.PLAYER: return Players.get_player().global_position
+		PositioningMode.RANDOM: return arena.get_random_position()
+	
+	return Vector2.ZERO

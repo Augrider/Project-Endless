@@ -14,11 +14,11 @@ const ALLEGIANCE: int = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Players.add_player(self)
-	
-#	movement=get_node(movementPath)
+	set_allegiance(ALLEGIANCE)
 
 func _exit_tree() -> void:
 	Players.remove_player(self)
+
 
 func deal_damage(value:float):
 	pass

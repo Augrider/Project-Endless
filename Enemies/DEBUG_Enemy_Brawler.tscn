@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://8b1moxf2o8ex"]
+
+[ext_resource type="Script" uid="uid://e35awnyfg0m1" path="res://Enemies/Scripts/Enemy.gd" id="1_510b8"]
+[ext_resource type="Script" uid="uid://b1mpu1rm8sn7h" path="res://Enemies/Scripts/EnemyVisuals.gd" id="2_og13o"]
+[ext_resource type="Texture2D" uid="uid://c2mlcng6lq48a" path="res://Enemies/Sprites/Enemy_DEBUG(Full_Body_DEBUG) _0001.png" id="3_e0p0h"]
+[ext_resource type="Texture2D" uid="uid://b76i3tf6nc1eq" path="res://Enemies/Sprites/Enemy_DEBUG(Head) _0001.png" id="4_pc0w3"]
+[ext_resource type="Script" uid="uid://4com5kf7gw2p" path="res://Enemies/Scripts/EnemyMovement.gd" id="5_fthnm"]
+[ext_resource type="Script" uid="uid://cjgc8oyk0fjsx" path="res://Weapons/Scripts/Launchers/Launcher_Offset.gd" id="6_pjjix"]
+[ext_resource type="Script" uid="uid://cm581hdrply5r" path="res://Enemies/Scripts/Abilities/Ability_Targeted.gd" id="7_4dar1"]
+[ext_resource type="PackedScene" uid="uid://du4576dwtntag" path="res://Projectiles/DEBUG_EnemyProjectile.tscn" id="8_x2j81"]
+[ext_resource type="Script" uid="uid://tyrnbnoqybdp" path="res://Enemies/Scripts/Abilities/Ability_Chase.gd" id="9_nlejg"]
+[ext_resource type="Script" uid="uid://s4seanbpod8j" path="res://Enemies/Scripts/Hitbox/EnemyHitbox.gd" id="10_v32oa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b2fr2"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jnba6"]
+radius = 6.0
+
+[node name="DEBUG_Enemy_Small" type="CharacterBody2D" unique_id=1124543649 node_paths=PackedStringArray("ability_targeted", "ability_spread", "ability_arena", "ability_chase")]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_510b8")
+ability_targeted = NodePath("Ability_Targeted")
+ability_spread = NodePath("Ability_Targeted")
+ability_arena = NodePath("Ability_Targeted")
+ability_chase = NodePath("Ability_Chase")
+size_class = 1
+max_health = null
+allegiance = null
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1126737213]
+shape = SubResource("CircleShape2D_b2fr2")
+
+[node name="Visuals" type="Node2D" parent="." unique_id=1770240641 node_paths=PackedStringArray("top", "bottom", "body")]
+unique_name_in_owner = true
+scale = Vector2(1.1, 1.1)
+script = ExtResource("2_og13o")
+top = NodePath("Sprite2D_Head")
+bottom = NodePath("Sprite2D_Body")
+body = NodePath("..")
+_rotation_multiplier = 10.0
+
+[node name="Sprite2D_Body" type="Sprite2D" parent="Visuals" unique_id=1924707109]
+texture = ExtResource("3_e0p0h")
+
+[node name="Sprite2D_Head" type="Sprite2D" parent="Visuals" unique_id=1306039881]
+position = Vector2(0, -1)
+texture = ExtResource("4_pc0w3")
+
+[node name="Movement" type="NavigationAgent2D" parent="." unique_id=2087549942 node_paths=PackedStringArray("body")]
+unique_name_in_owner = true
+path_desired_distance = 5.0
+avoidance_enabled = true
+radius = 8.0
+neighbor_distance = 50.0
+debug_enabled = true
+script = ExtResource("5_fthnm")
+body = NodePath("..")
+speed = 50.0
+
+[node name="RepathTimer" type="Timer" parent="Movement" unique_id=616442296]
+wait_time = 0.6
+autostart = true
+
+[node name="Launcher" type="Node2D" parent="." unique_id=849237996]
+unique_name_in_owner = true
+script = ExtResource("6_pjjix")
+
+[node name="Ability_Targeted" type="Node2D" parent="." unique_id=1181017405]
+script = ExtResource("7_4dar1")
+projectile_prefab = ExtResource("8_x2j81")
+cooldown = 1.0
+
+[node name="Ability_Chase" type="Node2D" parent="." unique_id=685141506]
+script = ExtResource("9_nlejg")
+projectile_prefab = ExtResource("8_x2j81")
+
+[node name="UnitHitbox" type="Area2D" parent="." unique_id=1290063913 node_paths=PackedStringArray("owner_unit")]
+scale = Vector2(1.1, 1.1)
+script = ExtResource("10_v32oa")
+owner_unit = NodePath("..")
+metadata/_custom_type_script = "uid://gnggj403l0xj"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UnitHitbox" unique_id=1857488409]
+shape = SubResource("CircleShape2D_jnba6")
+debug_color = Color(0.8956036, 0.0002092725, 0.7792681, 0.41960785)
+
+[connection signal="timeout" from="Movement/RepathTimer" to="Movement" method="_on_repath_timer"]
