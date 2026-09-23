@@ -6,11 +6,7 @@ class_name AttackReaction extends ReactionArea2D
 @export var projectile_prefab: PackedScene
 @export var launcher: WeaponLauncher
 
-@export var shot_count: int = 3
-@export var fire_rate: float = 1
-
 @export var spread_variance: float = 3
-
 @export var cooldown: float = 0.5
 
 var active: bool = false
@@ -41,16 +37,13 @@ func perform(target: Node2D):
 	
 	await get_tree().create_timer(0.3 * randf()).timeout
 	
-	for i in shot_count:
-		var spread: float = _calculate_spread()
-		
-		launcher.look_at(target.global_position)
-		var projectile = launcher.spawn_one(projectile_prefab)
-		
-		projectile.rotation_degrees += spread
-		projectile.init(owner_node.allegiance)
-		
-		await get_tree().create_timer(1/fire_rate).timeout
+	var spread: float = _calculate_spread()
+	
+	launcher.look_at(target.global_position)
+	var projectile = launcher.spawn_one(projectile_prefab)
+	
+	projectile.rotation_degrees += spread
+	projectile.init(owner_node.allegiance)
 	
 	await get_tree().create_timer(cooldown).timeout
 	active = false
