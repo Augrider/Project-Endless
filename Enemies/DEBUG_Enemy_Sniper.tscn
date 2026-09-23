@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c2mlcng6lq48a" path="res://Enemies/Sprites/Enemy_DEBUG(Full_Body_DEBUG) _0001.png" id="3_w2uue"]
 [ext_resource type="Texture2D" uid="uid://b76i3tf6nc1eq" path="res://Enemies/Sprites/Enemy_DEBUG(Head) _0001.png" id="4_68sug"]
 [ext_resource type="Script" uid="uid://4com5kf7gw2p" path="res://Enemies/Scripts/EnemyMovement.gd" id="5_ljhwq"]
-[ext_resource type="Script" uid="uid://cjgc8oyk0fjsx" path="res://Weapons/Scripts/Launchers/Launcher_Offset.gd" id="6_gkb2g"]
+[ext_resource type="Script" uid="uid://cjgc8oyk0fjsx" path="res://Weapons/Scripts/Launchers/Launcher_Simple.gd" id="6_gkb2g"]
 [ext_resource type="Script" uid="uid://cm581hdrply5r" path="res://Enemies/Scripts/Abilities/Ability_Targeted.gd" id="7_e0270"]
 [ext_resource type="PackedScene" uid="uid://du4576dwtntag" path="res://Projectiles/DEBUG_EnemyProjectile.tscn" id="8_8dwaf"]
 [ext_resource type="Script" uid="uid://tyrnbnoqybdp" path="res://Enemies/Scripts/Abilities/Ability_Chase.gd" id="9_itoag"]

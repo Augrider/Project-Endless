@@ -1,7 +1,5 @@
 class_name SpreadAbility extends EnemyAbility
 
-@export var enemy: Enemy
-
 @export var projectile_prefab: PackedScene
 
 @export var shot_count: int = 3

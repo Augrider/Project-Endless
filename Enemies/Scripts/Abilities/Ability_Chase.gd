@@ -2,8 +2,6 @@ class_name ChaseAbility extends EnemyAbility
 
 enum PositioningMode {PLAYER, RANDOM, AWAY}
 
-@export var enemy: Enemy
-
 @export var positioning: PositioningMode
 
 @export var cooldown: float

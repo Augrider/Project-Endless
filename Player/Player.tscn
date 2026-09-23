@@ -13,6 +13,7 @@
 [ext_resource type="Curve" path="res://trail_curve.tres" id="10"]
 [ext_resource type="Script" uid="uid://ddy71goj8dukq" path="res://Player/Scripts/PlayerFollowLookPoint.gd" id="10_dm7nj"]
 [ext_resource type="PackedScene" uid="uid://dktq20vsp1g8e" path="res://Weapons/weapon_blade.tscn" id="13_dm7nj"]
+[ext_resource type="Script" uid="uid://kgm4y55dvs1r" path="res://Player/Scripts/PlayerHealth.gd" id="15_3mea3"]
 [ext_resource type="PackedScene" uid="uid://cbt4iv5u07iuq" path="res://Weapons/weapon_uzi.tscn" id="17_8sa4y"]
 
 [sub_resource type="CircleShape2D" id="1"]
@@ -25,6 +26,9 @@ point_count = 2
 [sub_resource type="Curve" id="Curve_u5tep"]
 _data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jnba6"]
+radius = 2.236068
 
 [node name="Player" type="CharacterBody2D" unique_id=1896151399]
 light_mask = 4
@@ -90,6 +94,16 @@ script = ExtResource("10_dm7nj")
 _duration_multiplier = 25.0
 
 [node name="Weapon_Uzi" parent="Pivot_Weapon02" unique_id=598673798 instance=ExtResource("17_8sa4y")]
+
+[node name="PlayerHealth" type="Area2D" parent="." unique_id=1465983404 node_paths=PackedStringArray("owner_player")]
+position = Vector2(0, -4)
+script = ExtResource("15_3mea3")
+owner_player = NodePath("..")
+max_health = 1000
+metadata/_custom_type_script = "uid://kgm4y55dvs1r"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHealth" unique_id=498843218]
+shape = SubResource("CircleShape2D_jnba6")
 
 [connection signal="look_point_changed" from="Input Direction" to="AnimatedSprite2D" method="_on_input_direction_look_point_changed"]
 [connection signal="look_point_changed" from="Input Direction" to="Pivot_Weapon01" method="aim_at"]

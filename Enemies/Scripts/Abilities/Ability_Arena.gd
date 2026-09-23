@@ -1,7 +1,5 @@
 class_name ArenaAbility extends EnemyAbility
 
-@export var enemy: Enemy
-
 @export var projectile_prefab: PackedScene
 @export var shot_count: int = 3
 @export var spread_variance: float = 3

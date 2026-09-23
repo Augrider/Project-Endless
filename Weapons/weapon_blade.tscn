@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bki8k0b2opu71" path="res://Weapons/Scripts/Weapons/Weapon_Melee.gd" id="1_ywa5w"]
 [ext_resource type="PackedScene" uid="uid://cc3qec3nxmxbk" path="res://Projectiles/DEBUG_BladeProjectile.tscn" id="2_uoxcq"]
 [ext_resource type="PackedScene" uid="uid://b23p4vycrt4cv" path="res://Projectiles/DEBUG_BladeSwipe.tscn" id="3_eshwv"]
-[ext_resource type="Script" uid="uid://cjgc8oyk0fjsx" path="res://Weapons/Scripts/Launchers/Launcher_Offset.gd" id="4_4la07"]
+[ext_resource type="Script" uid="uid://cjgc8oyk0fjsx" path="res://Weapons/Scripts/Launchers/Launcher_Simple.gd" id="4_4la07"]
 [ext_resource type="Texture2D" uid="uid://cxtqhgkoy6c2y" path="res://Weapons/Sprites/Weapon01.png" id="4_uoxcq"]
 [ext_resource type="Texture2D" uid="uid://c56dm07wtv4ek" path="res://Weapons/Sprites/Player_Blade.png" id="5_hab51"]
 
