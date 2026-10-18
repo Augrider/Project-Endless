@@ -7,6 +7,8 @@ enum PositioningMode {PLAYER, RANDOM, AWAY}
 @export var cooldown: float
 @export var stop_after_cooldown: bool
 
+@export var stop_distance: float = 0
+
 
 func perform(arena: Arena):
 	active = true
@@ -15,7 +17,13 @@ func perform(arena: Arena):
 	
 	enemy.go_to_target(target_position)
 	
-	await get_tree().create_timer(cooldown).timeout
+	if stop_distance <= 0:
+		await Timers.get_oneshot(cooldown).timeout
+	else:
+		await _getting_close(target_position, cooldown)
+	
+	if !active:
+		return
 	
 	if stop_after_cooldown:
 		enemy.stop_moving()
@@ -32,3 +40,16 @@ func _calculate_position(arena: Arena) -> Vector2:
 		PositioningMode.RANDOM: return arena.get_random_position()
 	
 	return Vector2.ZERO
+
+func _getting_close(target: Vector2, cooldown: float):
+	var timer = Timers.get_oneshot(cooldown)
+	
+	while timer.time_left > 0:
+		if enemy.global_position.distance_squared_to(target) <= stop_distance * stop_distance:
+			enemy.stop_moving()
+			break
+		
+		await get_tree().process_frame
+	
+	if timer.time_left > 0:
+		await timer.timeout

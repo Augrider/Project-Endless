@@ -98,8 +98,8 @@ enemy = NodePath("..")
 [node name="ChaseAbility" type="Node2D" parent="Ability_Chase" unique_id=1453792506 node_paths=PackedStringArray("enemy")]
 script = ExtResource("10_5dn3h")
 positioning = 1
-cooldown = 1.0
-stop_after_cooldown = true
+cooldown = 2.0
+stop_distance = 6.0
 enemy = NodePath("../..")
 metadata/_custom_type_script = "uid://tyrnbnoqybdp"
 
@@ -135,7 +135,6 @@ script = ExtResource("14_luipg")
 attack_units = true
 projectile_prefab = ExtResource("15_luipg")
 launcher = NodePath("SimpleLauncher")
-shot_count = 1
 spread_variance = 0.0
 owner_node = NodePath("..")
 metadata/_custom_type_script = "uid://clomwl5h8b2k4"

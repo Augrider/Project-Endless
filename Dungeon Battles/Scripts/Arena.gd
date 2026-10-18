@@ -1,5 +1,6 @@
 class_name Arena extends Node2D
 
+@export var shape: ArenaShape
 @export var formation: LayeredFormation2D
 var chasers: Array[Enemy]
 
@@ -21,4 +22,4 @@ func get_current_target() -> Vector2:
 	return global_position
 
 func get_random_position() -> Vector2:
-	return global_position
+	return shape.get_random_point()
