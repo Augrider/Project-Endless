@@ -35,11 +35,12 @@ func _process(delta: float) -> void:
 func perform(target: Node2D):
 	active = true
 	
+	var target_position = target.global_position
 	await get_tree().create_timer(0.3 * randf()).timeout
 	
 	var spread: float = _calculate_spread()
 	
-	launcher.look_at(target.global_position)
+	launcher.look_at(target_position)
 	var projectile = launcher.spawn_one(projectile_prefab)
 	
 	projectile.rotation_degrees += spread

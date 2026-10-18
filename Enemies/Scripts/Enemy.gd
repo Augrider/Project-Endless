@@ -28,6 +28,7 @@ func _exit_tree() -> void:
 func deal_damage(value:float):
 	health -= value
 	if health < 0:
+		stop_abilities()
 		queue_free()
 
 func set_pushed(impulse:Vector2):

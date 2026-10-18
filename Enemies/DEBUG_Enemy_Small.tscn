@@ -74,6 +74,9 @@ unique_name_in_owner = true
 script = ExtResource("5_b7dvi")
 
 [node name="UnitHitbox" type="Area2D" parent="." unique_id=1290063913 node_paths=PackedStringArray("owner_unit")]
+collision_layer = 2
+collision_mask = 3
+monitoring = false
 script = ExtResource("10_owe38")
 owner_unit = NodePath("..")
 metadata/_custom_type_script = "uid://gnggj403l0xj"

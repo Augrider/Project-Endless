@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://lowed4k25gx2"]
+
+[ext_resource type="Script" uid="uid://binu511n125kt" path="res://Projectiles/Scripts/Projectile Types/Projectile_Normal.gd" id="1_6y724"]
+[ext_resource type="Texture2D" uid="uid://qauc4apnv6jd" path="res://Aseprite/Enemy_Brawler.png" id="2_6y724"]
+[ext_resource type="Script" uid="uid://ckd8x1hw8ub5c" path="res://Projectiles/Scripts/Hit Detection/ProjectileHitbox.gd" id="3_e8s0u"]
+[ext_resource type="Script" uid="uid://cefbedj1l64rp" path="res://Projectiles/Scripts/Effects/Projectile_DealDamage.gd" id="4_76ef5"]
+
+[sub_resource type="Curve" id="Curve_y1hf8"]
+_data = [Vector2(0, 0), 0.0, 0.9723658, 0, 0, Vector2(0.4023904, 0.22314048), 1.0130694, 1.0130694, 0, 0, Vector2(0.76892424, 1), -0.029216692, -0.029216692, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CapsuleShape2D" id="1"]
+radius = 8.571429
+height = 17.142859
+
+[node name="Projectile" type="CharacterBody2D" unique_id=163435155]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_6y724")
+base_power = 20.0
+base_speed = 80.0
+base_lifetime = 0.8
+speed_curve = SubResource("Curve_y1hf8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1520348288]
+position = Vector2(-1, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("2_6y724")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1636163517 node_paths=PackedStringArray("owner_projectile")]
+unique_name_in_owner = true
+collision_layer = 8
+collision_mask = 15
+monitoring = false
+script = ExtResource("3_e8s0u")
+owner_projectile = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=896404539]
+rotation = 1.5708
+scale = Vector2(1.05, 1.05)
+shape = SubResource("1")
+
+[node name="DamageEffect" type="Node2D" parent="." unique_id=1865099451 node_paths=PackedStringArray("owner_projectile")]
+script = ExtResource("4_76ef5")
+owner_projectile = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1558243646]
+rotation = 1.5708
+shape = SubResource("1")
+
+[connection signal="object_hit" from="Hitbox" to="DamageEffect" method="_on_object_hit"]
+[connection signal="opponent_hit" from="Hitbox" to="DamageEffect" method="_on_unit_hit"]
+[connection signal="opponent_projectile_hit" from="Hitbox" to="DamageEffect" method="_on_opponent_projectile_hit"]

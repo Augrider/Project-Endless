@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://bb7dqkjvtgyxx" path="res://Player/Player.tscn" id="1_0q417"]
 [ext_resource type="Script" uid="uid://nvc2yxcodih4" path="res://Dungeon Battles/Scripts/BattleControl.gd" id="1_jhtm6"]
-[ext_resource type="PackedScene" uid="uid://jpahwcw6fs8p" path="res://Enemies/DEBUG_Enemy_Small.tscn" id="3_inwax"]
 [ext_resource type="Resource" uid="uid://b32r8i7ybs5i8" path="res://Dungeon Battles/Strategies/Attack/DEBUG_AttackStrategy.tres" id="3_qnwog"]
 [ext_resource type="Script" uid="uid://cb57nb55w11q2" path="res://Dungeon Battles/Scripts/EnemyAttackStrategy.gd" id="3_vplat"]
 [ext_resource type="Script" uid="uid://yji43ynf5uer" path="res://CircleFormation2D.gd" id="4_rfxk1"]
@@ -13,6 +12,7 @@
 [ext_resource type="Script" uid="uid://cvvve75gj6g5p" path="res://Dungeon Battles/Scripts/BattlePhaseComponent.gd" id="7_rfxk1"]
 [ext_resource type="Script" uid="uid://bt83lsvkj0eux" path="res://Dungeon Battles/Scripts/Arena Shapes/CircleArenaShape.gd" id="8_i8jvw"]
 [ext_resource type="Script" uid="uid://bb6mtx3qvx8la" path="res://Dungeon Battles/Scripts/EnemiesBattleController.gd" id="8_qnwog"]
+[ext_resource type="PackedScene" uid="uid://8b1moxf2o8ex" path="res://Enemies/DEBUG_Enemy_Brawler.tscn" id="10_i8jvw"]
 [ext_resource type="Script" uid="uid://ddfr363kas73a" path="res://Projectiles/Scripts/ProjectileContainer.gd" id="10_rjbpi"]
 [ext_resource type="PackedScene" uid="uid://buiqmepp6t7gi" path="res://Dungeon Battles/UI/UI_BattleDisplay.tscn" id="13_rjbpi"]
 [ext_resource type="PackedScene" uid="uid://p5xvcflilfx7" path="res://Weapons/UI/UI_WeaponDisplay.tscn" id="14_ih6p7"]
@@ -53,7 +53,7 @@ metadata/_custom_type_script = "uid://bt83lsvkj0eux"
 [node name="BattleEnemies" type="Node2D" parent="." unique_id=783342939 node_paths=PackedStringArray("formation")]
 script = ExtResource("8_qnwog")
 formation = NodePath("../Environment/Formation")
-enemy_prefab = ExtResource("3_inwax")
+enemy_prefab = ExtResource("10_i8jvw")
 spawns_left = 6
 
 [node name="ReorderTimer" type="Timer" parent="BattleEnemies" unique_id=708728382]
