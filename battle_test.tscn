@@ -12,8 +12,10 @@
 [ext_resource type="Script" uid="uid://cvvve75gj6g5p" path="res://Dungeon Battles/Scripts/BattlePhaseComponent.gd" id="7_rfxk1"]
 [ext_resource type="Script" uid="uid://bt83lsvkj0eux" path="res://Dungeon Battles/Scripts/Arena Shapes/CircleArenaShape.gd" id="8_i8jvw"]
 [ext_resource type="Script" uid="uid://bb6mtx3qvx8la" path="res://Dungeon Battles/Scripts/EnemiesBattleController.gd" id="8_qnwog"]
+[ext_resource type="PackedScene" uid="uid://jpahwcw6fs8p" path="res://Enemies/DEBUG_Enemy_Small.tscn" id="10_14hq7"]
 [ext_resource type="PackedScene" uid="uid://8b1moxf2o8ex" path="res://Enemies/DEBUG_Enemy_Brawler.tscn" id="10_i8jvw"]
 [ext_resource type="Script" uid="uid://ddfr363kas73a" path="res://Projectiles/Scripts/ProjectileContainer.gd" id="10_rjbpi"]
+[ext_resource type="Script" uid="uid://13jc8fqcjaqt" path="res://Dungeon Battles/Scripts/EncounterEnemies.gd" id="11_fp30v"]
 [ext_resource type="PackedScene" uid="uid://buiqmepp6t7gi" path="res://Dungeon Battles/UI/UI_BattleDisplay.tscn" id="13_rjbpi"]
 [ext_resource type="PackedScene" uid="uid://p5xvcflilfx7" path="res://Weapons/UI/UI_WeaponDisplay.tscn" id="14_ih6p7"]
 
@@ -21,6 +23,14 @@
 vertices = PackedVector2Array(134, 70, -134, 70, -134, -70, 134, -70)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-144, -80, 144, -80, 144, 80, -144, 80)])
+
+[sub_resource type="Resource" id="Resource_picvq"]
+script = ExtResource("11_fp30v")
+base_enemy_prefab = ExtResource("10_14hq7")
+elite_enemies = Dictionary[PackedScene, int]({
+ExtResource("10_i8jvw"): 10
+})
+metadata/_custom_type_script = "uid://13jc8fqcjaqt"
 
 [node name="BattleTest" type="Node2D" unique_id=719512692 node_paths=PackedStringArray("battle_phase", "arena")]
 script = ExtResource("1_jhtm6")
@@ -53,8 +63,7 @@ metadata/_custom_type_script = "uid://bt83lsvkj0eux"
 [node name="BattleEnemies" type="Node2D" parent="." unique_id=783342939 node_paths=PackedStringArray("formation")]
 script = ExtResource("8_qnwog")
 formation = NodePath("../Environment/Formation")
-enemy_prefab = ExtResource("10_i8jvw")
-spawns_left = 6
+enemies = SubResource("Resource_picvq")
 
 [node name="ReorderTimer" type="Timer" parent="BattleEnemies" unique_id=708728382]
 autostart = true
